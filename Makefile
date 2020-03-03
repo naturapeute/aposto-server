@@ -6,13 +6,7 @@ deploy:
 	make start"
 
 start:
-	source venv/bin/activate && \
-	export DISPLAY=':99.0' \
-	Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 & \
-	uvicorn --reload --port 8080 app:app
+	bash -c "bin/start.sh"
 
 install:
-	npm install && \
-	python3 -m venv venv && \
-	source venv/bin/activate && \
-	pip3 install -r requirements.txt
+	bash -c "bin/install.sh"
