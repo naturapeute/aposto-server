@@ -3,4 +3,9 @@
 source venv/bin/activate
 export DISPLAY=':99.0'
 Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-uvicorn --reload --port 8080 app:app
+
+if [ -s "$HOME/.nvm/nvm.sh" ]; then
+    source "$HOME/.nvm/nvm.sh"
+fi
+
+uvicorn --reload --host 0.0.0.0 --port 8080 app:app

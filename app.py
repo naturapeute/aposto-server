@@ -27,7 +27,7 @@ app: Starlette = Starlette(debug=True)
 async def downloadReceipt(request: Request):
     receipt_url: str = f"{config['apostoAppURL']}/receipt/receipt.html?receiptContent={request.path_params['receiptContentBase64']}"
 
-    subprocess.run(["npx", "electron-pdf", receipt_url, "out.pdf"])
+    subprocess.call(["npx", "electron-pdf", receipt_url, "out.pdf"])
 
     return FileResponse("out.pdf")
 
