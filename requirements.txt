@@ -2,4 +2,5 @@ starlette==0.13.2
 uvicorn==0.11.3
 aiofiles==0.4.0
 ujson==1.35
-requests=2.23.0
+requests==2.23.0
+wheel
