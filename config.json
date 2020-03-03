@@ -1,0 +1,5 @@
+{
+    "sendInBlueAPIURL": "https://api.sendinblue.com/v3",
+    "apostoAppURL": "https://app.aposto.ch",
+    "apostoAPIURL": "https://api.aposto.ch"
+}
