@@ -24,7 +24,7 @@ with open("config.json", "r") as configData:
     config: Dict = ujson.load(configData)
 
 middleware: List[Middleware] = [
-    Middleware(CORSMiddleware, allow_origins=["https://app.aposto.ch/"])
+    Middleware(CORSMiddleware, allow_origins=[config["apostoAppURL"]])
 ]
 
 app: Starlette = Starlette(debug=True, middleware=middleware)
@@ -42,14 +42,10 @@ async def downloadReceipt(request: Request):
 @app.route("/email/{receiptContentBase64}")
 async def emailReceipt(request: Request):
     receipt_content: Dict = ujson.loads(
-        base64.b64decode(request.path_params["receiptContentBase64"])
-    )
-    receipt_url: str = urllib.parse.quote(
-        f"{config['apostoAppURL']}/receipt/receipt.html?receiptContent={request.path_params['receiptContentBase64']}",
-        safe="",
+        base64.b64decode(request.path_params["receiptContentBase64"]).decode("latin1")
     )
     receipt_filename: str = f"facture-{round(time())}.pdf"
-    url: str = f"{config['apostoAPIURL']}/pdf/{receipt_url}/{receipt_filename}"
+    url: str = f"{config['apostoAPIURL']}/pdf/{request.path_params['receiptContentBase64']}/{receipt_filename}"
 
     data: str = ujson.dumps(
         {
