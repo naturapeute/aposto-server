@@ -6,21 +6,28 @@ from datetime import datetime
 import requests
 from dotenv import load_dotenv
 import os
+from typing import List, Dict
 
 from requests import Response
 from starlette.applications import Starlette
 from starlette.requests import Request
 from starlette.responses import FileResponse, UJSONResponse
 from starlette.status import HTTP_400_BAD_REQUEST
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
 import ujson
 
 load_dotenv()
 SEND_IN_BLUE_API_KEY = os.getenv("SEND_IN_BLUE_API_KEY")
 
 with open("config.json", "r") as configData:
-    config: dict = ujson.load(configData)
+    config: Dict = ujson.load(configData)
 
-app: Starlette = Starlette(debug=True)
+middleware: List[Middleware] = [
+    Middleware(CORSMiddleware, allow_origins=["https://app.aposto.ch/"])
+]
+
+app: Starlette = Starlette(debug=True, middleware=middleware)
 
 
 @app.route("/pdf/{receiptContentBase64}/{name}")
@@ -34,7 +41,7 @@ async def downloadReceipt(request: Request):
 
 @app.route("/email/{receiptContentBase64}")
 async def emailReceipt(request: Request):
-    receipt_content: dict = ujson.loads(
+    receipt_content: Dict = ujson.loads(
         base64.b64decode(request.path_params["receiptContentBase64"])
     )
     receipt_url: str = urllib.parse.quote(
@@ -78,6 +85,6 @@ async def emailReceipt(request: Request):
     if response.status_code == 201:
         return UJSONResponse()
     else:
-        response_content: dict = ujson.loads(response.text)
+        response_content: Dict = ujson.loads(response.text)
 
         return UJSONResponse(response_content, status_code=HTTP_400_BAD_REQUEST)
