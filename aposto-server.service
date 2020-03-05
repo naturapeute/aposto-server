@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User=ubuntu
 WorkingDirectory=/home/ubuntu/server
-ExecStart=/usr/bin/make install && /usr/bin/make start
+ExecStart=/usr/bin/make start
 Restart=on-failure
 
 [Install]
