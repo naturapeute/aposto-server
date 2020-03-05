@@ -1,0 +1,12 @@
+[Unit]
+Description=Keep the Aposto API running
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/server
+ExecStart=/usr/bin/make install && /usr/bin/make start
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
