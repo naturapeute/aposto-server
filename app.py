@@ -32,9 +32,7 @@ app: Starlette = Starlette(debug=True, middleware=middleware)
 
 @app.route("/pdf/{receiptContentBase64}/{name}")
 async def downloadReceipt(request: Request):
-    receipt_url: str = f"{config['apostoAppURL']}/receipt/receipt.html?receiptContent={request.path_params['receiptContentBase64']}"
-
-    subprocess.call(["npx", "electron-pdf", receipt_url, "out.pdf"])
+    generateReceipt(request.path_params["receiptContentBase64"])
 
     return FileResponse("out.pdf")
 
@@ -45,7 +43,11 @@ async def emailReceipt(request: Request):
         base64.b64decode(request.path_params["receiptContentBase64"]).decode("latin1")
     )
     receipt_filename: str = f"facture-{round(time())}.pdf"
-    url: str = f"{config['apostoAPIURL']}/pdf/{request.path_params['receiptContentBase64']}/{receipt_filename}"
+
+    generateReceipt(request.path_params["receiptContentBase64"])
+
+    with open("out.pdf", "rb") as receiptFile:
+        receiptFileBase64 = base64.b64encode(receiptFile.read())
 
     data: str = ujson.dumps(
         {
@@ -64,7 +66,7 @@ async def emailReceipt(request: Request):
             ],
             "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {receipt_content['customer']['firstName']} {receipt_content['customer']['lastName']},</p><p>Vous pouvez dès à présent consulter votre facture du {datetime.now().strftime('%d/%m/%Y')} en pièce jointe.</p><p>À très bientôt,<br>{receipt_content['author']['name']}</p>",
             "subject": "Aposto - Votre nouvelle facture",
-            "attachment": [{"url": url, "name": receipt_filename}],
+            "attachment": [{"content": receiptFileBase64, "name": receipt_filename}],
         }
     )
 
@@ -84,3 +86,8 @@ async def emailReceipt(request: Request):
         response_content: Dict = ujson.loads(response.text)
 
         return UJSONResponse(response_content, status_code=HTTP_400_BAD_REQUEST)
+
+def generateReceipt(receiptContentBase64: str):
+    receipt_url: str = f"http://localhost:8000/receipt/receipt.html?receiptContent={receiptContentBase64}"
+
+    subprocess.call(["npx", "electron-pdf", receipt_url, "out.pdf"])
