@@ -4,11 +4,11 @@ import urllib.parse
 from time import time
 from datetime import datetime
 import requests
+from requests import Response
 from dotenv import load_dotenv
 import os
 from typing import List, Dict
 
-from requests import Response
 from starlette.applications import Starlette
 from starlette.requests import Request
 from starlette.responses import FileResponse, UJSONResponse
@@ -74,8 +74,8 @@ async def emailReceipt(request: Request):
         "api-key": SEND_IN_BLUE_API_KEY,
     }
 
-    response: Response = requests.request(
-        "POST", f"{config['sendInBlueAPIURL']}/smtp/email", data=data, headers=headers,
+    response: Response = requests.post(
+        f"{config['sendInBlueAPIURL']}/smtp/email", data=data, headers=headers
     )
 
     if response.status_code == 201:

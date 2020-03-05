@@ -8,4 +8,4 @@ if [ -s "$HOME/.nvm/nvm.sh" ]; then
     source "$HOME/.nvm/nvm.sh"
 fi
 
-uvicorn --reload --host 0.0.0.0 --port 8080 app:app
+uvicorn --host 0.0.0.0 --port 8080 --workers 4 app:app
