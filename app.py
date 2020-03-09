@@ -11,7 +11,7 @@ from typing import List, Dict
 
 from starlette.applications import Starlette
 from starlette.requests import Request
-from starlette.responses import FileResponse, UJSONResponse
+from starlette.responses import Response, FileResponse, UJSONResponse
 from starlette.status import HTTP_400_BAD_REQUEST
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
@@ -86,6 +86,13 @@ async def emailReceipt(request: Request):
     response_content: Dict = ujson.loads(response.text)
 
     return UJSONResponse(response_content, status_code=HTTP_400_BAD_REQUEST)
+
+
+@app.route("/favicon.ico")
+async def icon(request: Request):
+    return Response(
+        status_code=302, headers={"Location": "https://terrapeute.ch/img/favicon.png"}
+    )
 
 
 def generateReceipt(receiptContentBase64: str):
