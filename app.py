@@ -30,24 +30,24 @@ middleware: List[Middleware] = [
 app: Starlette = Starlette(debug=True, middleware=middleware)
 
 
-@app.route("/pdf/{receiptContentBase64}/{name}")
+@app.route("/pdf/{receipt_content_base_64}/{name}")
 async def downloadReceipt(request: Request):
-    generateReceipt(request.path_params["receiptContentBase64"])
+    generateReceipt(request.path_params["receipt_content_base_64"])
 
     return FileResponse("out.pdf")
 
 
-@app.route("/email/{receiptContentBase64}")
+@app.route("/email/{receipt_content_base_64}")
 async def emailReceipt(request: Request):
     receipt_content: Dict = ujson.loads(
-        base64.b64decode(request.path_params["receiptContentBase64"]).decode("latin1")
+        base64.b64decode(request.path_params["receipt_content_base_64"]).decode("latin1")
     )
     receipt_filename: str = f"facture-{round(time())}.pdf"
 
-    generateReceipt(request.path_params["receiptContentBase64"])
+    generateReceipt(request.path_params["receipt_content_base_64"])
 
-    with open("out.pdf", "rb") as receiptFile:
-        receiptFileBase64 = base64.b64encode(receiptFile.read())
+    with open("out.pdf", "rb") as receipt_file:
+        receipt_file_base_64 = base64.b64encode(receipt_file.read())
 
     data: str = ujson.dumps(
         {
@@ -66,7 +66,7 @@ async def emailReceipt(request: Request):
             ],
             "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {receipt_content['customer']['firstName']} {receipt_content['customer']['lastName']},</p><p>Vous pouvez dès à présent consulter votre facture du {datetime.now().strftime('%d/%m/%Y')} en pièce jointe.</p><p>À très bientôt,<br>{receipt_content['author']['name']}</p>",
             "subject": "Aposto - Votre nouvelle facture",
-            "attachment": [{"content": receiptFileBase64, "name": receipt_filename}],
+            "attachment": [{"content": receipt_file_base_64, "name": receipt_filename}],
         }
     )
 
@@ -95,7 +95,7 @@ async def icon(request: Request):
     )
 
 
-def generateReceipt(receiptContentBase64: str):
-    receipt_url: str = f"https://app.aposto.ch/receipt/receipt.html?receiptContent={receiptContentBase64}"
+def generateReceipt(receipt_content_base_64: str):
+    receipt_url: str = f"https://app.aposto.ch/receipt/receipt.html?receiptContent={receipt_content_base_64}"
 
     subprocess.Popen(f"npx electron-pdf {receipt_url} out.pdf", shell=True)
