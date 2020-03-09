@@ -7,3 +7,4 @@ wheel
 python-dotenv
 black
 pylint
+pyStrich==0.8

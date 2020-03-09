@@ -3,3 +3,4 @@ __pycache__
 out.pdf
 package-lock.json
 .env
+datamatrix.png
