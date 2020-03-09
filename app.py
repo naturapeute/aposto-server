@@ -82,12 +82,13 @@ async def emailReceipt(request: Request):
 
     if response.status_code == 201:
         return UJSONResponse()
-    else:
-        response_content: Dict = ujson.loads(response.text)
 
-        return UJSONResponse(response_content, status_code=HTTP_400_BAD_REQUEST)
+    response_content: Dict = ujson.loads(response.text)
+
+    return UJSONResponse(response_content, status_code=HTTP_400_BAD_REQUEST)
+
 
 def generateReceipt(receiptContentBase64: str):
-    receipt_url: str = f"http://localhost:8000/receipt/receipt.html?receiptContent={receiptContentBase64}"
+    receipt_url: str = f"https://app.aposto.ch/receipt/receipt.html?receiptContent={receiptContentBase64}"
 
-    subprocess.call(["npx", "electron-pdf", receipt_url, "out.pdf"])
+    subprocess.Popen(f"npx electron-pdf {receipt_url} out.pdf", shell=True)
