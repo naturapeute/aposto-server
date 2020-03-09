@@ -7,15 +7,11 @@ from requests import Response as requests_Response
 from dotenv import load_dotenv
 import os
 from typing import List, Dict
+from pystrich.datamatrix import DataMatrixEncoder
 
 from starlette.applications import Starlette
 from starlette.requests import Request
-from starlette.responses import (
-    RedirectResponse,
-    FileResponse,
-    UJSONResponse,
-    StreamingResponse,
-)
+from starlette.responses import RedirectResponse, FileResponse, UJSONResponse
 from starlette.status import HTTP_400_BAD_REQUEST
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
@@ -92,6 +88,18 @@ async def emailReceipt(request: Request):
     response_content: Dict = ujson.loads(response.text)
 
     return UJSONResponse(response_content, status_code=HTTP_400_BAD_REQUEST)
+
+
+@app.route("/datamatrix/{datamatrix_str}/datamatrix.png")
+async def dataMatrix(request: Request):
+    decoded_data_matrix_st: str = base64.b64decode(
+        request.path_params["datamatrix_str"]
+    ).decode()
+    encoder: DataMatrixEncoder = DataMatrixEncoder(decoded_data_matrix_st)
+
+    encoder.save("datamatrix.png")
+
+    return FileResponse("datamatrix.png")
 
 
 @app.route("/favicon.ico")
