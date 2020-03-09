@@ -1,17 +1,21 @@
 import subprocess
 import base64
-import urllib.parse
 from time import time
 from datetime import datetime
 import requests
-from requests import Response
+from requests import Response as requests_Response
 from dotenv import load_dotenv
 import os
 from typing import List, Dict
 
 from starlette.applications import Starlette
 from starlette.requests import Request
-from starlette.responses import Response, FileResponse, UJSONResponse
+from starlette.responses import (
+    RedirectResponse,
+    FileResponse,
+    UJSONResponse,
+    StreamingResponse,
+)
 from starlette.status import HTTP_400_BAD_REQUEST
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
@@ -40,7 +44,9 @@ async def downloadReceipt(request: Request):
 @app.route("/email/{receipt_content_base_64}")
 async def emailReceipt(request: Request):
     receipt_content: Dict = ujson.loads(
-        base64.b64decode(request.path_params["receipt_content_base_64"]).decode("latin1")
+        base64.b64decode(request.path_params["receipt_content_base_64"]).decode(
+            "latin1"
+        )
     )
     receipt_filename: str = f"facture-{round(time())}.pdf"
 
@@ -76,7 +82,7 @@ async def emailReceipt(request: Request):
         "api-key": SEND_IN_BLUE_API_KEY,
     }
 
-    response: Response = requests.post(
+    response: requests_Response = requests.post(
         f"{config['sendInBlueAPIURL']}/smtp/email", data=data, headers=headers
     )
 
@@ -90,9 +96,7 @@ async def emailReceipt(request: Request):
 
 @app.route("/favicon.ico")
 async def icon(request: Request):
-    return Response(
-        status_code=302, headers={"Location": "https://terrapeute.ch/img/favicon.png"}
-    )
+    return RedirectResponse("https://terrapeute.ch/img/favicon.png")
 
 
 def generateReceipt(receipt_content_base_64: str):
