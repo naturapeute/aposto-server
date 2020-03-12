@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import os
 from typing import List, Dict
 from pystrich.datamatrix import DataMatrixEncoder
+from pathlib import Path
 
 from starlette.applications import Starlette
 from starlette.requests import Request
@@ -34,23 +35,22 @@ app: Starlette = Starlette(debug=True, middleware=middleware)
 
 @app.route("/pdf/{receipt_content_base_64}/{name}")
 async def downloadReceipt(request: Request):
-    generateReceipt(request.path_params["receipt_content_base_64"])
+    receipt_path: Path = generateReceipt(
+        parseReceiptContent(request.path_params["receipt_content_base_64"])
+    )
 
-    return FileResponse("out.pdf")
+    return FileResponse(receipt_path.as_posix())
 
 
 @app.route("/email/{receipt_content_base_64}")
 async def emailReceipt(request: Request):
-    receipt_content: Dict = ujson.loads(
-        base64.b64decode(request.path_params["receipt_content_base_64"]).decode(
-            "latin1"
-        )
+    receipt_content: Dict = parseReceiptContent(
+        request.path_params["receipt_content_base_64"]
     )
-    receipt_filename: str = f"facture-{round(time())}.pdf"
 
-    generateReceipt(request.path_params["receipt_content_base_64"])
+    receipt_path: Path = generateReceipt(receipt_content)
 
-    with open("out.pdf", "rb") as receipt_file:
+    with open(receipt_path.as_posix(), "rb") as receipt_file:
         receipt_file_base_64 = base64.b64encode(receipt_file.read())
 
     data: str = ujson.dumps(
@@ -70,11 +70,13 @@ async def emailReceipt(request: Request):
             ],
             "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {receipt_content['customer']['firstName']} {receipt_content['customer']['lastName']},</p><p>Vous pouvez dès à présent consulter votre facture du {datetime.now().strftime('%d/%m/%Y')} en pièce jointe.</p><p>À très bientôt,<br>{receipt_content['author']['name']}</p>",
             "subject": "Aposto - Votre nouvelle facture",
-            "attachment": [{"content": receipt_file_base_64, "name": receipt_filename}],
+            "attachment": [
+                {"content": receipt_file_base_64, "name": receipt_path.name}
+            ],
         }
     )
 
-    headers = {
+    headers: Dict = {
         "accept": "application/json",
         "content-type": "application/json",
         "api-key": SEND_IN_BLUE_API_KEY,
@@ -109,7 +111,25 @@ async def icon(request: Request):
     return RedirectResponse("https://terrapeute.ch/img/favicon.png")
 
 
-def generateReceipt(receipt_content_base_64: str):
-    receipt_url: str = f"https://app.aposto.ch/receipt/receipt.html?receiptContent={receipt_content_base_64}"
+def generateReceipt(receipt_content: str) -> Path:
+    receipt_url: str = f"{config['apostoAppURL']}/receipt/receipt.html?receiptContent={receipt_content}"
 
-    subprocess.Popen(f"npx electron-pdf {receipt_url} out.pdf", shell=True)
+    receipt_dir: Path = Path(
+        f"./out/{receipt_content['author']['name']}/{receipt_content['author']['RCCNumber']}"
+    )
+    receipt_dir.mkdir(parents=True, exist_ok=True)
+    receipt_path: Path = receipt_dir.joinpath(
+        f"invoice-{receipt_content['timestamp']}.pdf"
+    )
+
+    if not receipt_path.exists():
+        sanitized_receipt_path = receipt_path.as_posix().replace(" ", r"\ ")
+        subprocess.call(
+            f"npx electron-pdf {receipt_url} {sanitized_receipt_path}", shell=True
+        )
+
+    return receipt_path
+
+
+def parseReceiptContent(receipt_content_base_64: str) -> Dict:
+    return ujson.loads(base64.b64decode(receipt_content_base_64).decode("latin1"))

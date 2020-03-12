@@ -1,6 +1,6 @@
 node_modules
 __pycache__
-out.pdf
+out
 package-lock.json
 .env
 datamatrix.png
