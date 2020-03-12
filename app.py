@@ -35,9 +35,7 @@ app: Starlette = Starlette(debug=True, middleware=middleware)
 
 @app.route("/pdf/{receipt_content_base_64}/{name}")
 async def downloadReceipt(request: Request):
-    receipt_path: Path = generateReceipt(
-        parseReceiptContent(request.path_params["receipt_content_base_64"])
-    )
+    receipt_path: Path = generateReceipt(request.path_params["receipt_content_base_64"])
 
     return FileResponse(receipt_path.as_posix())
 
@@ -48,7 +46,7 @@ async def emailReceipt(request: Request):
         request.path_params["receipt_content_base_64"]
     )
 
-    receipt_path: Path = generateReceipt(receipt_content)
+    receipt_path: Path = generateReceipt(request.path_params["receipt_content_base_64"])
 
     with open(receipt_path.as_posix(), "rb") as receipt_file:
         receipt_file_base_64 = base64.b64encode(receipt_file.read())
@@ -111,8 +109,9 @@ async def icon(request: Request):
     return RedirectResponse("https://terrapeute.ch/img/favicon.png")
 
 
-def generateReceipt(receipt_content: str) -> Path:
-    receipt_url: str = f"{config['apostoAppURL']}/receipt/receipt.html?receiptContent={receipt_content}"
+def generateReceipt(receipt_content_base_64: str) -> Path:
+    receipt_content = parseReceiptContent(receipt_content_base_64)
+    receipt_url: str = f"{config['apostoAppURL']}/receipt/receipt.html?receiptContent={receipt_content_base_64}"
 
     receipt_dir: Path = Path(
         f"./out/{receipt_content['author']['name']}/{receipt_content['author']['RCCNumber']}"
