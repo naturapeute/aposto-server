@@ -21,7 +21,9 @@ load_dotenv()
 SEND_IN_BLUE_API_KEY = os.getenv("SEND_IN_BLUE_API_KEY")
 
 with open("config.json", "r") as configData:
-    config: Dict = ujson.load(configData)
+    ENV = os.getenv("ENV")
+    fullConfig: Dict = ujson.load(configData)
+    config: Dict = fullConfig["PROD"] if ENV == "PROD" else fullConfig["DEV"]
 
 middleware: List[Middleware] = [
     Middleware(CORSMiddleware, allow_origins=[config["apostoAppURL"]])
