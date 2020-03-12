@@ -123,9 +123,9 @@ def generateReceipt(receipt_content_base_64: str) -> Path:
 
     if not receipt_path.exists():
         sanitized_receipt_path = receipt_path.as_posix().replace(" ", r"\ ")
-        subprocess.call(
+        subprocess.Popen(
             f"npx electron-pdf {receipt_url} {sanitized_receipt_path}", shell=True
-        )
+        ).communicate()
 
     return receipt_path
 
