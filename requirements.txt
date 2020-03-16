@@ -8,3 +8,4 @@ python-dotenv
 black
 pylint
 pyStrich==0.8
+reportlab=7.0.0
