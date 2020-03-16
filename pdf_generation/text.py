@@ -4,6 +4,9 @@ from collections import namedtuple
 import pdf_generation
 from pdf_generation.text_style import TextStyle
 
+from reportlab.lib.units import mm
+
+
 class Text:
     def __init__(self, dict_text: Dict):
         self.text: str = dict_text["text"]
@@ -11,7 +14,18 @@ class Text:
         self._top: float = dict_text["top"]
         self.style: TextStyle = getattr(pdf_generation.text_style, dict_text["style"])()
 
+    @property
+    def left(self):
+        return Text.to_mm(self._left)
+
+    @property
+    def bottom(self):
+        return Text.top_to_bottom(self._top)
+
     @staticmethod
-    def from_dict(dict_text: Dict) -> tuple:
-        dict_text["text_style"] = getattr(pdf_generation.text_style, dict_text["text_style"])()
-        return namedtuple("Text", dict_text.keys())(*dict_text.values())
+    def to_mm(x: float) -> float:
+        return x * mm
+
+    @staticmethod
+    def top_to_bottom(top: float) -> float:
+        return Text.to_mm(297 - top)
