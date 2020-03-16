@@ -34,8 +34,14 @@ class ApostoCanvas(canvas.Canvas):
         else:
             super().drawString(text.left, text.bottom, text.text)
 
-    def load_template(self, template_path: Path):
+    def load_template(self, template_path: Path) -> List[Text]:
         with open(template_path.resolve().as_posix()) as json_template:
-            self.template: List[Text] = list(
-                Text.from_dict(text_dict) for text_dict in json.load(json_template)
+            return list(
+                Text(text_dict) for text_dict in json.load(json_template)
             )
+
+    def draw_template(self, template_path: Path):
+        template: List[Text] = self.load_template(template_path)
+
+        for text in template:
+            self.drawString(text)
