@@ -38,8 +38,14 @@ class ApostoCanvas(canvas.Canvas):
     def draw_frame(self, frame: Frame):
         self.rect(frame.left, frame.bottom, frame.width, frame.height, stroke=1)
 
-    def draw_template(self, template_path: Path):
-        template: List[Text] = self.load_template(template_path)
+    def draw_descriptor_template(self, descriptor_template_path: Path):
+        template: List[Text] = DescriptorTemplate(descriptor_template_path).load_template()
 
         for text in template:
             self.drawString(text)
+
+    def draw_frame_template(self, frame_template_path: Path):
+        template: List[Frame] = FrameTemplate(frame_template_path).load_template()
+
+        for frame in template:
+            self.draw_frame(frame)
