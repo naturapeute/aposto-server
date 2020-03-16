@@ -1,0 +1,110 @@
+[
+    {
+        "text": "Date",
+        "left": 16.089,
+        "top": 151.829,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Tarif",
+        "left": 34.862,
+        "top": 151.829,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Code",
+        "left": 42.698,
+        "top": 151.831,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Code réf.",
+        "left": 65.668,
+        "top": 151.831,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Sé",
+        "left": 78.809,
+        "top": 151.831,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Cô",
+        "left": 82.978,
+        "top": 151.831,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Quantité",
+        "left": 95.937,
+        "top": 151.938,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "Pt PM/Prix",
+        "left": 112.541,
+        "top": 151.831,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "f PM",
+        "left": 121.729,
+        "top": 151.801,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "VPt PM",
+        "left": 131.258,
+        "top": 151.817,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "Pt PT",
+        "left": 147.64,
+        "top": 151.817,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "f PT",
+        "left": 156.687,
+        "top": 151.801,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "VPt PT",
+        "left": 167.038,
+        "top": 151.817,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "E",
+        "left": 169.858,
+        "top": 151.801,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "R",
+        "left": 171.91,
+        "top": 151.801,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "P",
+        "left": 174.098,
+        "top": 151.801,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "M",
+        "left": 175.997,
+        "top": 151.801,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Montant",
+        "left": 194.973,
+        "top": 151.829,
+        "style": "DescriptorRightTextStyle"
+    }
+]
