@@ -3,7 +3,8 @@ from pathlib import Path
 import json
 
 from pdf_generation.text_style import TTFontToRegister, TextStyle
-from pdf_generation.text import Text
+from pdf_generation.content import Text, Frame
+from pdf_generation.template import DescriptorTemplate, FrameTemplate
 
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Paragraph
@@ -34,11 +35,8 @@ class ApostoCanvas(canvas.Canvas):
         else:
             super().drawString(text.left, text.bottom, text.text)
 
-    def load_template(self, template_path: Path) -> List[Text]:
-        with open(template_path.resolve().as_posix()) as json_template:
-            return list(
-                Text(text_dict) for text_dict in json.load(json_template)
-            )
+    def draw_frame(self, frame: Frame):
+        self.rect(frame.left, frame.bottom, frame.width, frame.height, stroke=1)
 
     def draw_template(self, template_path: Path):
         template: List[Text] = self.load_template(template_path)
