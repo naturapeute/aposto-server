@@ -1,0 +1,38 @@
+[
+    {
+        "text": "Mandataire",
+        "left": 16.07,
+        "top": 121.34,
+        "style": "BoldDescriptorTextStyle"
+    },
+    {
+        "text": "N° GLN/N° RCC",
+        "left": 33.754,
+        "top": 121.412,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Diagnostic",
+        "left": 16.073,
+        "top": 125.433,
+        "style": "BoldDescriptorTextStyle"
+    },
+    {
+        "text": "Contract",
+        "left": 33.69,
+        "top": 125.504,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Liste GLN",
+        "left": 16.084,
+        "top": 129.522,
+        "style": "BoldDescriptorTextStyle"
+    },
+    {
+        "text": "Commentaire",
+        "left": 16.015,
+        "top": 137.459,
+        "style": "BoldDescriptorTextStyle"
+    }
+]
