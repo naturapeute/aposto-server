@@ -1,0 +1,128 @@
+[
+    {
+        "text": "Code",
+        "left": 47.895,
+        "top": 261.862,
+        "style": "BoldDescriptorCenteredTextStyle"
+    },
+    {
+        "text": "0",
+        "left": 48.031,
+        "top": 265.037,
+        "style": "DescriptorCenteredTextStyle"
+    },
+    {
+        "text": "1",
+        "left": 47.949,
+        "top": 267.754,
+        "style": "DescriptorCenteredTextStyle"
+    },
+    {
+        "text": "2",
+        "left": 48.012,
+        "top": 270.505,
+        "style": "DescriptorCenteredTextStyle"
+    },
+    {
+        "text": "Taux",
+        "left": 58.762,
+        "top": 261.86,
+        "style": "BoldDescriptorRightTextStyle"
+    },
+    {
+        "text": "0.00",
+        "left": 58.587,
+        "top": 265.037,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "2.50",
+        "left": 58.587,
+        "top": 267.785,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "8.00",
+        "left": 58.587,
+        "top": 270.536,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "Montant",
+        "left": 73.155,
+        "top": 261.86,
+        "style": "BoldDescriptorRightTextStyle"
+    },
+    {
+        "text": "0.00",
+        "left": 73.344,
+        "top": 267.786,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "0.00",
+        "left": 73.298,
+        "top": 270.536,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "TVA",
+        "left": 86.184,
+        "top": 261.831,
+        "style": "BoldDescriptorRightTextStyle"
+    },
+    {
+        "text": "0.00",
+        "left": 85.918,
+        "top": 265.037,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "0.00",
+        "left": 85.927,
+        "top": 267.785,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "0.00",
+        "left": 85.922,
+        "top": 270.536,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "N° TVA:",
+        "left": 115.125,
+        "top": 261.831,
+        "style": "BoldDescriptorRightTextStyle"
+    },
+    {
+        "text": "Monnaie:",
+        "left": 114.445,
+        "top": 264.86,
+        "style": "BoldDescriptorRightTextStyle"
+    },
+    {
+        "text": "CHF",
+        "left": 121.095,
+        "top": 264.861,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Montant total:",
+        "left": 177.686,
+        "top": 261.86,
+        "style": "BoldDescriptorRightTextStyle"
+    },
+    {
+        "text": "dont pr. obl.:",
+        "left": 178.358,
+        "top": 264.86,
+        "style": "BoldDescriptorRightTextStyle"
+    },
+    {
+        "text": "Montant de la facture:",
+        "left": 178.788,
+        "top": 270.788,
+        "style": "BoldDescriptorRightTextStyle"
+    }
+]
