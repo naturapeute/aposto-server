@@ -6,8 +6,8 @@ from reportlab.pdfbase.ttfonts import TTFont
 
 class TTFontToRegister:
     def __init__(self, path: Path, family: str):
-        self.path = path
-        self.family = family
+        self.path: Path = path
+        self.family: str = family
 
     def register(self):
         pdfmetrics.registerFont(TTFont(self.family, self.path.resolve().as_posix()))
@@ -15,12 +15,12 @@ class TTFontToRegister:
 
 class TextStyle:
     def __init__(self, family: str = "Arial", size: float = 9, align: str = ""):
-        self.family = family
-        self.size = size
-        self.align = align
+        self.family: str = family
+        self.size: float = size
+        self.align: str = align
 
 
-class MainTitleTextStyle(TextStyle):
+class TitleTextStyle(TextStyle):
     def __init__(self, align: str = ""):
         super().__init__("Arial B", 16, align=align)
 

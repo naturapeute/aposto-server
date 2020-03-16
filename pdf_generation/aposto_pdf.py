@@ -1,7 +1,7 @@
 from typing import Union
 from pathlib import Path
 
-from .text_style import TTFontToRegister, TextStyle
+from pdf_generation.text_style import TTFontToRegister, TextStyle
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
@@ -11,9 +11,7 @@ from reportlab.lib.enums import TA_LEFT, TA_RIGHT
 
 
 class ApostoCanvas(canvas.Canvas):
-    def __init__(
-        self, filename: str,
-    ):
+    def __init__(self, filename: str):
         super().__init__(filename)
         self.register_fonts()
 
@@ -22,9 +20,9 @@ class ApostoCanvas(canvas.Canvas):
         TTFontToRegister(Path("fonts/Arial Bold.ttf"), "Arial B").register()
         TTFontToRegister(Path("fonts/OCRB.ttf"), "ORCB").register()
 
-    def draw_string(self, x: float, y: float, text: str, style: TextStyle):
-        x_mm: float = self.to_mm(x)
-        y_mm: float = self.bottom_to_top(y)
+    def draw_string(self, left: float, top: float, text: str, style: TextStyle):
+        x_mm: float = self.to_mm(left)
+        y_mm: float = self.top_to_bottom(top)
 
         super().setFont(style.family, style.size)
 
@@ -38,5 +36,5 @@ class ApostoCanvas(canvas.Canvas):
     def to_mm(self, x: float) -> float:
         return x * mm
 
-    def bottom_to_top(self, y: float) -> float:
-        return self.to_mm(297 - y)
+    def top_to_bottom(self, top: float) -> float:
+        return self.to_mm(297 - top)
