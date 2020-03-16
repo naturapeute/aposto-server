@@ -1,0 +1,98 @@
+[
+    {
+        "text": "Document",
+        "left": 16.052,
+        "top": 20.909,
+        "style": "BoldDescriptorTextStyle"
+    },
+    {
+        "text": "Identification",
+        "left": 33.753,
+        "top": 20.98,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Page:",
+        "left": 175.097,
+        "top": 20.889,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "1",
+        "left": 176.231,
+        "top": 20.889,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Auteur",
+        "left": 15.881,
+        "top": 24.755,
+        "style": "BoldDescriptorTextStyle"
+    },
+    {
+        "text": "facture",
+        "left": 15.909,
+        "top": 27.272,
+        "style": "BoldDescriptorTextStyle"
+    },
+    {
+        "text": "N° GLN(B)",
+        "left": 33.711,
+        "top": 25.316,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "N° RCC(B)",
+        "left": 33.711,
+        "top": 29.157,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Tél:",
+        "left": 175.269,
+        "top": 24.825,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "Fax:",
+        "left": 175.241,
+        "top": 28.666,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "Four. de",
+        "left": 16.055,
+        "top": 32.436,
+        "style": "BoldDescriptorTextStyle"
+    },
+    {
+        "text": "prestations",
+        "left": 16.041,
+        "top": 34.958,
+        "style": "BoldDescriptorTextStyle"
+    },
+    {
+        "text": "N° GLN(P)",
+        "left": 33.711,
+        "top": 32.997,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "N° RCC(P)",
+        "left": 33.711,
+        "top": 36.843,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Tél:",
+        "left": 175.269,
+        "top": 32.506,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "Fax:",
+        "left": 175.241,
+        "top": 36.352,
+        "style": "DescriptorRightTextStyle"
+    }
+]
