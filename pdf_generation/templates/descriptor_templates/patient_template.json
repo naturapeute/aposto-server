@@ -1,0 +1,182 @@
+[
+    {
+        "text": "Patient",
+        "left": 16.075,
+        "top": 40.369,
+        "style": "BoldDescriptorTextStyle"
+    },
+    {
+        "text": "Nom",
+        "left": 33.754,
+        "top": 40.44,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "N° GLN",
+        "left": 118.558,
+        "top": 40.441,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Prénom",
+        "left": 33.756,
+        "top": 44.285,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Rue",
+        "left": 33.76,
+        "top": 48.126,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "NPA",
+        "left": 33.754,
+        "top": 51.942,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Localité",
+        "left": 33.747,
+        "top": 55.817,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Date de naissance",
+        "left": 33.756,
+        "top": 59.657,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Sexe",
+        "left": 33.679,
+        "top": 63.504,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Date cas",
+        "left": 33.756,
+        "top": 67.348,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "N° cas",
+        "left": 33.754,
+        "top": 71.193,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "N° AVS",
+        "left": 33.754,
+        "top": 75.035,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "N° Cada",
+        "left": 33.754,
+        "top": 78.88,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "N° assuré",
+        "left": 33.754,
+        "top": 82.724,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Canton",
+        "left": 33.69,
+        "top": 86.571,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Copie de facture",
+        "left": 33.69,
+        "top": 90.411,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Non",
+        "left": 59.216,
+        "top": 90.635,
+        "style": "ContentTextStyle"
+    },
+    {
+        "text": "Type de remb.",
+        "left": 33.672,
+        "top": 94.256,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "TG",
+        "left": 59.084,
+        "top": 94.482,
+        "style": "ContentTextStyle"
+    },
+    {
+        "text": "Date/N0 GaPrCh",
+        "left": 118.56,
+        "top": 94.257,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Loi",
+        "left": 33.747,
+        "top": 98.101,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "LCA",
+        "left": 59.239,
+        "top": 98.321,
+        "style": "ContentTextStyle"
+    },
+    {
+        "text": "Date/N° facture",
+        "left": 118.56,
+        "top": 98.103,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Traitement",
+        "left": 33.627,
+        "top": 101.942,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Date/N° rappel",
+        "left": 118.56,
+        "top": 101.942,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Type traitement",
+        "left": 33.627,
+        "top": 105.787,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Motif traitement",
+        "left": 33.749,
+        "top": 109.632,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Maladie",
+        "left": 59.177,
+        "top": 109.859,
+        "style": "ContentTextStyle"
+    },
+    {
+        "text": "N°/Nom entreprise",
+        "left": 33.754,
+        "top": 113.478,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Rôle/localité",
+        "left": 33.76,
+        "top": 117.32,
+        "style": "DescriptorTextStyle"
+    }
+]
