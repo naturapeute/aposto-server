@@ -1,7 +1,9 @@
-from typing import Union
+from typing import Dict, List
 from pathlib import Path
+import json
 
 from pdf_generation.text_style import TTFontToRegister, TextStyle
+from pdf_generation.text import Text
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
@@ -38,3 +40,9 @@ class ApostoCanvas(canvas.Canvas):
 
     def top_to_bottom(self, top: float) -> float:
         return self.to_mm(297 - top)
+
+    def load_template(self, template_path: Path):
+        with open(template_path.resolve().as_posix()) as json_template:
+            self.template: List[Text] = list(
+                Text.from_dict(text_dict) for text_dict in json.load(json_template)
+            )
