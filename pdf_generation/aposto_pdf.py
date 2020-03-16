@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import List
 from pathlib import Path
 import json
 
@@ -6,7 +6,6 @@ from pdf_generation.text_style import TTFontToRegister, TextStyle
 from pdf_generation.text import Text
 
 from reportlab.pdfgen import canvas
-from reportlab.lib.units import mm
 from reportlab.platypus import Paragraph
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.enums import TA_LEFT, TA_RIGHT
@@ -22,24 +21,18 @@ class ApostoCanvas(canvas.Canvas):
         TTFontToRegister(Path("fonts/Arial Bold.ttf"), "Arial B").register()
         TTFontToRegister(Path("fonts/OCRB.ttf"), "ORCB").register()
 
-    def draw_string(self, left: float, top: float, text: str, style: TextStyle):
-        x_mm: float = self.to_mm(left)
-        y_mm: float = self.top_to_bottom(top)
+    def setFont(self, style: TextStyle):
+        return super().setFont(style.family, style.size)
 
-        super().setFont(style.family, style.size)
+    def drawString(self, text: Text):
+        self.setFont(text.style)
 
-        if style.align == "R":
-            super().drawRightString(x_mm, y_mm, text)
-        elif style.align == "C":
-            super().drawCentredString(x_mm, y_mm, text)
+        if text.style.align == "R":
+            super().drawRightString(text.left, text.bottom, text.text)
+        elif text.style.align == "C":
+            super().drawCentredString(text.left, text.bottom, text.text)
         else:
-            super().drawString(x_mm, y_mm, text)
-
-    def to_mm(self, x: float) -> float:
-        return x * mm
-
-    def top_to_bottom(self, top: float) -> float:
-        return self.to_mm(297 - top)
+            super().drawString(text.left, text.bottom, text.text)
 
     def load_template(self, template_path: Path):
         with open(template_path.resolve().as_posix()) as json_template:
