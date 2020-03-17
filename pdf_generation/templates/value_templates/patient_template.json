@@ -36,6 +36,24 @@
         "style": "ValueTextStyle"
     },
     {
+        "key": "patient.names",
+        "left": 118.65,
+        "top": 60.578,
+        "style": "ValueTextStyle"
+    },
+    {
+        "key": "patient.street",
+        "left": 118.389,
+        "top": 64.509,
+        "style": "ValueTextStyle"
+    },
+    {
+        "key": "patient.npa_city",
+        "left": 118.557,
+        "top": 68.442,
+        "style": "ValueTextStyle"
+    },
+    {
         "key": "therapy_dates",
         "left": 59.351,
         "top": 102.168,

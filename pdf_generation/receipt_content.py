@@ -157,6 +157,14 @@ class Patient:
             self._patient_dict["birthdate"]
         ).strftime("%d.%m.%Y")
 
+    @property
+    def names(self) -> str:
+        return f"{self.first_name} {self.last_name}"
+
+    @property
+    def npa_city(self) -> str:
+        return f"{self.NPA} {self.city}"
+
 
 class ServiceList:
     def __init__(self, services_dict: Dict, service_price: float):
