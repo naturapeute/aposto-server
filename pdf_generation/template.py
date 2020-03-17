@@ -2,7 +2,7 @@ from typing import Dict, List
 from pathlib import Path
 import json
 
-from pdf_generation.content import Content, Text, Frame
+from pdf_generation.content import Content, Text, Frame, Value
 
 
 class Template:
@@ -27,3 +27,9 @@ class FrameTemplate(Template):
     def load_template(self) -> List[Frame]:
         with open(self.path.resolve().as_posix()) as json_template:
             return list(Frame(dict_frame) for dict_frame in json.load(json_template))
+
+
+class ValueTemplate(Template):
+    def load_template(self):
+        with open(self.path.resolve().as_posix()) as json_template:
+            return list(Value(dict_value) for dict_value in json.load(json_template))
