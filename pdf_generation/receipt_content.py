@@ -9,6 +9,7 @@ class ReceiptContent:
             self._receipt_content_dict["timestamp"] / 1000
         ).replace(tzinfo=timezone.utc)
         self.author: Author = Author(self._receipt_content_dict["author"])
+        self.therapist: Therapist = Therapist(self._receipt_content_dict["therapist"])
 
     @property
     def timestamp(self) -> str:
@@ -48,3 +49,13 @@ class Author(Entity):
     @property
     def name(self) -> str:
         return self._author_dict["name"]
+
+
+class Therapist(Entity):
+    def __init__(self, therapist_dict: Dict):
+        super().__init__(therapist_dict)
+        self._therapist_dict: Dict = therapist_dict
+
+    @property
+    def name(self) -> str:
+        return f"{self._therapist_dict['firstName']} {self._therapist_dict['lastName']}"
