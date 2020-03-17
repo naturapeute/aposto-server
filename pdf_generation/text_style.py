@@ -65,6 +65,12 @@ class ContentTextStyle(TextStyle):
         super().__init__()
 
 
+class ContentRightTextStyle(ContentTextStyle):
+    def __init__(self):
+        super().__init__()
+        self.align = "R"
+
+
 class SmallContentTextStyle(ContentTextStyle):
     def __init__(self):
         super().__init__()
@@ -82,6 +88,12 @@ class SmallContentRightTextStyle(SmallContentTextStyle):
         super().__init__()
         self.align = "R"
 
+
+class SmallBoldContentTextStyle(TextStyle):
+    def __init__(self):
+        super().__init__()
+        self.family = "Arial B"
+        self.size = 7
 
 class ESRCodeTextStyle(TextStyle):
     def __init__(self):
