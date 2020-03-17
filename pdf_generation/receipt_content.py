@@ -8,6 +8,7 @@ class ReceiptContent:
         self._date: datetime = datetime.utcfromtimestamp(
             self._receipt_content_dict["timestamp"] / 1000
         ).replace(tzinfo=timezone.utc)
+        self.author: Author = Author(self._receipt_content_dict["author"])
 
     @property
     def timestamp(self) -> str:
@@ -20,3 +21,30 @@ class ReceiptContent:
     @property
     def identification(self) -> str:
         return f"{self.timestamp} · {self.fullDateString}"
+
+
+class Entity:
+    def __init__(self, entity_dict: Dict):
+        self._entity_dict: Dict = entity_dict
+
+    @property
+    def RCC(self) -> str:
+        return self._entity_dict["RCCNumber"]
+
+    @property
+    def address(self) -> str:
+        return f"{self._entity_dict['street']} · {self._entity_dict['NPA']} {self._entity_dict['city']}"
+
+    @property
+    def phone(self) -> str:
+        return self._entity_dict["phone"]
+
+
+class Author(Entity):
+    def __init__(self, author_dict: Dict):
+        super().__init__(author_dict)
+        self._author_dict: Dict = author_dict
+
+    @property
+    def name(self) -> str:
+        return self._author_dict["name"]
