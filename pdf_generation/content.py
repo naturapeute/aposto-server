@@ -1,5 +1,6 @@
 from typing import Dict
 from collections import namedtuple
+from functools import reduce
 
 import pdf_generation
 from pdf_generation.text_style import TextStyle
@@ -63,7 +64,7 @@ class Value(Content):
     def to_text(self, receipt_content: ReceiptContent):
         return Text(
             {
-                "text": getattr(receipt_content, self.key),
+                "text": reduce(getattr, self.key.split('.'), receipt_content),
                 "left": self._left,
                 "top": self._top,
                 "style": type(self.style).__name__
