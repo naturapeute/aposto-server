@@ -3,6 +3,7 @@ from collections import namedtuple
 
 import pdf_generation
 from pdf_generation.text_style import TextStyle
+from pdf_generation.receipt_content import ReceiptContent
 
 from reportlab.lib.units import mm
 
@@ -49,3 +50,22 @@ class Frame(Content):
     @property
     def height(self):
         return self.to_mm(self._height)
+
+
+class Value(Content):
+    def __init__(self, dict_value: Dict):
+        super().__init__(dict_value)
+        self.key: str = dict_value["key"]
+        self.style: TextStyle = getattr(
+            pdf_generation.text_style, dict_value["style"]
+        )()
+
+    def to_text(self, receipt_content: ReceiptContent):
+        return Text(
+            {
+                "text": getattr(receipt_content, self.key),
+                "left": self._left,
+                "top": self._top,
+                "style": type(self.style).__name__
+            }
+        )
