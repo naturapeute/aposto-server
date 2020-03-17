@@ -23,6 +23,10 @@ class ReceiptContent:
     def identification(self) -> str:
         return f"{self.timestamp} · {self.fullDateString}"
 
+    @property
+    def page(self) -> str:
+        return str(1)
+
 
 class Entity:
     def __init__(self, entity_dict: Dict):

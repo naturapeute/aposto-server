@@ -1,0 +1,62 @@
+[
+    {
+        "key": "identification",
+        "left": 59.277,
+        "top": 21.206,
+        "style": "ContentTextStyle"
+    },
+    {
+        "key": "page",
+        "left": 176.231,
+        "top": 20.889,
+        "style": "SmallContentTextStyle"
+    },
+    {
+        "key": "author.name",
+        "left": 84.873,
+        "top": 24.796,
+        "style": "SmallContentTextStyle"
+    },
+    {
+        "key": "author.RCC",
+        "left": 59.187,
+        "top": 28.853,
+        "style": "ContentTextStyle"
+    },
+    {
+        "key": "author.address",
+        "left": 84.873,
+        "top": 28.673,
+        "style": "SmallContentTextStyle"
+    },
+    {
+        "key": "author.phone",
+        "left": 176.555,
+        "top": 24.826,
+        "style": "SmallContentTextStyle"
+    },
+    {
+        "key": "therapist.name",
+        "left": 84.894,
+        "top": 32.506,
+        "style": "SmallContentTextStyle"
+    },
+    {
+        "key": "therapist.RCC",
+        "left": 59.178,
+        "top": 36.535,
+        "style": "ContentTextStyle"
+    },
+    {
+        "key": "therapist.address",
+        "left": 84.693,
+        "top": 36.323,
+        "style": "SmallContentTextStyle"
+    },
+    {
+        "key": "therapist.phone",
+        "left": 176.555,
+        "top": 32.508,
+        "style": "SmallContentTextStyle"
+    }
+]
