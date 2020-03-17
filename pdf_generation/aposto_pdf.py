@@ -1,10 +1,11 @@
-from typing import List
+from typing import List, Dict
 from pathlib import Path
 import json
 
 from pdf_generation.text_style import TTFontToRegister, TextStyle
-from pdf_generation.content import Text, Frame
-from pdf_generation.template import DescriptorTemplate, FrameTemplate
+from pdf_generation.content import Text, Frame, Value
+from pdf_generation.template import DescriptorTemplate, FrameTemplate, ValueTemplate
+from pdf_generation.receipt_content import ReceiptContent
 
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Paragraph
@@ -49,3 +50,10 @@ class ApostoCanvas(canvas.Canvas):
 
         for frame in template:
             self.draw_frame(frame)
+
+    def draw_value_template(self, value_template_path: Path, receipt_content: ReceiptContent):
+        template: List[Value] = ValueTemplate(value_template_path).load_template()
+
+        for value in template:
+            text: Text = value.to_text(receipt_content)
+            self.drawString(text)
