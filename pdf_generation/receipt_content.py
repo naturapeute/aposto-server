@@ -11,6 +11,7 @@ class ReceiptContent:
         self.author: Author = Author(self._receipt_content_dict["author"])
         self.therapist: Therapist = Therapist(self._receipt_content_dict["therapist"])
         self.patient: Patient = Patient(self._receipt_content_dict["patient"])
+        self.init_therapy_dates()
 
     @property
     def timestamp(self) -> str:
@@ -28,9 +29,30 @@ class ReceiptContent:
     def page(self) -> str:
         return str(1)
 
+    @property
+    def therapy_dates(self) -> str:
+        return f"{self._therapy_start_date.strftime('%d.%m.%Y')} - {self._therapy_end_date.strftime('%d.%m.%Y')}"
+
+    @property
+    def therapy_reason(self) -> str:
+        return "Maladie"
+
+    @property
+    def receipt_number_and_date(self) -> str:
+        return f"{self._date.strftime('%d.%m.%Y')} / {self.timestamp}"
+
     @staticmethod
     def timestamp_to_datetime(timestamp: float) -> datetime:
         return datetime.utcfromtimestamp(timestamp / 1000).replace(tzinfo=timezone.utc)
+
+    def init_therapy_dates(self):
+        services_dates: List[datetime] = list(
+            self.timestamp_to_datetime(service["date"])
+            for service in self._receipt_content_dict["services"]
+        )
+
+        self._therapy_start_date: datetime = min(services_dates)
+        self._therapy_end_date: datetime = max(services_dates)
 
 
 class Entity:

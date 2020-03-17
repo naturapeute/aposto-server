@@ -1,0 +1,56 @@
+[
+    {
+        "key": "patient.last_name",
+        "left": 59.242,
+        "top": 40.664,
+        "style": "ContentTextStyle"
+    },
+    {
+        "key": "patient.first_name",
+        "left": 59.251,
+        "top": 44.505,
+        "style": "ContentTextStyle"
+    },
+    {
+        "key": "patient.street",
+        "left": 59.242,
+        "top": 48.352,
+        "style": "ContentTextStyle"
+    },
+    {
+        "key": "patient.NPA",
+        "left": 59.158,
+        "top": 52.199,
+        "style": "ContentTextStyle"
+    },
+    {
+        "key": "patient.city",
+        "left": 59.242,
+        "top": 56.041,
+        "style": "ContentTextStyle"
+    },
+    {
+        "key": "patient.birthdate",
+        "left": 59.105,
+        "top": 59.883,
+        "style": "ContentTextStyle"
+    },
+    {
+        "key": "therapy_dates",
+        "left": 59.351,
+        "top": 102.168,
+        "style": "ContentTextStyle"
+    },
+    {
+        "key": "therapy_reason",
+        "left": 59.177,
+        "top": 109.859,
+        "style": "ContentTextStyle"
+    },
+    {
+        "key": "receipt_number_and_date",
+        "left": 152.74,
+        "top": 98.284,
+        "style": "ContentTextStyle"
+    }
+]
