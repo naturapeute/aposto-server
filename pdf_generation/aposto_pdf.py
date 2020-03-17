@@ -3,7 +3,7 @@ from pathlib import Path
 import json
 
 from pdf_generation.text_style import TTFontToRegister, TextStyle
-from pdf_generation.content import Text, Frame, Value
+from pdf_generation.content import Text, Frame, Value, Datamatrix
 from pdf_generation.template import DescriptorTemplate, FrameTemplate, ValueTemplate
 from pdf_generation.receipt_content import ReceiptContent
 
@@ -11,6 +11,7 @@ from reportlab.pdfgen import canvas
 from reportlab.platypus import Paragraph
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.enums import TA_LEFT, TA_RIGHT
+from reportlab.lib.utils import ImageReader
 
 
 class ApostoCanvas(canvas.Canvas):
@@ -65,3 +66,7 @@ class ApostoCanvas(canvas.Canvas):
                     text: Text = value.to_text(service)
                     text.shift_top(index * SERVICE_TOP_SHIFT)
                     self.drawString(text)
+
+    def draw_datamatrix(self, receipt_content: ReceiptContent):
+        datamatrix: Datamatrix = Datamatrix(receipt_content.generate_datamatrix())
+        self.drawImage(ImageReader(datamatrix.image), datamatrix.left, datamatrix.bottom, width=datamatrix.dim, height=datamatrix.dim)
