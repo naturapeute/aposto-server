@@ -7,6 +7,7 @@ from pdf_generation.text_style import TextStyle
 from pdf_generation.receipt_content import ReceiptContent
 
 from reportlab.lib.units import mm
+from PIL import Image
 
 
 class Content:
@@ -73,3 +74,9 @@ class Value(Content):
                 "style": type(self.style).__name__
             }
         )
+
+class Datamatrix(Content):
+    def __init__(self, image: Image):
+        super().__init__({"left": 15.817, "top": 276.856})
+        self.image: Image = image
+        self.dim: float = 16.462 * mm
