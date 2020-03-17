@@ -1,0 +1,44 @@
+[
+    {
+        "key": "date",
+        "left": 16.243,
+        "top": 155.226,
+        "style": "ContentTextStyle"
+    },
+    {
+        "key": "tarif_number",
+        "left": 34.909,
+        "top": 155.226,
+        "style": "ContentTextStyle"
+    },
+    {
+        "key": "code",
+        "left": 42.708,
+        "top": 155.226,
+        "style": "ContentTextStyle"
+    },
+    {
+        "key": "quantity",
+        "left": 95.982,
+        "top": 155.226,
+        "style": "ContentRightTextStyle"
+    },
+    {
+        "key": "price",
+        "left": 111.893,
+        "top": 155.226,
+        "style": "ContentRightTextStyle"
+    },
+    {
+        "key": "amount",
+        "left": 194.452,
+        "top": 155.226,
+        "style": "ContentRightTextStyle"
+    },
+    {
+        "key": "code_label",
+        "left": 42.69,
+        "top": 158.123,
+        "style": "SmallBoldContentTextStyle"
+    }
+]
