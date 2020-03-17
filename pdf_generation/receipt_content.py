@@ -3,6 +3,10 @@ from datetime import datetime, timezone
 
 from pdf_generation.service_codes import SERVICE_CODES
 
+from pystrich.datamatrix import DataMatrixEncoder
+from pystrich.datamatrix.renderer import DataMatrixRenderer
+from PIL import Image
+
 
 class ReceiptContent:
     def __init__(self, receipt_content_dict: Dict):
@@ -88,6 +92,43 @@ class ReceiptContent:
             total_amount += service.float_amount
 
         self._total_amount: float = total_amount
+
+    def generate_datamatrix_string(self) -> str:
+        separator: str = "#"
+        esrCodingLine: str = ""
+        eanBiller: str = ""
+        eanProvider: str = ""
+        SSN_patient_number: str = ""
+        therapy_start_date = self._therapy_start_date.strftime("%d.%m.%Y")
+        due_amount: str = "0"
+
+        datamtrix_string = (
+            f"{esrCodingLine}{separator}{eanBiller}{separator}{eanProvider}{separator}"
+        )
+        datamtrix_string = f"{datamtrix_string}{therapy_start_date}{separator}{SSN_patient_number}{separator}{self.patient.birthdate}{separator}"
+        datamtrix_string = f"{datamtrix_string}{due_amount}{separator}"
+
+        for service in self.services.services:
+            datamtrix_string = (
+                f"{datamtrix_string}{int(service.float_amount) % 10}{separator}"
+            )
+
+        if len(datamtrix_string) > 169:
+            datamtrix_string = datamtrix_string[-169:]
+        elif len(datamtrix_string) < 169:
+            datamtrix_string = datamtrix_string.ljust(169, "0")
+
+        return datamtrix_string
+
+    def generate_datamatrix(self) -> Image:
+        encoder: DataMatrixEncoder = DataMatrixEncoder(
+            self.generate_datamatrix_string()
+        )
+        renderer: DataMatrixRenderer = DataMatrixRenderer(
+            encoder.matrix, encoder.regions
+        )
+
+        return renderer.get_pilimage(5)
 
 
 class Entity:
