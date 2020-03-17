@@ -1,0 +1,44 @@
+[
+    {
+        "key": "total_amount_tax_rate_0",
+        "left": 73.28,
+        "top": 265.038,
+        "style": "SmallContentRightTextStyle"
+    },
+    {
+        "key": "total_amount_tax_rate_1",
+        "left": 73.344,
+        "top": 267.786,
+        "style": "SmallContentRightTextStyle"
+    },
+    {
+        "key": "total_amount_tax_rate_2",
+        "left": 73.298,
+        "top": 270.536,
+        "style": "SmallContentRightTextStyle"
+    },
+    {
+        "key": "currency",
+        "left": 121.095,
+        "top": 264.861,
+        "style": "SmallContentRightTextStyle"
+    },
+    {
+        "key": "total_amount",
+        "left": 195.053,
+        "top": 261.862,
+        "style": "SmallContentRightTextStyle"
+    },
+    {
+        "key": "total_amount",
+        "left": 195.053,
+        "top": 264.861,
+        "style": "SmallContentRightTextStyle"
+    },
+    {
+        "key": "total_amount",
+        "left": 194.998,
+        "top": 270.974,
+        "style": "BoldContentRightTextStyle"
+    }
+]

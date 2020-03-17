@@ -54,18 +54,6 @@
         "style": "BoldDescriptorRightTextStyle"
     },
     {
-        "text": "0.00",
-        "left": 73.344,
-        "top": 267.786,
-        "style": "SmallContentRightTextStyle"
-    },
-    {
-        "text": "0.00",
-        "left": 73.298,
-        "top": 270.536,
-        "style": "SmallContentRightTextStyle"
-    },
-    {
         "text": "TVA",
         "left": 86.184,
         "top": 261.831,
@@ -100,12 +88,6 @@
         "left": 114.445,
         "top": 264.86,
         "style": "BoldDescriptorRightTextStyle"
-    },
-    {
-        "text": "CHF",
-        "left": 121.095,
-        "top": 264.861,
-        "style": "SmallContentRightTextStyle"
     },
     {
         "text": "Montant total:",
