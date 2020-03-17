@@ -60,43 +60,43 @@ class BoldDescriptorCenteredTextStyle(BoldDescriptorTextStyle):
         self.align = "C"
 
 
-class ContentTextStyle(TextStyle):
+class ValueTextStyle(TextStyle):
     def __init__(self):
         super().__init__()
 
 
-class ContentRightTextStyle(ContentTextStyle):
+class ValueRightTextStyle(ValueTextStyle):
     def __init__(self):
         super().__init__()
         self.align = "R"
 
 
-class BoldContentRightTextStyle(ContentTextStyle):
+class BoldValueRightTextStyle(ValueTextStyle):
     def __init__(self):
         super().__init__()
         self.family = "Arial B"
         self.align = "R"
 
 
-class SmallContentTextStyle(ContentTextStyle):
+class SmallValueTextStyle(ValueTextStyle):
     def __init__(self):
         super().__init__()
         self.size = 7
 
 
-class SmallContentCenteredTextStyle(SmallContentTextStyle):
+class SmallValueCenteredTextStyle(SmallValueTextStyle):
     def __init__(self):
         super().__init__()
         self.align = "C"
 
 
-class SmallContentRightTextStyle(SmallContentTextStyle):
+class SmallValueRightTextStyle(SmallValueTextStyle):
     def __init__(self):
         super().__init__()
         self.align = "R"
 
 
-class SmallBoldContentTextStyle(TextStyle):
+class SmallBoldValueTextStyle(TextStyle):
     def __init__(self):
         super().__init__()
         self.family = "Arial B"

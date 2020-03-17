@@ -99,7 +99,7 @@
         "text": "Non",
         "left": 59.216,
         "top": 90.635,
-        "style": "ContentTextStyle"
+        "style": "ValueTextStyle"
     },
     {
         "text": "Type de remb.",
@@ -111,7 +111,7 @@
         "text": "TG",
         "left": 59.084,
         "top": 94.482,
-        "style": "ContentTextStyle"
+        "style": "ValueTextStyle"
     },
     {
         "text": "Date/N0 GaPrCh",
@@ -129,7 +129,7 @@
         "text": "LCA",
         "left": 59.239,
         "top": 98.321,
-        "style": "ContentTextStyle"
+        "style": "ValueTextStyle"
     },
     {
         "text": "Date/N° facture",

@@ -3,42 +3,42 @@
         "key": "date",
         "left": 16.243,
         "top": 155.226,
-        "style": "ContentTextStyle"
+        "style": "ValueTextStyle"
     },
     {
         "key": "tarif_number",
         "left": 34.909,
         "top": 155.226,
-        "style": "ContentTextStyle"
+        "style": "ValueTextStyle"
     },
     {
         "key": "code",
         "left": 42.708,
         "top": 155.226,
-        "style": "ContentTextStyle"
+        "style": "ValueTextStyle"
     },
     {
         "key": "quantity",
         "left": 95.982,
         "top": 155.226,
-        "style": "ContentRightTextStyle"
+        "style": "ValueRightTextStyle"
     },
     {
         "key": "price",
         "left": 111.893,
         "top": 155.226,
-        "style": "ContentRightTextStyle"
+        "style": "ValueRightTextStyle"
     },
     {
         "key": "amount",
         "left": 194.452,
         "top": 155.226,
-        "style": "ContentRightTextStyle"
+        "style": "ValueRightTextStyle"
     },
     {
         "key": "code_label",
         "left": 42.69,
         "top": 158.123,
-        "style": "SmallBoldContentTextStyle"
+        "style": "SmallBoldValueTextStyle"
     }
 ]
