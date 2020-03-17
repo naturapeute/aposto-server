@@ -37,6 +37,9 @@ class Text(Content):
         self.text: str = dict_text["text"]
         self.style: TextStyle = getattr(pdf_generation.text_style, dict_text["style"])()
 
+    def shift_top(self, shift: float):
+        self._top += shift
+
 
 class Frame(Content):
     def __init__(self, dict_frame: Dict):
