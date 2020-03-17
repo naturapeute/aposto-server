@@ -9,19 +9,19 @@
         "text": "0",
         "left": 48.031,
         "top": 265.037,
-        "style": "DescriptorCenteredTextStyle"
+        "style": "SmallContentCenteredTextStyle"
     },
     {
         "text": "1",
         "left": 47.949,
         "top": 267.754,
-        "style": "DescriptorCenteredTextStyle"
+        "style": "SmallContentCenteredTextStyle"
     },
     {
         "text": "2",
         "left": 48.012,
         "top": 270.505,
-        "style": "DescriptorCenteredTextStyle"
+        "style": "SmallContentCenteredTextStyle"
     },
     {
         "text": "Taux",
@@ -33,19 +33,19 @@
         "text": "0.00",
         "left": 58.587,
         "top": 265.037,
-        "style": "DescriptorRightTextStyle"
+        "style": "SmallContentRightTextStyle"
     },
     {
         "text": "2.50",
         "left": 58.587,
         "top": 267.785,
-        "style": "DescriptorRightTextStyle"
+        "style": "SmallContentRightTextStyle"
     },
     {
         "text": "8.00",
         "left": 58.587,
         "top": 270.536,
-        "style": "DescriptorRightTextStyle"
+        "style": "SmallContentRightTextStyle"
     },
     {
         "text": "Montant",
@@ -57,13 +57,13 @@
         "text": "0.00",
         "left": 73.344,
         "top": 267.786,
-        "style": "DescriptorRightTextStyle"
+        "style": "SmallContentRightTextStyle"
     },
     {
         "text": "0.00",
         "left": 73.298,
         "top": 270.536,
-        "style": "DescriptorRightTextStyle"
+        "style": "SmallContentRightTextStyle"
     },
     {
         "text": "TVA",
@@ -75,19 +75,19 @@
         "text": "0.00",
         "left": 85.918,
         "top": 265.037,
-        "style": "DescriptorRightTextStyle"
+        "style": "SmallContentRightTextStyle"
     },
     {
         "text": "0.00",
         "left": 85.927,
         "top": 267.785,
-        "style": "DescriptorRightTextStyle"
+        "style": "SmallContentRightTextStyle"
     },
     {
         "text": "0.00",
         "left": 85.922,
         "top": 270.536,
-        "style": "DescriptorRightTextStyle"
+        "style": "SmallContentRightTextStyle"
     },
     {
         "text": "N° TVA:",
@@ -105,7 +105,7 @@
         "text": "CHF",
         "left": 121.095,
         "top": 264.861,
-        "style": "DescriptorTextStyle"
+        "style": "SmallContentRightTextStyle"
     },
     {
         "text": "Montant total:",

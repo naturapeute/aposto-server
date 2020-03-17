@@ -65,6 +65,24 @@ class ContentTextStyle(TextStyle):
         super().__init__()
 
 
+class SmallContentTextStyle(ContentTextStyle):
+    def __init__(self):
+        super().__init__()
+        self.size = 7
+
+
+class SmallContentCenteredTextStyle(SmallContentTextStyle):
+    def __init__(self):
+        super().__init__()
+        self.align = "C"
+
+
+class SmallContentRightTextStyle(SmallContentTextStyle):
+    def __init__(self):
+        super().__init__()
+        self.align = "R"
+
+
 class ESRCodeTextStyle(TextStyle):
     def __init__(self):
         super().__init__("OCRB", 10)
