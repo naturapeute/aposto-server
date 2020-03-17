@@ -18,6 +18,7 @@ class ReceiptContent:
             self._receipt_content_dict["services"],
             self._receipt_content_dict["servicePrice"],
         )
+        self.init_total_amount()
 
     @property
     def timestamp(self) -> str:
@@ -47,6 +48,26 @@ class ReceiptContent:
     def receipt_number_and_date(self) -> str:
         return f"{self._date.strftime('%d.%m.%Y')} / {self.timestamp}"
 
+    @property
+    def total_amount_tax_rate_0(self) -> str:
+        return self.total_amount
+
+    @property
+    def total_amount_tax_rate_1(self) -> str:
+        return "0.00"
+
+    @property
+    def total_amount_tax_rate_2(self) -> str:
+        return "0.00"
+
+    @property
+    def currency(self) -> str:
+        return "CHF"
+
+    @property
+    def total_amount(self) -> str:
+        return "%.2f" % self._total_amount
+
     @staticmethod
     def timestamp_to_datetime(timestamp: float) -> datetime:
         return datetime.utcfromtimestamp(timestamp / 1000).replace(tzinfo=timezone.utc)
@@ -59,6 +80,14 @@ class ReceiptContent:
 
         self._therapy_start_date: datetime = min(services_dates)
         self._therapy_end_date: datetime = max(services_dates)
+
+    def init_total_amount(self):
+        total_amount: float = 0
+
+        for service in self.services.services:
+            total_amount += service.float_amount
+
+        self._total_amount: float = total_amount
 
 
 class Entity:
@@ -166,8 +195,12 @@ class Service:
         return "%.2f" % self._service_price
 
     @property
+    def float_amount(self) -> float:
+        return self._quantity * self._service_price
+
+    @property
     def amount(self) -> str:
-        return "%.2f" % (self._quantity * self._service_price)
+        return "%.2f" % self.float_amount
 
     @property
     def code_label(self) -> str:
