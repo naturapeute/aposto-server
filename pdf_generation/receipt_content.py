@@ -228,12 +228,16 @@ class Service:
         ).strftime("%d.%m.%Y")
 
     @property
-    def tarif_number(self) -> str:
+    def tariff_number(self) -> str:
         return "590"
 
     @property
     def code(self) -> str:
         return str(self._service_dict["code"])
+
+    @property
+    def session(self) -> str:
+        return "1"
 
     @property
     def quantity(self) -> str:
@@ -242,6 +246,30 @@ class Service:
     @property
     def price(self) -> str:
         return "%.2f" % self._service_price
+
+    @property
+    def internal_scaling_factor(self) -> str:
+        return "1.00"
+
+    @property
+    def tax_point_value(self) -> str:
+        return "1.00"
+
+    @property
+    def provider_id(self) -> str:
+        return "1"
+
+    @property
+    def responsible_id(self) -> str:
+        return "2"
+
+    @property
+    def obligation(self) -> str:
+        return "1"
+
+    @property
+    def vat_id(self) -> str:
+        return "0"
 
     @property
     def float_amount(self) -> float:

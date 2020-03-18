@@ -6,7 +6,7 @@
         "style": "ValueTextStyle"
     },
     {
-        "key": "tarif_number",
+        "key": "tariff_number",
         "left": 34.909,
         "top": 155.226,
         "style": "ValueTextStyle"
@@ -18,6 +18,12 @@
         "style": "ValueTextStyle"
     },
     {
+        "key": "session",
+        "left": 80.481,
+        "top": 155.226,
+        "style": "ValueRightTextStyle"
+    },
+    {
         "key": "quantity",
         "left": 95.982,
         "top": 155.226,
@@ -26,6 +32,42 @@
     {
         "key": "price",
         "left": 111.893,
+        "top": 155.226,
+        "style": "ValueRightTextStyle"
+    },
+    {
+        "key": "internal_scaling_factor",
+        "left": 121.069,
+        "top": 155.226,
+        "style": "ValueRightTextStyle"
+    },
+    {
+        "key": "tax_point_value",
+        "left": 131.682,
+        "top": 155.226,
+        "style": "ValueRightTextStyle"
+    },
+    {
+        "key": "provider_id",
+        "left": 170.763,
+        "top": 155.226,
+        "style": "ValueRightTextStyle"
+    },
+    {
+        "key": "responsible_id",
+        "left": 173.294,
+        "top": 155.226,
+        "style": "ValueRightTextStyle"
+    },
+    {
+        "key": "obligation",
+        "left": 175.003,
+        "top": 155.226,
+        "style": "ValueRightTextStyle"
+    },
+    {
+        "key": "vat_id",
+        "left": 177.548,
         "top": 155.226,
         "style": "ValueRightTextStyle"
     },

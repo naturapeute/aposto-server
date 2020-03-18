@@ -25,9 +25,9 @@
     },
     {
         "text": "Sé",
-        "left": 78.809,
+        "left": 81.549,
         "top": 151.831,
-        "style": "DescriptorTextStyle"
+        "style": "DescriptorRightTextStyle"
     },
     {
         "text": "Cô",
@@ -79,27 +79,27 @@
     },
     {
         "text": "E",
-        "left": 169.858,
+        "left": 171.146,
         "top": 151.801,
-        "style": "DescriptorTextStyle"
+        "style": "DescriptorRightTextStyle"
     },
     {
         "text": "R",
-        "left": 171.91,
+        "left": 173.431,
         "top": 151.801,
-        "style": "DescriptorTextStyle"
+        "style": "DescriptorRightTextStyle"
     },
     {
         "text": "P",
-        "left": 174.098,
+        "left": 175.414,
         "top": 151.801,
-        "style": "DescriptorTextStyle"
+        "style": "DescriptorRightTextStyle"
     },
     {
         "text": "M",
-        "left": 175.997,
+        "left": 177.643,
         "top": 151.801,
-        "style": "DescriptorTextStyle"
+        "style": "DescriptorRightTextStyle"
     },
     {
         "text": "Montant",
