@@ -71,6 +71,12 @@ class ValueRightTextStyle(ValueTextStyle):
         self.align = "R"
 
 
+class ValueCenteredTextStyle(ValueTextStyle):
+    def __init__(self):
+        super().__init__()
+        self.align = "C"
+
+
 class BoldValueRightTextStyle(ValueTextStyle):
     def __init__(self):
         super().__init__()

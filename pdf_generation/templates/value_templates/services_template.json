@@ -49,27 +49,27 @@
     },
     {
         "key": "provider_id",
-        "left": 170.763,
+        "left": 170.502,
         "top": 155.226,
-        "style": "ValueRightTextStyle"
+        "style": "ValueCenteredTextStyle"
     },
     {
         "key": "responsible_id",
-        "left": 173.294,
+        "left": 172.67,
         "top": 155.226,
-        "style": "ValueRightTextStyle"
+        "style": "ValueCenteredTextStyle"
     },
     {
         "key": "obligation",
-        "left": 175.003,
+        "left": 174.756,
         "top": 155.226,
-        "style": "ValueRightTextStyle"
+        "style": "ValueCenteredTextStyle"
     },
     {
         "key": "vat_id",
-        "left": 177.548,
+        "left": 176.82,
         "top": 155.226,
-        "style": "ValueRightTextStyle"
+        "style": "ValueCenteredTextStyle"
     },
     {
         "key": "amount",

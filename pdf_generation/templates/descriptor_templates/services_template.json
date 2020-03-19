@@ -79,27 +79,27 @@
     },
     {
         "text": "E",
-        "left": 171.146,
+        "left": 170.502,
         "top": 151.801,
-        "style": "DescriptorRightTextStyle"
+        "style": "DescriptorCenteredTextStyle"
     },
     {
         "text": "R",
-        "left": 173.431,
+        "left": 172.67,
         "top": 151.801,
-        "style": "DescriptorRightTextStyle"
+        "style": "DescriptorCenteredTextStyle"
     },
     {
         "text": "P",
-        "left": 175.414,
+        "left": 174.756,
         "top": 151.801,
-        "style": "DescriptorRightTextStyle"
+        "style": "DescriptorCenteredTextStyle"
     },
     {
         "text": "M",
-        "left": 177.643,
+        "left": 176.82,
         "top": 151.801,
-        "style": "DescriptorRightTextStyle"
+        "style": "DescriptorCenteredTextStyle"
     },
     {
         "text": "Montant",
