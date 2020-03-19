@@ -18,7 +18,7 @@
         "style": "ValueTextStyle"
     },
     {
-        "key": "patient.NPA",
+        "key": "patient.ZIP",
         "left": 59.158,
         "top": 52.199,
         "style": "ValueTextStyle"
@@ -60,7 +60,7 @@
         "style": "ValueTextStyle"
     },
     {
-        "key": "patient.npa_city",
+        "key": "patient.zip_city",
         "left": 118.557,
         "top": 68.442,
         "style": "ValueTextStyle"

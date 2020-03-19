@@ -149,7 +149,7 @@ class Entity:
 
     @property
     def address(self) -> str:
-        return f"{self._entity_dict['street']} · {self._entity_dict['NPA']} {self._entity_dict['city']}"
+        return f"{self._entity_dict['street']} · {self._entity_dict['ZIP']} {self._entity_dict['city']}"
 
     @property
     def phone(self) -> str:
@@ -193,8 +193,8 @@ class Patient:
         return self._patient_dict["street"]
 
     @property
-    def NPA(self) -> str:
-        return self._patient_dict["NPA"]
+    def ZIP(self) -> str:
+        return self._patient_dict["ZIP"]
 
     @property
     def city(self) -> str:
@@ -222,8 +222,8 @@ class Patient:
         return f"{self.first_name} {self.last_name}"
 
     @property
-    def npa_city(self) -> str:
-        return f"{self.NPA} {self.city}"
+    def zip_city(self) -> str:
+        return f"{self.ZIP} {self.city}"
 
 
 class ServiceList:
