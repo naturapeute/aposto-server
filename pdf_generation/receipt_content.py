@@ -141,7 +141,7 @@ class Entity:
 
     @property
     def GLN(self) -> str:
-        return "7601002631310"
+        return self._entity_dict["GLNNumber"]
 
     @property
     def RCC(self) -> str:
