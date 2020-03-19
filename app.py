@@ -63,8 +63,8 @@ async def emailReceipt(request: Request):
             "sender": {"email": "facture@app.aposto.ch", "name": "Aposto"},
             "to": [
                 {
-                    "email": receipt_content["customer"]["email"],
-                    "name": f"{receipt_content['customer']['firstName']} {receipt_content['customer']['lastName']}",
+                    "email": receipt_content["patient"]["email"],
+                    "name": f"{receipt_content['patient']['firstName']} {receipt_content['patient']['lastName']}",
                 }
             ],
             "bcc": [
@@ -73,7 +73,7 @@ async def emailReceipt(request: Request):
                     "name": receipt_content["author"]["name"],
                 }
             ],
-            "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {receipt_content['customer']['firstName']} {receipt_content['customer']['lastName']},</p><p>Vous pouvez dès à présent consulter votre facture du {datetime.now().strftime('%d/%m/%Y')} en pièce jointe.</p><p>À très bientôt,<br>{receipt_content['author']['name']}</p>",
+            "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {receipt_content['patient']['firstName']} {receipt_content['patient']['lastName']},</p><p>Vous pouvez dès à présent consulter votre facture du {datetime.now().strftime('%d/%m/%Y')} en pièce jointe.</p><p>À très bientôt,<br>{receipt_content['author']['name']}</p>",
             "subject": "Aposto - Votre nouvelle facture",
             "attachment": [
                 {"content": receipt_file_base_64, "name": receipt_path.name}
