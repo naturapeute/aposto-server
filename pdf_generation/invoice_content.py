@@ -33,6 +33,10 @@ class InvoiceContent:
         return self._date.strftime("%d.%m.%Y %H:%M:%S")
 
     @property
+    def date_string(self) -> str:
+        return self._date.strftime("%d/%m/%Y")
+
+    @property
     def identification(self) -> str:
         return f"{self.timestamp} · {self.full_date_string}"
 
@@ -155,6 +159,10 @@ class Entity:
     def phone(self) -> str:
         return self._entity_dict["phone"]
 
+    @property
+    def email(self) -> str:
+        return self._entity_dict["email"]
+
 
 class Author(Entity):
     def __init__(self, author_dict: Dict):
@@ -224,6 +232,10 @@ class Patient:
     @property
     def zip_city(self) -> str:
         return f"{self.ZIP} {self.city}"
+
+    @property
+    def email(self) -> str:
+        return self._patient_dict["email"]
 
 
 class ServiceList:

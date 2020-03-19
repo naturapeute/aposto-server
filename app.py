@@ -49,11 +49,11 @@ async def downloadInvoice(request: Request):
 
 @app.route("/email/{invoice_content_base_64}")
 async def emailInvoice(request: Request):
-    invoice_content: Dict = parseInvoiceContent(
-        request.path_params["invoice_content_base_64"]
+    invoice_content: InvoiceContent = InvoiceContent(
+        parseInvoiceContent(request.path_params["invoice_content_base_64"])
     )
 
-    invoice_path: Path = generateInvoice(InvoiceContent(invoice_content))
+    invoice_path: Path = generateInvoice(invoice_content)
 
     with open(invoice_path.as_posix(), "rb") as invoice_file:
         invoice_file_base_64 = base64.b64encode(invoice_file.read())
@@ -63,17 +63,17 @@ async def emailInvoice(request: Request):
             "sender": {"email": "facture@app.aposto.ch", "name": "Aposto"},
             "to": [
                 {
-                    "email": invoice_content["patient"]["email"],
-                    "name": f"{invoice_content['patient']['firstName']} {invoice_content['patient']['lastName']}",
+                    "email": invoice_content.patient.email,
+                    "name": f"{invoice_content.patient.first_name} {invoice_content.patient.last_name}",
                 }
             ],
             "bcc": [
                 {
-                    "email": invoice_content["author"]["email"],
-                    "name": invoice_content["author"]["name"],
+                    "email": invoice_content.author.email,
+                    "name": invoice_content.author.name,
                 }
             ],
-            "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {invoice_content['patient']['firstName']} {invoice_content['patient']['lastName']},</p><p>Vous pouvez dès à présent consulter votre facture du {datetime.now().strftime('%d/%m/%Y')} en pièce jointe.</p><p>À très bientôt,<br>{invoice_content['author']['name']}</p>",
+            "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {invoice_content.patient.first_name} {invoice_content.patient.last_name},</p><p>Vous pouvez dès à présent consulter votre facture du {invoice_content.date_string} en pièce jointe.</p><p>À très bientôt,<br>{invoice_content.author.name}</p>",
             "subject": "Aposto - Votre nouvelle facture",
             "attachment": [
                 {"content": invoice_file_base_64, "name": invoice_path.name}
@@ -118,22 +118,32 @@ def generateInvoice(invoice_content: InvoiceContent) -> Path:
 
         cvs.draw_full_invoice(
             [
-                Path("pdf_generation/templates/descriptor_templates/header_template.json"),
-                Path("pdf_generation/templates/descriptor_templates/author_template.json"),
-                Path("pdf_generation/templates/descriptor_templates/patient_template.json"),
+                Path(
+                    "pdf_generation/templates/descriptor_templates/header_template.json"
+                ),
+                Path(
+                    "pdf_generation/templates/descriptor_templates/author_template.json"
+                ),
+                Path(
+                    "pdf_generation/templates/descriptor_templates/patient_template.json"
+                ),
                 Path(
                     "pdf_generation/templates/descriptor_templates/other_fields_template.json"
                 ),
                 Path(
                     "pdf_generation/templates/descriptor_templates/services_template.json"
                 ),
-                Path("pdf_generation/templates/descriptor_templates/footer_template.json"),
+                Path(
+                    "pdf_generation/templates/descriptor_templates/footer_template.json"
+                ),
             ],
             [Path("pdf_generation/templates/graphic_templates/frame_template.json")],
             [
                 Path("pdf_generation/templates/value_templates/author_template.json"),
                 Path("pdf_generation/templates/value_templates/patient_template.json"),
-                Path("pdf_generation/templates/value_templates/other_fields_template.json"),
+                Path(
+                    "pdf_generation/templates/value_templates/other_fields_template.json"
+                ),
                 Path("pdf_generation/templates/value_templates/services_template.json"),
                 Path("pdf_generation/templates/value_templates/footer_template.json"),
             ],
