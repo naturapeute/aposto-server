@@ -41,7 +41,9 @@ class ApostoCanvas(canvas.Canvas):
         self.rect(frame.left, frame.bottom, frame.width, frame.height, stroke=1)
 
     def draw_descriptor_template(self, descriptor_template_path: Path):
-        template: List[Text] = DescriptorTemplate(descriptor_template_path).load_template()
+        template: List[Text] = DescriptorTemplate(
+            descriptor_template_path
+        ).load_template()
 
         for text in template:
             self.drawString(text)
@@ -52,7 +54,9 @@ class ApostoCanvas(canvas.Canvas):
         for frame in template:
             self.draw_frame(frame)
 
-    def draw_value_template(self, value_template_path: Path, receipt_content: ReceiptContent):
+    def draw_value_template(
+        self, value_template_path: Path, receipt_content: ReceiptContent
+    ):
         template: List[Value] = ValueTemplate(value_template_path).load_template()
 
         if "services" not in value_template_path.as_posix():
@@ -69,4 +73,28 @@ class ApostoCanvas(canvas.Canvas):
 
     def draw_datamatrix(self, receipt_content: ReceiptContent):
         datamatrix: Datamatrix = Datamatrix(receipt_content.generate_datamatrix())
-        self.drawImage(ImageReader(datamatrix.image), datamatrix.left, datamatrix.bottom, width=datamatrix.dim, height=datamatrix.dim)
+        self.drawImage(
+            ImageReader(datamatrix.image),
+            datamatrix.left,
+            datamatrix.bottom,
+            width=datamatrix.dim,
+            height=datamatrix.dim,
+        )
+
+    def draw_full_receipt(
+        self,
+        descriptor_template_paths: List[Path],
+        frame_template_paths: List[Path],
+        value_template_paths: List[Path],
+        receipt_content: ReceiptContent,
+    ):
+        for descriptor_template_path in descriptor_template_paths:
+            self.draw_descriptor_template(descriptor_template_path)
+
+        for frame_template_path in frame_template_paths:
+            self.draw_frame_template(frame_template_path)
+
+        for value_template_path in value_template_paths:
+            self.draw_value_template(value_template_path, receipt_content)
+
+        self.draw_datamatrix(receipt_content)
