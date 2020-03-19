@@ -1,10 +1,10 @@
-from typing import Dict
+from typing import Dict, Union
 from collections import namedtuple
 from functools import reduce
 
 import pdf_generation
 from pdf_generation.text_style import TextStyle
-from pdf_generation.receipt_content import ReceiptContent
+from pdf_generation.receipt_content import ReceiptContent, Service
 
 from reportlab.lib.units import mm
 from PIL import Image
@@ -65,15 +65,16 @@ class Value(Content):
             pdf_generation.text_style, dict_value["style"]
         )()
 
-    def to_text(self, receipt_content: ReceiptContent):
+    def to_text(self, content: Union[ReceiptContent, Service]) -> Text:
         return Text(
             {
-                "text": reduce(getattr, self.key.split('.'), receipt_content),
+                "text": reduce(getattr, self.key.split("."), content),
                 "left": self._left,
                 "top": self._top,
-                "style": type(self.style).__name__
+                "style": type(self.style).__name__,
             }
         )
+
 
 class Datamatrix(Content):
     def __init__(self, image: Image):
