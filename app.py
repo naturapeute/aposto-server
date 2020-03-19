@@ -12,7 +12,7 @@ from pathlib import Path
 import ujson
 
 from pdf_generation.aposto_pdf import ApostoCanvas
-from pdf_generation.receipt_content import ReceiptContent
+from pdf_generation.invoice_content import InvoiceContent
 
 from starlette.applications import Starlette
 from starlette.requests import Request
@@ -36,47 +36,47 @@ middleware: List[Middleware] = [
 app: Starlette = Starlette(debug=True, middleware=middleware)
 
 
-@app.route("/pdf/{receipt_content_base_64}/{name}")
-async def downloadReceipt(request: Request):
-    receipt_path: Path = generateReceipt(
-        ReceiptContent(
-            parseReceiptContent(request.path_params["receipt_content_base_64"])
+@app.route("/pdf/{invoice_content_base_64}/{name}")
+async def downloadInvoice(request: Request):
+    invoice_path: Path = generateInvoice(
+        InvoiceContent(
+            parseInvoiceContent(request.path_params["invoice_content_base_64"])
         )
     )
 
-    return FileResponse(receipt_path.as_posix())
+    return FileResponse(invoice_path.as_posix())
 
 
-@app.route("/email/{receipt_content_base_64}")
-async def emailReceipt(request: Request):
-    receipt_content: Dict = parseReceiptContent(
-        request.path_params["receipt_content_base_64"]
+@app.route("/email/{invoice_content_base_64}")
+async def emailInvoice(request: Request):
+    invoice_content: Dict = parseInvoiceContent(
+        request.path_params["invoice_content_base_64"]
     )
 
-    receipt_path: Path = generateReceipt(ReceiptContent(receipt_content))
+    invoice_path: Path = generateInvoice(InvoiceContent(invoice_content))
 
-    with open(receipt_path.as_posix(), "rb") as receipt_file:
-        receipt_file_base_64 = base64.b64encode(receipt_file.read())
+    with open(invoice_path.as_posix(), "rb") as invoice_file:
+        invoice_file_base_64 = base64.b64encode(invoice_file.read())
 
     data: str = ujson.dumps(
         {
             "sender": {"email": "facture@app.aposto.ch", "name": "Aposto"},
             "to": [
                 {
-                    "email": receipt_content["patient"]["email"],
-                    "name": f"{receipt_content['patient']['firstName']} {receipt_content['patient']['lastName']}",
+                    "email": invoice_content["patient"]["email"],
+                    "name": f"{invoice_content['patient']['firstName']} {invoice_content['patient']['lastName']}",
                 }
             ],
             "bcc": [
                 {
-                    "email": receipt_content["author"]["email"],
-                    "name": receipt_content["author"]["name"],
+                    "email": invoice_content["author"]["email"],
+                    "name": invoice_content["author"]["name"],
                 }
             ],
-            "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {receipt_content['patient']['firstName']} {receipt_content['patient']['lastName']},</p><p>Vous pouvez dès à présent consulter votre facture du {datetime.now().strftime('%d/%m/%Y')} en pièce jointe.</p><p>À très bientôt,<br>{receipt_content['author']['name']}</p>",
+            "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {invoice_content['patient']['firstName']} {invoice_content['patient']['lastName']},</p><p>Vous pouvez dès à présent consulter votre facture du {datetime.now().strftime('%d/%m/%Y')} en pièce jointe.</p><p>À très bientôt,<br>{invoice_content['author']['name']}</p>",
             "subject": "Aposto - Votre nouvelle facture",
             "attachment": [
-                {"content": receipt_file_base_64, "name": receipt_path.name}
+                {"content": invoice_file_base_64, "name": invoice_path.name}
             ],
         }
     )
@@ -104,19 +104,19 @@ async def icon(request: Request):
     return RedirectResponse("https://terrapeute.ch/img/favicon.png")
 
 
-def generateReceipt(receipt_content: ReceiptContent) -> Path:
-    receipt_dir: Path = Path(
-        f"./out/{receipt_content.author.name}/{receipt_content.author.RCC}"
+def generateInvoice(invoice_content: InvoiceContent) -> Path:
+    invoice_dir: Path = Path(
+        f"./out/{invoice_content.author.name}/{invoice_content.author.RCC}"
     )
-    receipt_dir.mkdir(parents=True, exist_ok=True)
-    receipt_path: Path = receipt_dir.joinpath(
-        f"invoice-{receipt_content.timestamp}.pdf"
+    invoice_dir.mkdir(parents=True, exist_ok=True)
+    invoice_path: Path = invoice_dir.joinpath(
+        f"invoice-{invoice_content.timestamp}.pdf"
     )
 
-    if not receipt_path.exists():
-        cvs: ApostoCanvas = ApostoCanvas(receipt_path.as_posix())
+    if not invoice_path.exists():
+        cvs: ApostoCanvas = ApostoCanvas(invoice_path.as_posix())
 
-        cvs.draw_full_receipt(
+        cvs.draw_full_invoice(
             [
                 Path("pdf_generation/templates/descriptor_templates/header_template.json"),
                 Path("pdf_generation/templates/descriptor_templates/author_template.json"),
@@ -137,14 +137,14 @@ def generateReceipt(receipt_content: ReceiptContent) -> Path:
                 Path("pdf_generation/templates/value_templates/services_template.json"),
                 Path("pdf_generation/templates/value_templates/footer_template.json"),
             ],
-            receipt_content,
+            invoice_content,
         )
 
         cvs.showPage()
         cvs.save()
 
-    return receipt_path
+    return invoice_path
 
 
-def parseReceiptContent(receipt_content_base_64: str) -> Dict:
-    return ujson.loads(base64.b64decode(receipt_content_base_64).decode("latin1"))
+def parseInvoiceContent(invoice_content_base_64: str) -> Dict:
+    return ujson.loads(base64.b64decode(invoice_content_base_64).decode("latin1"))

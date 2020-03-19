@@ -4,7 +4,7 @@ from functools import reduce
 
 import pdf_generation
 from pdf_generation.text_style import TextStyle
-from pdf_generation.receipt_content import ReceiptContent, Service
+from pdf_generation.invoice_content import InvoiceContent, Service
 
 from reportlab.lib.units import mm
 from PIL import Image
@@ -65,7 +65,7 @@ class Value(Content):
             pdf_generation.text_style, dict_value["style"]
         )()
 
-    def to_text(self, content: Union[ReceiptContent, Service]) -> Text:
+    def to_text(self, content: Union[InvoiceContent, Service]) -> Text:
         return Text(
             {
                 "text": reduce(getattr, self.key.split("."), content),

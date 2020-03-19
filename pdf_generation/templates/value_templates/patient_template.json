@@ -78,7 +78,7 @@
         "style": "ValueTextStyle"
     },
     {
-        "key": "receipt_number_and_date",
+        "key": "invoice_number_and_date",
         "left": 152.74,
         "top": 98.284,
         "style": "ValueTextStyle"

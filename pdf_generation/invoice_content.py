@@ -8,19 +8,19 @@ from pystrich.datamatrix.renderer import DataMatrixRenderer
 from PIL import Image
 
 
-class ReceiptContent:
-    def __init__(self, receipt_content_dict: Dict):
-        self._receipt_content_dict: Dict = receipt_content_dict
+class InvoiceContent:
+    def __init__(self, invoice_content_dict: Dict):
+        self._invoice_content_dict: Dict = invoice_content_dict
         self._date: datetime = self.timestamp_to_datetime(
-            self._receipt_content_dict["timestamp"]
+            self._invoice_content_dict["timestamp"]
         )
-        self.author: Author = Author(self._receipt_content_dict["author"])
-        self.therapist: Therapist = Therapist(self._receipt_content_dict["therapist"])
-        self.patient: Patient = Patient(self._receipt_content_dict["patient"])
+        self.author: Author = Author(self._invoice_content_dict["author"])
+        self.therapist: Therapist = Therapist(self._invoice_content_dict["therapist"])
+        self.patient: Patient = Patient(self._invoice_content_dict["patient"])
         self.init_therapy_dates()
         self.services: ServiceList = ServiceList(
-            self._receipt_content_dict["services"],
-            self._receipt_content_dict["servicePrice"],
+            self._invoice_content_dict["services"],
+            self._invoice_content_dict["servicePrice"],
         )
         self.init_total_amount()
 
@@ -49,7 +49,7 @@ class ReceiptContent:
         return "Maladie"
 
     @property
-    def receipt_number_and_date(self) -> str:
+    def invoice_number_and_date(self) -> str:
         return f"{self._date.strftime('%d.%m.%Y')} / {self.timestamp}"
 
     @property
@@ -83,7 +83,7 @@ class ReceiptContent:
     def init_therapy_dates(self):
         services_dates: List[datetime] = list(
             self.timestamp_to_datetime(service["date"])
-            for service in self._receipt_content_dict["services"]
+            for service in self._invoice_content_dict["services"]
         )
 
         self._therapy_start_date: datetime = min(services_dates)
@@ -202,7 +202,7 @@ class Patient:
 
     @property
     def birthdate(self) -> str:
-        return ReceiptContent.timestamp_to_datetime(
+        return InvoiceContent.timestamp_to_datetime(
             self._patient_dict["birthdate"]
         ).strftime("%d.%m.%Y")
 
@@ -242,7 +242,7 @@ class Service:
 
     @property
     def date(self) -> str:
-        return ReceiptContent.timestamp_to_datetime(
+        return InvoiceContent.timestamp_to_datetime(
             self._service_dict["date"]
         ).strftime("%d.%m.%Y")
 

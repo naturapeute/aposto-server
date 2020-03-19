@@ -5,7 +5,7 @@ import json
 from pdf_generation.text_style import TTFontToRegister, TextStyle
 from pdf_generation.content import Text, Frame, Value, Datamatrix
 from pdf_generation.template import DescriptorTemplate, FrameTemplate, ValueTemplate
-from pdf_generation.receipt_content import ReceiptContent
+from pdf_generation.invoice_content import InvoiceContent
 
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Paragraph
@@ -55,24 +55,24 @@ class ApostoCanvas(canvas.Canvas):
             self.draw_frame(frame)
 
     def draw_value_template(
-        self, value_template_path: Path, receipt_content: ReceiptContent
+        self, value_template_path: Path, invoice_content: InvoiceContent
     ):
         template: List[Value] = ValueTemplate(value_template_path).load_template()
 
         if "services" not in value_template_path.as_posix():
             for value in template:
-                self.drawString(value.to_text(receipt_content))
+                self.drawString(value.to_text(invoice_content))
         else:
             SERVICE_TOP_SHIFT: float = 6.363
 
-            for index, service in enumerate(receipt_content.services.services):
+            for index, service in enumerate(invoice_content.services.services):
                 for value in template:
                     text: Text = value.to_text(service)
                     text.shift_top(index * SERVICE_TOP_SHIFT)
                     self.drawString(text)
 
-    def draw_datamatrix(self, receipt_content: ReceiptContent):
-        datamatrix: Datamatrix = Datamatrix(receipt_content.generate_datamatrix())
+    def draw_datamatrix(self, invoice_content: InvoiceContent):
+        datamatrix: Datamatrix = Datamatrix(invoice_content.generate_datamatrix())
         self.drawImage(
             ImageReader(datamatrix.image),
             datamatrix.left,
@@ -81,12 +81,12 @@ class ApostoCanvas(canvas.Canvas):
             height=datamatrix.dim,
         )
 
-    def draw_full_receipt(
+    def draw_full_invoice(
         self,
         descriptor_template_paths: List[Path],
         frame_template_paths: List[Path],
         value_template_paths: List[Path],
-        receipt_content: ReceiptContent,
+        invoice_content: InvoiceContent,
     ):
         for descriptor_template_path in descriptor_template_paths:
             self.draw_descriptor_template(descriptor_template_path)
@@ -95,6 +95,6 @@ class ApostoCanvas(canvas.Canvas):
             self.draw_frame_template(frame_template_path)
 
         for value_template_path in value_template_paths:
-            self.draw_value_template(value_template_path, receipt_content)
+            self.draw_value_template(value_template_path, invoice_content)
 
-        self.draw_datamatrix(receipt_content)
+        self.draw_datamatrix(invoice_content)
