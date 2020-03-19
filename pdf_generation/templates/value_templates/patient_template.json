@@ -36,6 +36,18 @@
         "style": "ValueTextStyle"
     },
     {
+        "key": "patient.gender",
+        "left": 59.267,
+        "top": 63.69,
+        "style": "ValueTextStyle"
+    },
+    {
+        "key": "patient.canton",
+        "left": 59.239,
+        "top": 86.791,
+        "style": "ValueTextStyle"
+    },
+    {
         "key": "patient.names",
         "left": 118.65,
         "top": 60.578,

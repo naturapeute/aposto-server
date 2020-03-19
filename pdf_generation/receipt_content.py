@@ -207,6 +207,17 @@ class Patient:
         ).strftime("%d.%m.%Y")
 
     @property
+    def gender(self) -> str:
+        if self._patient_dict["gender"] == "male":
+            return "H"
+        else:
+            return "F"
+
+    @property
+    def canton(self) -> str:
+        return self._patient_dict["canton"]
+
+    @property
     def names(self) -> str:
         return f"{self.first_name} {self.last_name}"
 
