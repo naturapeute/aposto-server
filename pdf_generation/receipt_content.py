@@ -53,6 +53,10 @@ class ReceiptContent:
         return f"{self._date.strftime('%d.%m.%Y')} / {self.timestamp}"
 
     @property
+    def GLN_list(self) -> str:
+        return f"1/{self.author.GLN} 2/{self.therapist.GLN}"
+
+    @property
     def total_amount_tax_rate_0(self) -> str:
         return self.total_amount
 
@@ -134,6 +138,10 @@ class ReceiptContent:
 class Entity:
     def __init__(self, entity_dict: Dict):
         self._entity_dict: Dict = entity_dict
+
+    @property
+    def GLN(self) -> str:
+        return "7601002631310"
 
     @property
     def RCC(self) -> str:
