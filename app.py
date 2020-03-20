@@ -16,7 +16,12 @@ from pdf_generation.invoice_content import InvoiceContent
 
 from starlette.applications import Starlette
 from starlette.requests import Request
-from starlette.responses import RedirectResponse, FileResponse, UJSONResponse
+from starlette.responses import (
+    RedirectResponse,
+    FileResponse,
+    UJSONResponse,
+    PlainTextResponse,
+)
 from starlette.status import HTTP_400_BAD_REQUEST
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
@@ -102,6 +107,44 @@ async def emailInvoice(request: Request):
 @app.route("/favicon.ico")
 async def icon(request: Request):
     return RedirectResponse("https://terrapeute.ch/img/favicon.png")
+
+
+@app.route("/gln", methods=["POST"])
+async def gln(request: Request):
+    body: Dict[str, str] = await request.json()
+
+    if not "name" in body and not ("firstName" in body and "lastName" in body):
+        return UJSONResponse(
+            {"name": "Name or first name and last name parameters are missing."},
+            status_code=HTTP_400_BAD_REQUEST,
+        )
+
+    formBody: List[str] = ["SearchRole=CompTherapist"]
+
+    if "name" in body:
+        formBody.append(f"SearchDescription={body['name']}")
+    else:
+        formBody.append(f"SearchDescription={body['lastName']}")
+        formBody.append(f"SearchDescription2={body['firstName']}")
+
+    if "ZIP" in body:
+        formBody.append(f"SearchZip={body['ZIP']}")
+
+    if "city" in body:
+        formBody.append(f"SearchCity={body['city']}")
+
+    url: str = f"https://refdatabase.refdata.ch/Viewer/SearchPartner{'Jur' if 'name' in body else 'Nat'}?Lang=fr"
+
+    headers: Dict[str, str] = {
+        "accept": "text/html",
+        "content-type": "application/x-www-form-urlencoded",
+    }
+
+    response: requests_Response = requests.post(
+        url, data="&".join(formBody), headers=headers
+    )
+
+    return PlainTextResponse(response.text)
 
 
 def generateInvoice(invoice_content: InvoiceContent) -> Path:
