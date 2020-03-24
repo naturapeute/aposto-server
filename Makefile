@@ -13,3 +13,6 @@ start:
 
 install:
 	bash -c "bin/install.sh"
+
+test:
+	python -m unittest -v
