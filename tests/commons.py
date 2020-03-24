@@ -52,3 +52,27 @@ class InvoiceContentTestCase(TestCase):
     def tearDown(self):
         self.invoice_content_base_64 = None
         self.invoice_content_dict = None
+
+
+class SendInBlueMock:
+    @staticmethod
+    def smtp_email_success_request() -> Response:
+        return Response(
+            POST,
+            f"{config['sendInBlueAPIURL']}/smtp/email",
+            json={"messageId": "1"},
+            status=201,
+        )
+
+    @staticmethod
+    def failure_json() -> Dict:
+        return {"code": "400", "message": "Invalid parameter"}
+
+    @staticmethod
+    def smtp_email_failure_request() -> Response:
+        return Response(
+            POST,
+            f"{config['sendInBlueAPIURL']}/smtp/email",
+            json=SendInBlueMock.failure_json(),
+            status=400,
+        )

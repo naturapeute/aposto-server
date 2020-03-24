@@ -9,3 +9,4 @@ black
 pylint
 pyStrich==0.8
 reportlab==3.5.42
+responses==0.10.12
