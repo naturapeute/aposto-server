@@ -3,7 +3,7 @@ import base64
 from time import time
 from datetime import datetime
 import requests
-from requests import Response as requests_Response
+from requests import Response as RequestsResponse
 from dotenv import load_dotenv
 import os
 from typing import List, Dict
@@ -42,23 +42,21 @@ app: Starlette = Starlette(debug=True, middleware=middleware)
 
 
 @app.route("/pdf/{invoice_content_base_64}/{name}")
-async def downloadInvoice(request: Request):
-    invoice_path: Path = generateInvoice(
-        InvoiceContent(
-            parseInvoiceContent(request.path_params["invoice_content_base_64"])
-        )
+async def download_invoice(request: Request):
+    invoice_path: Path = generate_invoice(
+        parse_invoice_content(request.path_params["invoice_content_base_64"])
     )
 
     return FileResponse(invoice_path.as_posix())
 
 
 @app.route("/email/{invoice_content_base_64}")
-async def emailInvoice(request: Request):
-    invoice_content: InvoiceContent = InvoiceContent(
-        parseInvoiceContent(request.path_params["invoice_content_base_64"])
+async def email_invoice(request: Request):
+    invoice_content: InvoiceContent = parse_invoice_content(
+        request.path_params["invoice_content_base_64"]
     )
 
-    invoice_path: Path = generateInvoice(invoice_content)
+    invoice_path: Path = generate_invoice(invoice_content)
 
     with open(invoice_path.as_posix(), "rb") as invoice_file:
         invoice_file_base_64 = base64.b64encode(invoice_file.read())
@@ -92,7 +90,7 @@ async def emailInvoice(request: Request):
         "api-key": SEND_IN_BLUE_API_KEY,
     }
 
-    response: requests_Response = requests.post(
+    response: RequestsResponse = requests.post(
         f"{config['sendInBlueAPIURL']}/smtp/email", data=data, headers=headers
     )
 
@@ -140,14 +138,14 @@ async def gln(request: Request):
         "content-type": "application/x-www-form-urlencoded",
     }
 
-    response: requests_Response = requests.post(
+    response: RequestsResponse = requests.post(
         url, data="&".join(formBody), headers=headers
     )
 
     return PlainTextResponse(response.text)
 
 
-def generateInvoice(invoice_content: InvoiceContent) -> Path:
+def generate_invoice(invoice_content: InvoiceContent) -> Path:
     invoice_dir: Path = Path(
         f"./out/{invoice_content.author.name}/{invoice_content.author.RCC}"
     )
@@ -199,5 +197,7 @@ def generateInvoice(invoice_content: InvoiceContent) -> Path:
     return invoice_path
 
 
-def parseInvoiceContent(invoice_content_base_64: str) -> Dict:
-    return ujson.loads(base64.b64decode(invoice_content_base_64).decode("latin1"))
+def parse_invoice_content(invoice_content_base_64: str) -> InvoiceContent:
+    return InvoiceContent(
+        ujson.loads(base64.b64decode(invoice_content_base_64).decode("latin1"))
+    )
