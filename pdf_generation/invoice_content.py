@@ -1,11 +1,11 @@
-from typing import Dict, List
 from datetime import datetime, timezone
+from typing import Dict, List
 
-from pdf_generation.service_codes import SERVICE_CODES
-
+from PIL import Image
 from pystrich.datamatrix import DataMatrixEncoder
 from pystrich.datamatrix.renderer import DataMatrixRenderer
-from PIL import Image
+
+from pdf_generation.service_codes import SERVICE_CODES
 
 
 class InvoiceContent:
@@ -103,15 +103,15 @@ class InvoiceContent:
 
     def generate_datamatrix_string(self) -> str:
         separator: str = "#"
-        esrCodingLine: str = ""
-        eanBiller: str = ""
-        eanProvider: str = ""
+        esr_coding_line: str = ""
+        ean_biller: str = ""
+        ean_provider: str = ""
         SSN_patient_number: str = ""
         therapy_start_date = self._therapy_start_date.strftime("%d.%m.%Y")
         due_amount: str = "0"
 
         datamtrix_string = (
-            f"{esrCodingLine}{separator}{eanBiller}{separator}{eanProvider}{separator}"
+            f"{esr_coding_line}{separator}{ean_biller}{separator}{ean_provider}{separator}"
         )
         datamtrix_string = f"{datamtrix_string}{therapy_start_date}{separator}{SSN_patient_number}{separator}{self.patient.birthdate}{separator}"
         datamtrix_string = f"{datamtrix_string}{due_amount}{separator}"

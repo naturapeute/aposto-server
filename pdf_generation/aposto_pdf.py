@@ -1,20 +1,18 @@
-from typing import List, Dict
 from pathlib import Path
-import json
+from typing import List
 
-from pdf_generation.text_style import TTFontToRegister, TextStyle
-from pdf_generation.content import Text, Frame, Value, Datamatrix
-from pdf_generation.template import DescriptorTemplate, FrameTemplate, ValueTemplate
-from pdf_generation.invoice_content import InvoiceContent
-
-from reportlab.pdfgen import canvas
-from reportlab.platypus import Paragraph
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.lib.enums import TA_LEFT, TA_RIGHT
 from reportlab.lib.utils import ImageReader
+from reportlab.pdfgen import canvas
+
+from pdf_generation.content import Datamatrix, Frame, Text, Value
+from pdf_generation.invoice_content import InvoiceContent
+from pdf_generation.template import DescriptorTemplate, FrameTemplate, ValueTemplate
+from pdf_generation.text_style import TextStyle, TTFontToRegister
 
 
 class ApostoCanvas(canvas.Canvas):
+    SERVICE_TOP_SHIFT: float = 6.363
+
     def __init__(self, filename: str):
         super().__init__(filename)
         self.register_fonts()
@@ -63,12 +61,10 @@ class ApostoCanvas(canvas.Canvas):
             for value in template:
                 self.drawString(value.to_text(invoice_content))
         else:
-            SERVICE_TOP_SHIFT: float = 6.363
-
             for index, service in enumerate(invoice_content.services.services):
                 for value in template:
                     text: Text = value.to_text(service)
-                    text.shift_top(index * SERVICE_TOP_SHIFT)
+                    text.shift_top(index * self.SERVICE_TOP_SHIFT)
                     self.drawString(text)
 
     def draw_datamatrix(self, invoice_content: InvoiceContent):

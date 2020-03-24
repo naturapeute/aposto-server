@@ -1,8 +1,8 @@
-from typing import Dict, List
-from pathlib import Path
 import json
+from pathlib import Path
+from typing import List
 
-from pdf_generation.content import Content, Text, Frame, Value
+from pdf_generation.content import Content, Frame, Text, Value
 
 
 class Template:

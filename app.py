@@ -1,30 +1,26 @@
-import subprocess
 import base64
-from time import time
-from datetime import datetime
-import requests
-from requests import Response as RequestsResponse
-from dotenv import load_dotenv
 import os
-from typing import List, Dict
-from pystrich.datamatrix import DataMatrixEncoder
 from pathlib import Path
+from typing import Dict, List
+
+import requests
 import ujson
+from dotenv import load_dotenv
+from requests import Response as RequestsResponse
+from starlette.applications import Starlette
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
+from starlette.requests import Request
+from starlette.responses import (
+    FileResponse,
+    PlainTextResponse,
+    RedirectResponse,
+    UJSONResponse,
+)
+from starlette.status import HTTP_400_BAD_REQUEST
 
 from pdf_generation.aposto_pdf import ApostoCanvas
 from pdf_generation.invoice_content import InvoiceContent
-
-from starlette.applications import Starlette
-from starlette.requests import Request
-from starlette.responses import (
-    RedirectResponse,
-    FileResponse,
-    UJSONResponse,
-    PlainTextResponse,
-)
-from starlette.status import HTTP_400_BAD_REQUEST
-from starlette.middleware import Middleware
-from starlette.middleware.cors import CORSMiddleware
 
 load_dotenv()
 SEND_IN_BLUE_API_KEY = os.getenv("SEND_IN_BLUE_API_KEY")
@@ -117,19 +113,19 @@ async def gln(request: Request):
             status_code=HTTP_400_BAD_REQUEST,
         )
 
-    formBody: List[str] = ["SearchRole=CompTherapist"]
+    form_body: List[str] = ["SearchRole=CompTherapist"]
 
     if "name" in body:
-        formBody.append(f"SearchDescription={body['name']}")
+        form_body.append(f"SearchDescription={body['name']}")
     else:
-        formBody.append(f"SearchDescription={body['lastName']}")
-        formBody.append(f"SearchDescription2={body['firstName']}")
+        form_body.append(f"SearchDescription={body['lastName']}")
+        form_body.append(f"SearchDescription2={body['firstName']}")
 
     if "ZIP" in body:
-        formBody.append(f"SearchZip={body['ZIP']}")
+        form_body.append(f"SearchZip={body['ZIP']}")
 
     if "city" in body:
-        formBody.append(f"SearchCity={body['city']}")
+        form_body.append(f"SearchCity={body['city']}")
 
     url: str = f"https://refdatabase.refdata.ch/Viewer/SearchPartner{'Jur' if 'name' in body else 'Nat'}?Lang=fr"
 
@@ -139,7 +135,7 @@ async def gln(request: Request):
     }
 
     response: RequestsResponse = requests.post(
-        url, data="&".join(formBody), headers=headers
+        url, data="&".join(form_body), headers=headers
     )
 
     return PlainTextResponse(response.text)

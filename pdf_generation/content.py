@@ -1,13 +1,12 @@
-from typing import Dict, Union
-from collections import namedtuple
 from functools import reduce
+from typing import Dict, Union
+
+from PIL import Image
+from reportlab.lib.units import mm
 
 import pdf_generation
-from pdf_generation.text_style import TextStyle
 from pdf_generation.invoice_content import InvoiceContent, Service
-
-from reportlab.lib.units import mm
-from PIL import Image
+from pdf_generation.text_style import TextStyle
 
 
 class Content:

@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import Dict, List
 
 SERVICE_CODES: List[Dict] = [
     {"value": 1003, "label": "Acupressure, par période de 5 minutes"},
