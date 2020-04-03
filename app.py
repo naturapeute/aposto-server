@@ -99,7 +99,7 @@ async def email_invoice(request: Request):
 
 
 @app.route("/favicon.ico")
-async def icon(request: Request):
+async def icon(_: Request):
     return RedirectResponse("https://terrapeute.ch/img/favicon.png")
 
 
