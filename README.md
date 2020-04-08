@@ -41,8 +41,8 @@ The invoice content is a JSON object. Its structure should be as follow:
     * **`city`**: The author city.
     * **`phone`**: The author phone number.
     * **`email`**: The author email.
-    * **`RCCNumber`**: The author RCC number.
-    * **`GLNNumber`**: The author GLN number.
+    * **`RCC`**: The author RCC number.
+    * **`GLN`**: The author GLN number.
 * **`therapist`**
     * **`firstName`**: The therapist first name.
     * **`lastName`**: The therapist first name.
@@ -50,9 +50,8 @@ The invoice content is a JSON object. Its structure should be as follow:
     * **`ZIP`**: The therapist postal code.
     * **`city`**: The therapist city.
     * **`phone`**: The therapist phone number.
-    * **`email`**: The therapist email.
-    * **`RCCNumber`**: The therapist RCC number.
-    * **`GLNNumber`**: The therapist GLN number.
+    * **`RCC`**: The therapist RCC number.
+    * **`GLN`**: The therapist GLN number.
 * **`patient`**
     * **`firstName`**: The patient first name.
     * **`lastName`**: The patient first name.
