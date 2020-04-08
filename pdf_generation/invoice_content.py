@@ -159,10 +159,6 @@ class Entity:
     def phone(self) -> str:
         return self._entity_dict["phone"]
 
-    @property
-    def email(self) -> str:
-        return self._entity_dict["email"]
-
 
 class Author(Entity):
     def __init__(self, author_dict: Dict):
@@ -172,6 +168,10 @@ class Author(Entity):
     @property
     def name(self) -> str:
         return self._author_dict["name"]
+
+    @property
+    def email(self) -> str:
+        return self._author_dict["email"]
 
 
 class Therapist(Entity):
