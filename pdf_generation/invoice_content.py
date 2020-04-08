@@ -145,11 +145,11 @@ class Entity:
 
     @property
     def GLN(self) -> str:
-        return self._entity_dict["GLNNumber"]
+        return self._entity_dict["GLN"]
 
     @property
     def RCC(self) -> str:
-        return self._entity_dict["RCCNumber"]
+        return self._entity_dict["RCC"]
 
     @property
     def address(self) -> str:
