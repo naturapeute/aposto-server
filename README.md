@@ -60,7 +60,7 @@ The invoice content is a JSON object. Its structure should be as follow:
     * **`city`**: The patient city.
     * **`canton`**: The patient Swiss canton.
     * **`birthdate`**: The patient birthdate.
-    * **`gender`**: The patient gender.
+    * **`gender`**: The patient gender: _male_ of _female_.
     * **`email`**: The patient email.
 * **`servicePrice`**: The hourly price.
 * **`services`**: An array of service objects:
