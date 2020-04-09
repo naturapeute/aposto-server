@@ -59,7 +59,7 @@ class InvoiceContentMiddleware(BaseHTTPMiddleware):
                         invoice_content_dict
                     )
                 except ValueError as missing_params:
-                    error_message = missing_params
+                    error_message = missing_params.args[0]
             except binascii.Error:
                 error_message = {"error": "Improper base64 provided"}
             except ValueError:
