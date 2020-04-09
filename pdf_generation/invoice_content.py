@@ -1,6 +1,8 @@
+import base64
 from datetime import datetime, timezone
 from typing import Dict, List
 
+import ujson
 from PIL import Image
 from pystrich.datamatrix import DataMatrixEncoder
 from pystrich.datamatrix.renderer import DataMatrixRenderer
@@ -9,6 +11,43 @@ from pdf_generation.service_codes import SERVICE_CODES
 
 
 class InvoiceContent:
+    SCHEMA: Dict = {
+        "author": {
+            "name": {},
+            "street": {},
+            "ZIP": {},
+            "city": {},
+            "phone": {},
+            "email": {},
+            "RCC": {},
+            "GLN": {},
+        },
+        "therapist": {
+            "firstName": {},
+            "lastName": {},
+            "street": {},
+            "ZIP": {},
+            "city": {},
+            "phone": {},
+            "RCC": {},
+            "GLN": {},
+        },
+        "patient": {
+            "firstName": {},
+            "lastName": {},
+            "street": {},
+            "ZIP": {},
+            "city": {},
+            "canton": {},
+            "birthdate": {},
+            "gender": {},
+            "email": {},
+        },
+        "servicePrice": {},
+        "services": [{"date": {}, "duration": {}, "code": {}}],
+        "timestamp": {},
+    }
+
     def __init__(self, invoice_content_dict: Dict):
         self._invoice_content_dict: Dict = invoice_content_dict
         self._date: datetime = self.timestamp_to_datetime(
@@ -84,6 +123,39 @@ class InvoiceContent:
     def timestamp_to_datetime(timestamp: float) -> datetime:
         return datetime.utcfromtimestamp(timestamp / 1000).replace(tzinfo=timezone.utc)
 
+    @staticmethod
+    def validate(invoice_content_dict: Dict):
+        missing_param: Dict = {}
+
+        for attr, value in InvoiceContent.SCHEMA.items():
+            if not attr in invoice_content_dict:
+                missing_param[attr] = "Missing parameter"
+                continue
+
+            if isinstance(value, list):
+                if not isinstance(invoice_content_dict[attr], list):
+                    missing_param[attr] = "List expected"
+                    continue
+
+                for i, elem in enumerate(invoice_content_dict[attr]):
+                    for sub_attr, _ in value[0].items():
+                        if not sub_attr in elem:
+                            missing_param[
+                                f"{attr}[{i}].{sub_attr}"
+                            ] = "Missing parameter"
+                continue
+
+            for sub_attr, _ in InvoiceContent.SCHEMA[attr].items():
+                if not sub_attr in invoice_content_dict[attr]:
+                    missing_param[f"{attr}.{sub_attr}"] = "Missing parameter"
+
+        if missing_param:
+            raise ValueError(missing_param)
+
+    @staticmethod
+    def parse(invoice_content_base_64: str) -> Dict:
+        return ujson.loads(base64.b64decode(invoice_content_base_64).decode("latin1"))
+
     def init_therapy_dates(self):
         services_dates: List[datetime] = list(
             self.timestamp_to_datetime(service["date"])
@@ -110,9 +182,7 @@ class InvoiceContent:
         therapy_start_date = self._therapy_start_date.strftime("%d.%m.%Y")
         due_amount: str = "0"
 
-        datamtrix_string = (
-            f"{esr_coding_line}{separator}{ean_biller}{separator}{ean_provider}{separator}"
-        )
+        datamtrix_string = f"{esr_coding_line}{separator}{ean_biller}{separator}{ean_provider}{separator}"
         datamtrix_string = f"{datamtrix_string}{therapy_start_date}{separator}{SSN_patient_number}{separator}{self.patient.birthdate}{separator}"
         datamtrix_string = f"{datamtrix_string}{due_amount}{separator}"
 

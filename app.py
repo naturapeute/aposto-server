@@ -1,4 +1,5 @@
 import base64
+import binascii
 import os
 from pathlib import Path
 from typing import Dict, List
@@ -39,18 +40,50 @@ app: Starlette = Starlette(debug=True, middleware=middleware)
 
 @app.route("/pdf/{invoice_content_base_64}/{name}")
 async def download_invoice(request: Request):
-    invoice_path: Path = generate_invoice(
-        parse_invoice_content(request.path_params["invoice_content_base_64"])
-    )
+    try:
+        invoice_content_dict: Dict = InvoiceContent.parse(
+            request.path_params["invoice_content_base_64"]
+        )
+    except binascii.Error:
+        return UJSONResponse(
+            {"error": "Improper base64 provided"}, HTTP_400_BAD_REQUEST
+        )
+    except ValueError:
+        return UJSONResponse(
+            {"error": "Improper JSON provided inside base64"}, HTTP_400_BAD_REQUEST
+        )
+
+    try:
+        InvoiceContent.validate(invoice_content_dict)
+    except ValueError as missing_params:
+        return UJSONResponse(missing_params, HTTP_400_BAD_REQUEST)
+
+    invoice_path: Path = generate_invoice(InvoiceContent(invoice_content_dict))
 
     return FileResponse(invoice_path.as_posix())
 
 
 @app.route("/email/{invoice_content_base_64}")
 async def email_invoice(request: Request):
-    invoice_content: InvoiceContent = parse_invoice_content(
-        request.path_params["invoice_content_base_64"]
-    )
+    try:
+        invoice_content_dict: Dict = InvoiceContent.parse(
+            request.path_params["invoice_content_base_64"]
+        )
+    except binascii.Error:
+        return UJSONResponse(
+            {"error": "Improper base64 provided"}, HTTP_400_BAD_REQUEST
+        )
+    except ValueError:
+        return UJSONResponse(
+            {"error": "Improper JSON provided inside base64"}, HTTP_400_BAD_REQUEST
+        )
+
+    try:
+        InvoiceContent.validate(invoice_content_dict)
+    except ValueError as missing_params:
+        return UJSONResponse(missing_params, HTTP_400_BAD_REQUEST)
+
+    invoice_content: InvoiceContent = InvoiceContent(invoice_content_dict)
 
     invoice_path: Path = generate_invoice(invoice_content)
 
@@ -191,9 +224,3 @@ def generate_invoice(invoice_content: InvoiceContent) -> Path:
         cvs.save()
 
     return invoice_path
-
-
-def parse_invoice_content(invoice_content_base_64: str) -> InvoiceContent:
-    return InvoiceContent(
-        ujson.loads(base64.b64decode(invoice_content_base_64).decode("latin1"))
-    )
