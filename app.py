@@ -2,6 +2,7 @@ import base64
 import binascii
 import os
 from pathlib import Path
+import re
 from typing import Dict, List
 
 import requests
@@ -10,9 +11,11 @@ from dotenv import load_dotenv
 from requests import Response as RequestsResponse
 from starlette.applications import Starlette
 from starlette.middleware import Middleware
+from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 from starlette.responses import (
+    Response,
     FileResponse,
     PlainTextResponse,
     RedirectResponse,
@@ -23,6 +26,52 @@ from starlette.status import HTTP_400_BAD_REQUEST
 from pdf_generation.aposto_pdf import ApostoCanvas
 from pdf_generation.invoice_content import InvoiceContent
 
+
+class InvoiceContentMiddleware(BaseHTTPMiddleware):
+    INVOICE_CONTENT_ROUTES = [
+        r"^/pdf/([^/]*)/.*$",
+        r"^/email/([^/]*)$",
+    ]
+
+    async def dispatch(self, request: Request, call_next) -> Response:
+        invoice_content_base_64: str = ""
+
+        for invoice_content_route in self.INVOICE_CONTENT_ROUTES:
+            match = re.search(
+                invoice_content_route, request.url.path
+            )
+
+            if match:
+                invoice_content_base_64 = match.group(1)
+                break
+
+        if invoice_content_base_64:
+            invoice_content_dict = {}
+
+            try:
+                invoice_content_dict: Dict = InvoiceContent.parse(
+                    invoice_content_base_64
+                )
+            except binascii.Error:
+                return UJSONResponse(
+                    {"error": "Improper base64 provided"}, HTTP_400_BAD_REQUEST
+                )
+            except ValueError:
+                return UJSONResponse(
+                    {"error": "Improper JSON provided inside base64"}, HTTP_400_BAD_REQUEST
+                )
+
+            try:
+                InvoiceContent.validate(invoice_content_dict)
+            except ValueError as missing_params:
+                return UJSONResponse(missing_params, HTTP_400_BAD_REQUEST)
+
+            request.state.invoice_content: InvoiceContent = InvoiceContent(invoice_content_dict)
+
+        response: Response = await call_next(request)
+        return response
+
+
 load_dotenv()
 SEND_IN_BLUE_API_KEY = os.getenv("SEND_IN_BLUE_API_KEY")
 
@@ -32,7 +81,8 @@ with open("config.json", "r") as configData:
     config: Dict[str, str] = fullConfig["PROD"] if ENV == "PROD" else fullConfig["DEV"]
 
 middleware: List[Middleware] = [
-    Middleware(CORSMiddleware, allow_origins=[config["apostoAppURL"]])
+    Middleware(InvoiceContentMiddleware),
+    Middleware(CORSMiddleware, allow_origins=[config["apostoAppURL"]]),
 ]
 
 app: Starlette = Starlette(debug=True, middleware=middleware)
@@ -40,52 +90,14 @@ app: Starlette = Starlette(debug=True, middleware=middleware)
 
 @app.route("/pdf/{invoice_content_base_64}/{name}")
 async def download_invoice(request: Request):
-    try:
-        invoice_content_dict: Dict = InvoiceContent.parse(
-            request.path_params["invoice_content_base_64"]
-        )
-    except binascii.Error:
-        return UJSONResponse(
-            {"error": "Improper base64 provided"}, HTTP_400_BAD_REQUEST
-        )
-    except ValueError:
-        return UJSONResponse(
-            {"error": "Improper JSON provided inside base64"}, HTTP_400_BAD_REQUEST
-        )
-
-    try:
-        InvoiceContent.validate(invoice_content_dict)
-    except ValueError as missing_params:
-        return UJSONResponse(missing_params, HTTP_400_BAD_REQUEST)
-
-    invoice_path: Path = generate_invoice(InvoiceContent(invoice_content_dict))
+    invoice_path: Path = generate_invoice(request.state.invoice_content)
 
     return FileResponse(invoice_path.as_posix())
 
 
 @app.route("/email/{invoice_content_base_64}")
 async def email_invoice(request: Request):
-    try:
-        invoice_content_dict: Dict = InvoiceContent.parse(
-            request.path_params["invoice_content_base_64"]
-        )
-    except binascii.Error:
-        return UJSONResponse(
-            {"error": "Improper base64 provided"}, HTTP_400_BAD_REQUEST
-        )
-    except ValueError:
-        return UJSONResponse(
-            {"error": "Improper JSON provided inside base64"}, HTTP_400_BAD_REQUEST
-        )
-
-    try:
-        InvoiceContent.validate(invoice_content_dict)
-    except ValueError as missing_params:
-        return UJSONResponse(missing_params, HTTP_400_BAD_REQUEST)
-
-    invoice_content: InvoiceContent = InvoiceContent(invoice_content_dict)
-
-    invoice_path: Path = generate_invoice(invoice_content)
+    invoice_path: Path = generate_invoice(request.state.invoice_content)
 
     with open(invoice_path.as_posix(), "rb") as invoice_file:
         invoice_file_base_64 = base64.b64encode(invoice_file.read())
@@ -95,17 +107,17 @@ async def email_invoice(request: Request):
             "sender": {"email": "facture@app.aposto.ch", "name": "Aposto"},
             "to": [
                 {
-                    "email": invoice_content.patient.email,
-                    "name": f"{invoice_content.patient.first_name} {invoice_content.patient.last_name}",
+                    "email": request.state.invoice_content.patient.email,
+                    "name": f"{request.state.invoice_content.patient.first_name} {request.state.invoice_content.patient.last_name}",
                 }
             ],
             "bcc": [
                 {
-                    "email": invoice_content.author.email,
-                    "name": invoice_content.author.name,
+                    "email": request.state.invoice_content.author.email,
+                    "name": request.state.invoice_content.author.name,
                 }
             ],
-            "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {invoice_content.patient.first_name} {invoice_content.patient.last_name},</p><p>Vous pouvez dès à présent consulter votre facture du {invoice_content.date_string} en pièce jointe.</p><p>À très bientôt,<br>{invoice_content.author.name}</p>",
+            "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {request.state.invoice_content.patient.first_name} {request.state.invoice_content.patient.last_name},</p><p>Vous pouvez dès à présent consulter votre facture du {request.state.invoice_content.date_string} en pièce jointe.</p><p>À très bientôt,<br>{request.state.invoice_content.author.name}</p>",
             "subject": "Aposto - Votre nouvelle facture",
             "attachment": [
                 {"content": invoice_file_base_64, "name": invoice_path.name}
