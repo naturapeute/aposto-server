@@ -35,11 +35,10 @@ class InvoiceContentMiddleware(BaseHTTPMiddleware):
 
     async def dispatch(self, request: Request, call_next) -> Response:
         invoice_content_base_64: str = ""
+        error_message: Dict = {}
 
         for invoice_content_route in self.INVOICE_CONTENT_ROUTES:
-            match = re.search(
-                invoice_content_route, request.url.path
-            )
+            match = re.search(invoice_content_route, request.url.path)
 
             if match:
                 invoice_content_base_64 = match.group(1)
@@ -52,24 +51,23 @@ class InvoiceContentMiddleware(BaseHTTPMiddleware):
                 invoice_content_dict: Dict = InvoiceContent.parse(
                     invoice_content_base_64
                 )
+
+                try:
+                    InvoiceContent.validate(invoice_content_dict)
+
+                    request.state.invoice_content: InvoiceContent = InvoiceContent(
+                        invoice_content_dict
+                    )
+                except ValueError as missing_params:
+                    error_message = missing_params
             except binascii.Error:
-                return UJSONResponse(
-                    {"error": "Improper base64 provided"}, HTTP_400_BAD_REQUEST
-                )
+                error_message = {"error": "Improper base64 provided"}
             except ValueError:
-                return UJSONResponse(
-                    {"error": "Improper JSON provided inside base64"}, HTTP_400_BAD_REQUEST
-                )
+                error_message = {"error": "Improper JSON provided inside base64"}
 
-            try:
-                InvoiceContent.validate(invoice_content_dict)
-            except ValueError as missing_params:
-                return UJSONResponse(missing_params, HTTP_400_BAD_REQUEST)
+        request.state.error_message: Dict = error_message
 
-            request.state.invoice_content: InvoiceContent = InvoiceContent(invoice_content_dict)
-
-        response: Response = await call_next(request)
-        return response
+        return await call_next(request)
 
 
 load_dotenv()
@@ -90,14 +88,28 @@ app: Starlette = Starlette(debug=True, middleware=middleware)
 
 @app.route("/pdf/{invoice_content_base_64}/{name}")
 async def download_invoice(request: Request):
-    invoice_path: Path = generate_invoice(request.state.invoice_content)
+    invoice_content: InvoiceContent = None
+
+    try:
+        invoice_content = request.state.invoice_content
+    except AttributeError:
+        return UJSONResponse(request.state.error_message, HTTP_400_BAD_REQUEST)
+
+    invoice_path: Path = generate_invoice(invoice_content)
 
     return FileResponse(invoice_path.as_posix())
 
 
 @app.route("/email/{invoice_content_base_64}")
 async def email_invoice(request: Request):
-    invoice_path: Path = generate_invoice(request.state.invoice_content)
+    invoice_content: InvoiceContent = None
+
+    try:
+        invoice_content = request.state.invoice_content
+    except AttributeError:
+        return UJSONResponse(request.state.error_message, HTTP_400_BAD_REQUEST)
+
+    invoice_path: Path = generate_invoice(invoice_content)
 
     with open(invoice_path.as_posix(), "rb") as invoice_file:
         invoice_file_base_64 = base64.b64encode(invoice_file.read())
@@ -107,17 +119,17 @@ async def email_invoice(request: Request):
             "sender": {"email": "facture@app.aposto.ch", "name": "Aposto"},
             "to": [
                 {
-                    "email": request.state.invoice_content.patient.email,
-                    "name": f"{request.state.invoice_content.patient.first_name} {request.state.invoice_content.patient.last_name}",
+                    "email": invoice_content.patient.email,
+                    "name": f"{invoice_content.patient.first_name} {invoice_content.patient.last_name}",
                 }
             ],
             "bcc": [
                 {
-                    "email": request.state.invoice_content.author.email,
-                    "name": request.state.invoice_content.author.name,
+                    "email": invoice_content.author.email,
+                    "name": invoice_content.author.name,
                 }
             ],
-            "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {request.state.invoice_content.patient.first_name} {request.state.invoice_content.patient.last_name},</p><p>Vous pouvez dès à présent consulter votre facture du {request.state.invoice_content.date_string} en pièce jointe.</p><p>À très bientôt,<br>{request.state.invoice_content.author.name}</p>",
+            "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {invoice_content.patient.first_name} {invoice_content.patient.last_name},</p><p>Vous pouvez dès à présent consulter votre facture du {invoice_content.date_string} en pièce jointe.</p><p>À très bientôt,<br>{invoice_content.author.name}</p>",
             "subject": "Aposto - Votre nouvelle facture",
             "attachment": [
                 {"content": invoice_file_base_64, "name": invoice_path.name}
