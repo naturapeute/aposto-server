@@ -2,11 +2,13 @@
     "PROD": {
         "sendInBlueAPIURL": "https://api.sendinblue.com/v3",
         "apostoAppURL": "https://app.aposto.ch",
+        "apostoBetaURL": "https://etceterra.github.io/aposto-beta/",
         "apostoAPIURL": "https://api.aposto.ch"
     },
     "DEV": {
         "sendInBlueAPIURL": "https://api.sendinblue.com/v3",
         "apostoAppURL": "http://localhost:8000",
+        "apostoBetaURL": "http://localhost:5000",
         "apostoAPIURL": "http://localhost:8080"
     }
 }

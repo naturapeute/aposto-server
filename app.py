@@ -80,7 +80,9 @@ with open("config.json", "r") as configData:
 
 middleware: List[Middleware] = [
     Middleware(InvoiceContentMiddleware),
-    Middleware(CORSMiddleware, allow_origins=[config["apostoAppURL"]]),
+    Middleware(
+        CORSMiddleware, allow_origins=[config["apostoAppURL"], config["apostoBetaURL"]]
+    ),
 ]
 
 app: Starlette = Starlette(debug=True, middleware=middleware)
