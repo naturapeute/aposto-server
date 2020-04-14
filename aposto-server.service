@@ -7,6 +7,7 @@ User=ubuntu
 WorkingDirectory=/home/ubuntu/server
 ExecStart=/usr/bin/make start
 Restart=on-failure
+Environment=ENV=PROD
 
 [Install]
 WantedBy=multi-user.target

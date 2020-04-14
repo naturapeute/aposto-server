@@ -5,7 +5,6 @@ deploy:
 	sudo ln -s ~/server/aposto-server.service /etc/systemd/system/ ; \
 	sudo systemctl daemon-reload && \
 	make install && \
-	export ENV="PROD" && \
 	sudo systemctl restart aposto-server"
 
 start:
