@@ -48,9 +48,7 @@ class InvoiceContentMiddleware(BaseHTTPMiddleware):
             invoice_content_dict = {}
 
             try:
-                invoice_content_dict: Dict = InvoiceContent.parse(
-                    invoice_content_base_64
-                )
+                invoice_content_dict: Dict = InvoiceContent.parse(invoice_content_base_64)
 
                 try:
                     InvoiceContent.validate(invoice_content_dict)
@@ -133,9 +131,7 @@ async def email_invoice(request: Request):
             ],
             "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {invoice_content.patient.first_name} {invoice_content.patient.last_name},</p><p>Vous pouvez dès à présent consulter votre facture du {invoice_content.date_string} en pièce jointe.</p><p>À très bientôt,<br>{invoice_content.author.name}</p>",
             "subject": "Aposto - Votre nouvelle facture",
-            "attachment": [
-                {"content": invoice_file_base_64, "name": invoice_path.name}
-            ],
+            "attachment": [{"content": invoice_file_base_64, "name": invoice_path.name}],
         }
     )
 
@@ -205,9 +201,7 @@ def generate_invoice(invoice_content: InvoiceContent) -> Path:
         f"./out/{invoice_content.author.name}/{invoice_content.author.RCC}"
     )
     invoice_dir.mkdir(parents=True, exist_ok=True)
-    invoice_path: Path = invoice_dir.joinpath(
-        f"invoice-{invoice_content.timestamp}.pdf"
-    )
+    invoice_path: Path = invoice_dir.joinpath(f"invoice-{invoice_content.timestamp}.pdf")
 
     if not invoice_path.exists():
         cvs: ApostoCanvas = ApostoCanvas(invoice_path.as_posix())

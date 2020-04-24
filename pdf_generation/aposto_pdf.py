@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import List
 
+from PIL import Image
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 
@@ -68,7 +69,12 @@ class ApostoCanvas(canvas.Canvas):
                     self.drawString(text)
 
     def draw_datamatrix(self, invoice_content: InvoiceContent):
-        datamatrix: Datamatrix = Datamatrix(invoice_content.generate_datamatrix())
+        datamatrix_image: Image = invoice_content.generate_datamatrix()
+
+        if not datamatrix_image:
+            return
+
+        datamatrix: Datamatrix = Datamatrix(datamatrix_image)
         self.drawImage(
             ImageReader(datamatrix.image),
             datamatrix.left,

@@ -140,9 +140,7 @@ class InvoiceContent:
                 for i, elem in enumerate(invoice_content_dict[attr]):
                     for sub_attr, _ in value[0].items():
                         if not sub_attr in elem:
-                            missing_param[
-                                f"{attr}[{i}].{sub_attr}"
-                            ] = "Missing parameter"
+                            missing_param[f"{attr}[{i}].{sub_attr}"] = "Missing parameter"
                 continue
 
             for sub_attr, _ in InvoiceContent.SCHEMA[attr].items():
@@ -174,37 +172,37 @@ class InvoiceContent:
         self._total_amount: float = total_amount
 
     def generate_datamatrix_string(self) -> str:
+        if not self.author.ESR_coding_line or not self.patient.SSN:
+            return None
+
         separator: str = "#"
-        esr_coding_line: str = ""
-        ean_biller: str = ""
-        ean_provider: str = ""
-        SSN_patient_number: str = ""
         therapy_start_date = self._therapy_start_date.strftime("%d.%m.%Y")
         due_amount: str = "0"
 
-        datamtrix_string = f"{esr_coding_line}{separator}{ean_biller}{separator}{ean_provider}{separator}"
-        datamtrix_string = f"{datamtrix_string}{therapy_start_date}{separator}{SSN_patient_number}{separator}{self.patient.birthdate}{separator}"
-        datamtrix_string = f"{datamtrix_string}{due_amount}{separator}"
+        datamatrix_string = f"{self.author.ESR_coding_line}{separator}{self.author.GLN}{separator}{self.therapist.GLN}{separator}"
+        datamatrix_string = f"{datamatrix_string}{therapy_start_date}{separator}{self.patient.SSN}{separator}{self.patient.birthdate}{separator}"
+        datamatrix_string = f"{datamatrix_string}{due_amount}{separator}"
 
         for service in self.services.services:
-            datamtrix_string = (
-                f"{datamtrix_string}{int(service.float_amount) % 10}{separator}"
+            datamatrix_string = (
+                f"{datamatrix_string}{int(service.float_amount) % 10}{separator}"
             )
 
-        if len(datamtrix_string) > 169:
-            datamtrix_string = datamtrix_string[-169:]
-        elif len(datamtrix_string) < 169:
-            datamtrix_string = datamtrix_string.ljust(169, "0")
+        if len(datamatrix_string) > 169:
+            datamatrix_string = datamatrix_string[-169:]
+        elif len(datamatrix_string) < 169:
+            datamatrix_string = datamatrix_string.ljust(169, "0")
 
-        return datamtrix_string
+        return datamatrix_string
 
     def generate_datamatrix(self) -> Image:
-        encoder: DataMatrixEncoder = DataMatrixEncoder(
-            self.generate_datamatrix_string()
-        )
-        renderer: DataMatrixRenderer = DataMatrixRenderer(
-            encoder.matrix, encoder.regions
-        )
+        datamatrix_string: str = self.generate_datamatrix_string()
+
+        if not datamatrix_string:
+            return None
+
+        encoder: DataMatrixEncoder = DataMatrixEncoder(datamatrix_string)
+        renderer: DataMatrixRenderer = DataMatrixRenderer(encoder.matrix, encoder.regions)
 
         return renderer.get_pilimage(5)
 
@@ -242,6 +240,11 @@ class Author(Entity):
     @property
     def email(self) -> str:
         return self._author_dict["email"]
+
+    @property
+    def ESR_coding_line(self) -> str:
+        # FIXME : This should become compulsory with QR-invoice
+        return self._author_dict["ESR"] if "ESR" in self._author_dict else None
 
 
 class Therapist(Entity):
@@ -307,6 +310,10 @@ class Patient:
     def email(self) -> str:
         return self._patient_dict["email"]
 
+    @property
+    def SSN(self) -> str:
+        return self._patient_dict["SSN"] if "SSN" in self._patient_dict else None
+
 
 class ServiceList:
     def __init__(self, services_dict: Dict, service_price: float):
@@ -324,9 +331,9 @@ class Service:
 
     @property
     def date(self) -> str:
-        return InvoiceContent.timestamp_to_datetime(
-            self._service_dict["date"]
-        ).strftime("%d.%m.%Y")
+        return InvoiceContent.timestamp_to_datetime(self._service_dict["date"]).strftime(
+            "%d.%m.%Y"
+        )
 
     @property
     def tariff_number(self) -> str:

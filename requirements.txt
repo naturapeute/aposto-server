@@ -3,10 +3,7 @@ uvicorn==0.11.3
 aiofiles==0.4.0
 ujson==1.35
 requests==2.23.0
-wheel
 python-dotenv
-black
-pylint
 pyStrich==0.8
 reportlab==3.5.42
 responses==0.10.12
