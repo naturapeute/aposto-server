@@ -1,6 +1,6 @@
-from unittest import TestCase
 import datetime
 from pathlib import Path
+from unittest import TestCase
 
 import responses
 from requests import Response
@@ -9,9 +9,9 @@ from starlette.testclient import TestClient
 
 from app import app
 from tests.commons import (
-    InvoiceContentTestCase,
     InvoiceContentImproperBase64TestCase,
     InvoiceContentImproperJSONTestCase,
+    InvoiceContentTestCase,
     SendInBlueMock,
 )
 

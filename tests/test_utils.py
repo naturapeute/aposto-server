@@ -1,5 +1,5 @@
 from pdf_generation.invoice_content import InvoiceContent
-from tests.commons import InvoiceContentTestCase, InvoiceContentMissingParamTestCase
+from tests.commons import InvoiceContentMissingParamTestCase, InvoiceContentTestCase
 
 
 class InvoiceContentValidateTest(
@@ -20,7 +20,8 @@ class InvoiceContentValidateTest(
             InvoiceContent.validate(self.invoice_content_missing_param_dict)
 
         self.assertDictEqual(
-            context_manager.exception.args[0], InvoiceContentMissingParamTestCase.FAILURE_JSON
+            context_manager.exception.args[0],
+            InvoiceContentMissingParamTestCase.FAILURE_JSON,
         )
 
 

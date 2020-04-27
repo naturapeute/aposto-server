@@ -60,9 +60,7 @@ class Value(Content):
     def __init__(self, dict_value: Dict):
         super().__init__(dict_value)
         self.key: str = dict_value["key"]
-        self.style: TextStyle = getattr(
-            pdf_generation.text_style, dict_value["style"]
-        )()
+        self.style: TextStyle = getattr(pdf_generation.text_style, dict_value["style"])()
 
     def to_text(self, content: Union[InvoiceContent, Service]) -> Text:
         return Text(

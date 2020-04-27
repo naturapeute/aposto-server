@@ -120,10 +120,7 @@ SERVICE_CODES: List[Dict] = [
     },
     {"value": 1122, "label": "Équilibration vertébrale, par période de 5 minutes"},
     {"value": 1123, "label": "Zilgrei, par période de 5 minutes"},
-    {
-        "value": 1131,
-        "label": "Thérapie à médiation plastique, par période de 5 minutes",
-    },
+    {"value": 1131, "label": "Thérapie à médiation plastique, par période de 5 minutes",},
     {"value": 1132, "label": "Thérapie intermédiale, par période de 5 minutes"},
     {"value": 1134, "label": "Réflexothérapie, par période de 5 minutes"},
     {"value": 1140, "label": "Microkinésithérapie"},

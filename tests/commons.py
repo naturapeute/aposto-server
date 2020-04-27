@@ -75,7 +75,7 @@ class InvoiceContentImproperJSONTestCase(TestCase):
 
 
 class InvoiceContentMissingParamTestCase(TestCase):
-    FAILURE_JSON = { "author.name": "Missing parameter" }
+    FAILURE_JSON = {"author.name": "Missing parameter"}
 
     def setUp(self):
         self.invoice_content_missing_param_dict: Dict = {
