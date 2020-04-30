@@ -63,7 +63,7 @@ class InvoiceContentMiddleware(BaseHTTPMiddleware):
             except ValueError:
                 error_message = {"error": "Improper JSON provided inside base64"}
 
-        request.state.error_message: Dict = error_message
+            request.state.error_message: Dict = error_message
 
         return await call_next(request)
 
@@ -79,7 +79,10 @@ with open("config.json", "r") as configData:
 middleware: List[Middleware] = [
     Middleware(InvoiceContentMiddleware),
     Middleware(
-        CORSMiddleware, allow_origins=[config["apostoAppURL"], config["apostoBetaURL"]]
+        CORSMiddleware,
+        allow_origins=[config["apostoAppURL"], config["apostoBetaURL"]],
+        allow_methods=["GET", "POST"],
+        allow_headers=["Content-Type", "Accept"],
     ),
 ]
 
@@ -168,13 +171,14 @@ async def gln(request: Request):
             status_code=HTTP_400_BAD_REQUEST,
         )
 
-    form_body: List[str] = ["SearchRole=CompTherapist"]
+    form_body: List[str] = []
 
     if "name" in body:
         form_body.append(f"SearchDescription={body['name']}")
     else:
         form_body.append(f"SearchDescription={body['lastName']}")
         form_body.append(f"SearchDescription2={body['firstName']}")
+        form_body.append("SearchRole=CompTherapist")
 
     if "ZIP" in body:
         form_body.append(f"SearchZip={body['ZIP']}")
