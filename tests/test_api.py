@@ -34,7 +34,7 @@ class PDFEndpointTest(
         InvoiceContentImproperJSONTestCase.setUp(self)
 
         invoice_path: Path = Path(
-            f"./out/{self.invoice_content_dict['author']['name']}/{self.invoice_content_dict['author']['RCC']}/invoice-{int(self.invoice_content_dict['timestamp'] / 1000)}.pdf"
+            f"./out/{self.invoice_content_dict['author']['name']}/invoice-{int(self.invoice_content_dict['timestamp'] / 1000)}.pdf"
         )
 
         if invoice_path.is_file():

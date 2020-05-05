@@ -161,49 +161,8 @@ async def icon(_: Request):
     return RedirectResponse("https://terrapeute.ch/img/favicon.png")
 
 
-@app.route("/gln", methods=["POST"])
-async def gln(request: Request):
-    body: Dict[str, str] = await request.json()
-
-    if not "name" in body and not ("firstName" in body and "lastName" in body):
-        return UJSONResponse(
-            {"name": "Name or first name and last name parameters are missing."},
-            status_code=HTTP_400_BAD_REQUEST,
-        )
-
-    form_body: List[str] = []
-
-    if "name" in body:
-        form_body.append(f"SearchDescription={body['name']}")
-    else:
-        form_body.append(f"SearchDescription={body['lastName']}")
-        form_body.append(f"SearchDescription2={body['firstName']}")
-        form_body.append("SearchRole=CompTherapist")
-
-    if "ZIP" in body:
-        form_body.append(f"SearchZip={body['ZIP']}")
-
-    if "city" in body:
-        form_body.append(f"SearchCity={body['city']}")
-
-    url: str = f"https://refdatabase.refdata.ch/Viewer/SearchPartner{'Jur' if 'name' in body else 'Nat'}?Lang=fr"
-
-    headers: Dict[str, str] = {
-        "accept": "text/html",
-        "content-type": "application/x-www-form-urlencoded",
-    }
-
-    response: RequestsResponse = requests.post(
-        url, data="&".join(form_body), headers=headers
-    )
-
-    return PlainTextResponse(response.text)
-
-
 def generate_invoice(invoice_content: InvoiceContent) -> Path:
-    invoice_dir: Path = Path(
-        f"./out/{invoice_content.author.name}/{invoice_content.author.RCC}"
-    )
+    invoice_dir: Path = Path(f"./out/{invoice_content.author.name}")
     invoice_dir.mkdir(parents=True, exist_ok=True)
     invoice_path: Path = invoice_dir.joinpath(f"invoice-{invoice_content.timestamp}.pdf")
 

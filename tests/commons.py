@@ -8,9 +8,8 @@ from app import config
 
 class InvoiceContentTestCase(TestCase):
     def setUp(self):
-        self.invoice_content_base_64: str = "eyJpbnRSYW5kb20iOjgzLCJhdXRob3IiOnsibmFtZSI6IkNhYmluZXQgZGUgTGVyb3kiLCJzdHJlZXQiOiJWaWEgZGVsbGUgVmlnbmUgMSIsIlpJUCI6IjcxNDkiLCJjaXR5IjoiVnJpbiIsImVtYWlsIjoiTGVyb3lGcmVjaGV0dGVAYXJteXNweS5jb20iLCJwaG9uZSI6IjA4MSA2NjAgNjggMzYiLCJSQ0MiOiJWMTIzMTIzIiwiR0xOIjoiNzYwMTIwMjQzMTMxMSJ9LCJ0aGVyYXBpc3QiOnsiZmlyc3ROYW1lIjoiTGVyb3kiLCJsYXN0TmFtZSI6IkZy6WNoZXR0ZSIsInN0cmVldCI6IlZpYSBkZWxsZSBWaWduZSAxIiwiWklQIjoiNzE0OSIsImNpdHkiOiJWcmluIiwiZW1haWwiOiJMZXJveUZyZWNoZXR0ZUBhcm15c3B5LmNvbSIsInBob25lIjoiMDgxIDY2MCA2OCAzNiIsIlJDQyI6IlYxMjMxMjMiLCJHTE4iOiI3NjAxMjAyNDMxMzExIn0sInBhdGllbnQiOnsiX2lkIjoiMTU4NTA0ODc1ODg5MCIsImZpcnN0TmFtZSI6Ik5pY2hvbGFzIiwibGFzdE5hbWUiOiJBaWxsZWJvdXN0Iiwic3RyZWV0IjoiVPZzc3RhbHN0cmFzc2UgOTciLCJaSVAiOiI4ODcyIiwiY2l0eSI6IldlZXNlbiIsImNhbnRvbiI6IlNHIiwiYmlydGhkYXRlIjotMTExODEwMjQwMDAwMCwiZ2VuZGVyIjoiZmVtYWxlIiwiZW1haWwiOiJOaWNob2xhc0FpbGxlYm91c3RAdGVsZXdvcm0udXMifSwic2VydmljZVByaWNlIjoxMDAsInNlcnZpY2VzIjpbeyJkYXRlIjoxNTg1MDA4MDAwMDAwLCJjb2RlIjoxMDAzLCJkdXJhdGlvbiI6NjB9XSwidGltZXN0YW1wIjoxNTg1MDQ5MTE4NDg1fQ=="
+        self.invoice_content_base_64: str = "eyJhdXRob3IiOnsibmFtZSI6IkNhYmluZXQgZGUgTGVyb3kiLCJzdHJlZXQiOiJWaWEgZGVsbGUgVmlnbmUgMSIsIlpJUCI6IjcxNDkiLCJjaXR5IjoiVnJpbiIsImVtYWlsIjoiTGVyb3lGcmVjaGV0dGVAYXJteXNweS5jb20iLCJwaG9uZSI6IjA4MSA2NjAgNjggMzYiLCJSQ0MiOiJWMTIzMTIzIn0sInRoZXJhcGlzdCI6eyJmaXJzdE5hbWUiOiJMZXJveSIsImxhc3ROYW1lIjoiRnLpY2hldHRlIiwic3RyZWV0IjoiVmlhIGRlbGxlIFZpZ25lIDEiLCJaSVAiOiI3MTQ5IiwiY2l0eSI6IlZyaW4iLCJlbWFpbCI6Ikxlcm95RnJlY2hldHRlQGFybXlzcHkuY29tIiwicGhvbmUiOiIwODEgNjYwIDY4IDM2IiwiUkNDIjoiVjEyMzEyMyJ9LCJwYXRpZW50Ijp7Il9pZCI6IjE1ODUwNDg3NTg4OTAiLCJmaXJzdE5hbWUiOiJOaWNob2xhcyIsImxhc3ROYW1lIjoiQWlsbGVib3VzdCIsInN0cmVldCI6IlT2c3N0YWxzdHJhc3NlIDk3IiwiWklQIjoiODg3MiIsImNpdHkiOiJXZWVzZW4iLCJjYW50b24iOiJTRyIsImJpcnRoZGF0ZSI6LTExMTgxMDI0MDAwMDAsImdlbmRlciI6ImZlbWFsZSIsImVtYWlsIjoiTmljaG9sYXNBaWxsZWJvdXN0QHRlbGV3b3JtLnVzIn0sInNlcnZpY2VQcmljZSI6MTAwLCJzZXJ2aWNlcyI6W3siZGF0ZSI6MTU4NTAwODAwMDAwMCwiY29kZSI6MTAwMywiZHVyYXRpb24iOjYwfV0sInRpbWVzdGFtcCI6MTU4NTA0OTExODQ4NX0="
         self.invoice_content_dict: Dict = {
-            "intRandom": 83,
             "author": {
                 "name": "Cabinet de Leroy",
                 "street": "Via delle Vigne 1",
@@ -19,7 +18,6 @@ class InvoiceContentTestCase(TestCase):
                 "email": "LeroyFrechette@armyspy.com",
                 "phone": "081 660 68 36",
                 "RCC": "V123123",
-                "GLN": "7601202431311",
             },
             "therapist": {
                 "firstName": "Leroy",
@@ -30,7 +28,6 @@ class InvoiceContentTestCase(TestCase):
                 "email": "LeroyFrechette@armyspy.com",
                 "phone": "081 660 68 36",
                 "RCC": "V123123",
-                "GLN": "7601202431311",
             },
             "patient": {
                 "_id": "1585048758890",
@@ -79,7 +76,6 @@ class InvoiceContentMissingParamTestCase(TestCase):
 
     def setUp(self):
         self.invoice_content_missing_param_dict: Dict = {
-            "intRandom": 83,
             "author": {
                 "street": "Via delle Vigne 1",
                 "ZIP": "7149",
@@ -87,7 +83,6 @@ class InvoiceContentMissingParamTestCase(TestCase):
                 "email": "LeroyFrechette@armyspy.com",
                 "phone": "081 660 68 36",
                 "RCC": "V123123",
-                "GLN": "7601202431311",
             },
             "therapist": {
                 "firstName": "Leroy",
@@ -98,7 +93,6 @@ class InvoiceContentMissingParamTestCase(TestCase):
                 "email": "LeroyFrechette@armyspy.com",
                 "phone": "081 660 68 36",
                 "RCC": "V123123",
-                "GLN": "7601202431311",
             },
             "patient": {
                 "_id": "1585048758890",

@@ -20,7 +20,6 @@ class InvoiceContent:
             "phone": {},
             "email": {},
             "RCC": {},
-            "GLN": {},
         },
         "therapist": {
             "firstName": {},
@@ -30,7 +29,6 @@ class InvoiceContent:
             "city": {},
             "phone": {},
             "RCC": {},
-            "GLN": {},
         },
         "patient": {
             "firstName": {},
@@ -213,7 +211,7 @@ class Entity:
 
     @property
     def GLN(self) -> str:
-        return self._entity_dict["GLN"]
+        return "2099999999999"
 
     @property
     def RCC(self) -> str:

@@ -41,8 +41,7 @@ The invoice content is a JSON object. Its structure should be as follow:
     * **`city`**: The author city.
     * **`phone`**: The author phone number.
     * **`email`**: The author email.
-    * **`RCC`**: The author RCC number.
-    * **`GLN`**: The author GLN number.
+    * **`RCC`**: The author RCC number *(If unknown, it can be empty)*.
 * **`therapist`**
     * **`firstName`**: The therapist first name.
     * **`lastName`**: The therapist first name.
@@ -50,8 +49,7 @@ The invoice content is a JSON object. Its structure should be as follow:
     * **`ZIP`**: The therapist postal code.
     * **`city`**: The therapist city.
     * **`phone`**: The therapist phone number.
-    * **`RCC`**: The therapist RCC number.
-    * **`GLN`**: The therapist GLN number.
+    * **`RCC`**: The therapist RCC number *(If unknown, it can be empty)*.
 * **`patient`**
     * **`firstName`**: The patient first name.
     * **`lastName`**: The patient first name.
@@ -74,7 +72,7 @@ The invoice content is a JSON object. Its structure should be as follow:
 
 ### **GET** `/pdf/{invoice_content_base_64}/{filename}`
 
-🧾 Generate a PDF invoice in the folder `/out/{author.name}/{author.RCCNumber}/{filename}`.
+🧾 Generate a PDF invoice in the folder `/out/{author.name}/{filename}`.
 
 #### Parameters
 
@@ -102,24 +100,3 @@ The invoice content is a JSON object. Its structure should be as follow:
     <br>**Body:** A JSON object
     * **`code`**: An error code
     * **`message`**: A readable message associated with the error code
-
-### **POST** `/gln`
-
-🔍 Return the GLN number associated with a therapist or a therapist organisation, fetched from [Refdata](https://www.refdata.ch/fr/partenaires/requete/base-de-donnees-des-partenaires-gln).
-
-#### Request body
-
-A JSON object
-* **`name`**: _Optional_. The therapist organisation name. If `name` is provided, `firstName` and `lastName` are ignored.
-* **`firstName`**: _Optional_. The therapist first name. If `firstName`is provided, `lastName` is also expected.
-* **`lastName`**: _Optional_. The therapist last name. If `lastName`is provided, `firstName` is also expected.
-* **`ZIP`**: _Optional_. The therapist postal code.
-* **`city`**: _Optional_. The therapist last name.
-
-#### Response
-
-* 👌 **Code:** `200`
-    <br>**Body:** HTML text corresponding to the response from https://refdatabase.refdata.ch/Viewer/SearchPartnerJur?Lang=fr or https://refdatabase.refdata.ch/Viewer/SearchPartnerNat?Lang=fr. This HTML contains a form and a table in which the therapist may be present.
-* 👎 **Code:** `400`
-    <br>**Body:** A JSON object
-    * **`name`**: An error message. Neither `name` nor `firstName` and `lastName` parameters are provided in the request body.
