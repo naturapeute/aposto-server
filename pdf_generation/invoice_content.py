@@ -62,6 +62,14 @@ class InvoiceContent:
         self.init_total_amount()
 
     @property
+    def terrapeute_ID(self) -> str:
+        return (
+            self._invoice_content_dict["terrapeuteID"]
+            if "terrapeuteID" in self._invoice_content_dict
+            else None
+        )
+
+    @property
     def timestamp(self) -> str:
         return str(int(self._date.timestamp() * 1000))[:-3]
 

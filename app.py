@@ -16,7 +16,6 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 from starlette.responses import (
     FileResponse,
-    PlainTextResponse,
     RedirectResponse,
     Response,
     UJSONResponse,
@@ -162,7 +161,12 @@ async def icon(_: Request):
 
 
 def generate_invoice(invoice_content: InvoiceContent) -> Path:
-    invoice_dir: Path = Path(f"./out/{invoice_content.author.name}")
+    invoice_dir_str = (
+        f"./out/{invoice_content.terrapeute_ID}"
+        if invoice_content.terrapeute_ID
+        else "./out/demo"
+    )
+    invoice_dir: Path = Path(invoice_dir_str)
     invoice_dir.mkdir(parents=True, exist_ok=True)
     invoice_path: Path = invoice_dir.joinpath(f"invoice-{invoice_content.timestamp}.pdf")
 

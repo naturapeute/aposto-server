@@ -34,6 +34,7 @@ You're done! The server is now running on http://localhost:8080/. 🚀
 
 The invoice content is a JSON object. Its structure should be as follow:
 
+* **`terrapeuteID`** *(optional)* The author Terrapeute ID. In demo mode, it is unset.
 * **`author`**
     * **`name`**: The author name. It can be a therapist organisation name or the first name and the last name of a therapist.
     * **`street`**: The author box number and street name.
@@ -72,7 +73,7 @@ The invoice content is a JSON object. Its structure should be as follow:
 
 ### **GET** `/pdf/{invoice_content_base_64}/{filename}`
 
-🧾 Generate a PDF invoice in the folder `/out/{author.name}/{filename}`.
+🧾 Generate a PDF invoice in the folder `/out/{terrapeuteID}/{filename}` if the user is logged with Terrapeute or `/out/demo/{filename}` if user is in demo mode..
 
 #### Parameters
 
