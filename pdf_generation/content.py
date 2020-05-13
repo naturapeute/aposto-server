@@ -23,8 +23,8 @@ class Content:
         return Content.top_to_bottom(self._top)
 
     @staticmethod
-    def to_mm(x: float) -> float:
-        return x * mm
+    def to_mm(val: float) -> float:
+        return val * mm
 
     @staticmethod
     def top_to_bottom(top: float) -> float:

@@ -249,7 +249,7 @@ class Author(Entity):
 
     @property
     def ESR_coding_line(self) -> str:
-        # FIXME : This should become compulsory with QR-invoice
+        # TODO : This should become compulsory with QR-invoice
         return self._author_dict["ESR"] if "ESR" in self._author_dict else None
 
 
