@@ -1,5 +1,6 @@
 import base64
 from datetime import datetime, timezone
+from dateutil import tz
 from typing import Dict, List
 
 import ujson
@@ -75,11 +76,13 @@ class InvoiceContent:
 
     @property
     def full_date_string(self) -> str:
-        return self._date.strftime("%d.%m.%Y %H:%M:%S")
+        return self._date.astimezone(tz.gettz("Europe/Zurich")).strftime(
+            "%d.%m.%Y %H:%M:%S"
+        )
 
     @property
     def date_string(self) -> str:
-        return self._date.strftime("%d/%m/%Y")
+        return self._date.astimezone(tz.gettz("Europe/Zurich")).strftime("%d.%m.%Y")
 
     @property
     def identification(self) -> str:
