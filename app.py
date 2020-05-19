@@ -176,33 +176,45 @@ def generate_invoice(invoice_content: InvoiceContent) -> Path:
         cvs.draw_full_invoice(
             [
                 Path(
-                    "pdf_generation/templates/descriptor_templates/header_template.json"
+                    "pdf_generation/invoice_templates/descriptor_templates/header_template.json"
                 ),
                 Path(
-                    "pdf_generation/templates/descriptor_templates/author_template.json"
+                    "pdf_generation/invoice_templates/descriptor_templates/author_template.json"
                 ),
                 Path(
-                    "pdf_generation/templates/descriptor_templates/patient_template.json"
+                    "pdf_generation/invoice_templates/descriptor_templates/patient_template.json"
                 ),
                 Path(
-                    "pdf_generation/templates/descriptor_templates/other_fields_template.json"
+                    "pdf_generation/invoice_templates/descriptor_templates/other_fields_template.json"
                 ),
                 Path(
-                    "pdf_generation/templates/descriptor_templates/services_template.json"
+                    "pdf_generation/invoice_templates/descriptor_templates/services_template.json"
                 ),
                 Path(
-                    "pdf_generation/templates/descriptor_templates/footer_template.json"
+                    "pdf_generation/invoice_templates/descriptor_templates/footer_template.json"
                 ),
             ],
-            [Path("pdf_generation/templates/graphic_templates/frame_template.json")],
             [
-                Path("pdf_generation/templates/value_templates/author_template.json"),
-                Path("pdf_generation/templates/value_templates/patient_template.json"),
                 Path(
-                    "pdf_generation/templates/value_templates/other_fields_template.json"
+                    "pdf_generation/invoice_templates/graphic_templates/frame_template.json"
+                )
+            ],
+            [
+                Path(
+                    "pdf_generation/invoice_templates/value_templates/author_template.json"
                 ),
-                Path("pdf_generation/templates/value_templates/services_template.json"),
-                Path("pdf_generation/templates/value_templates/footer_template.json"),
+                Path(
+                    "pdf_generation/invoice_templates/value_templates/patient_template.json"
+                ),
+                Path(
+                    "pdf_generation/invoice_templates/value_templates/other_fields_template.json"
+                ),
+                Path(
+                    "pdf_generation/invoice_templates/value_templates/services_template.json"
+                ),
+                Path(
+                    "pdf_generation/invoice_templates/value_templates/footer_template.json"
+                ),
             ],
             invoice_content,
         )
