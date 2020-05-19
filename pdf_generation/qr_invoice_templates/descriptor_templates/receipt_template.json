@@ -1,0 +1,44 @@
+[
+    {
+        "text": "Récépissé",
+        "left": 5,
+        "top": 200.881,
+        "style": "QRInvoiceMainTitleTextStyle"
+    },
+    {
+        "text": "Compte / Payable à",
+        "left": 5,
+        "top": 206.117,
+        "style": "QRInvoiceReceiptHeaderTextStyle"
+    },
+    {
+        "text": "Référence",
+        "left": 5,
+        "top": 224.641,
+        "style": "QRInvoiceReceiptHeaderTextStyle"
+    },
+    {
+        "text": "Payable par",
+        "left": 5,
+        "top": 232.913,
+        "style": "QRInvoiceReceiptHeaderTextStyle"
+    },
+    {
+        "text": "Monnaie",
+        "left": 5,
+        "top": 262.117,
+        "style": "QRInvoiceReceiptHeaderTextStyle"
+    },
+    {
+        "text": "Montant",
+        "left": 20,
+        "top": 262.177,
+        "style": "QRInvoiceReceiptHeaderTextStyle"
+    },
+    {
+        "text": "Point de dépôt",
+        "left": 57,
+        "top": 276.177,
+        "style": "QRInvoiceReceiptHeaderRightTextStyle"
+    }
+]

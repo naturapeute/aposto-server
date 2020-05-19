@@ -126,7 +126,8 @@ class QRInvoicePaymentSectionTextStyle(TextStyle):
 
 class QRInvoicePaymentSectionHeaderTextStyle(QRInvoiceMainTitleTextStyle):
     def __init__(self):
-        super().__init__(size=8)
+        super().__init__()
+        self.size = 8
 
 
 class QRInvoiceReceiptTextStyle(TextStyle):
@@ -136,4 +137,12 @@ class QRInvoiceReceiptTextStyle(TextStyle):
 
 class QRInvoiceReceiptHeaderTextStyle(QRInvoiceMainTitleTextStyle):
     def __init__(self):
-        super().__init__(size=6)
+        super().__init__()
+        self.size = 6
+
+
+class QRInvoiceReceiptHeaderRightTextStyle(QRInvoiceReceiptHeaderTextStyle):
+    def __init__(self):
+        super().__init__()
+        self.size = 6
+        self.align = "R"
