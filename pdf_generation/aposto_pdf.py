@@ -5,11 +5,12 @@ from PIL import Image
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 
-from pdf_generation.content import Graphic, Text, Value
+from pdf_generation.content import Graphic, SwissQRCode, Text, Value
 from pdf_generation.invoice_content import InvoiceContent
 from pdf_generation.template import (
     DescriptorTemplate,
     GraphicTemplate,
+    SwissQRCodeTemplate,
     ValueTemplate,
 )
 from pdf_generation.text_style import TextStyle, TTFontToRegister
@@ -42,6 +43,15 @@ class ApostoCanvas(canvas.Canvas):
 
     def draw_frame(self, frame: Graphic):
         self.rect(frame.left, frame.bottom, frame.width, frame.height, stroke=1)
+
+    def draw_image(self, image: Image, graphic: Graphic):
+        self.drawImage(
+            ImageReader(image),
+            graphic.left,
+            graphic.bottom,
+            graphic.width,
+            graphic.height,
+        )
 
     def draw_descriptor_template(self, descriptor_template_path: Path):
         template: List[Text] = DescriptorTemplate(
@@ -86,13 +96,7 @@ class ApostoCanvas(canvas.Canvas):
         ).load_template()
 
         for datamatrix in template:
-            self.drawImage(
-                ImageReader(datamatrix_image),
-                datamatrix.left,
-                datamatrix.bottom,
-                datamatrix.width,
-                datamatrix.height,
-            )
+            self.draw_image(datamatrix_image, datamatrix)
 
     def draw_scissors_template(self, scissors_template_path: Path):
         scissors_image: Image = Image.open("./pdf_generation/img/scissors.png")
@@ -102,13 +106,20 @@ class ApostoCanvas(canvas.Canvas):
             if scissors.rotate:
                 scissors_image = scissors_image.rotate(scissors.rotate, expand=True)
 
-            self.drawImage(
-                ImageReader(scissors_image),
-                scissors.left,
-                scissors.bottom,
-                width=scissors.width,
-                height=scissors.height,
-            )
+            self.draw_image(scissors_image, scissors)
+
+    def draw_swiss_qr_code_template(
+        self, swiss_qr_code_template_path: Path, invoice_content: InvoiceContent
+    ):
+        qr_code_image: Image = invoice_content.generate_qr_code()
+        swiss_cross_image: Image = Image.open("./pdf_generation/img/swiss_cross.png")
+        template: List[SwissQRCode] = SwissQRCodeTemplate(
+            swiss_qr_code_template_path
+        ).load_template()
+
+        for swiss_qr_code in template:
+            self.draw_image(qr_code_image, swiss_qr_code.qr_code)
+            self.draw_image(swiss_cross_image, swiss_qr_code.swiss_cross)
 
     def draw_invoice(
         self,

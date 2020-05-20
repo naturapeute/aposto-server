@@ -220,6 +220,10 @@ class InvoiceContent:
 
         return renderer.get_pilimage(5)
 
+    def generate_qr_code(self) -> Image:
+        # TODO : Implement QR code generation
+        return None
+
 
 class Entity:
     def __init__(self, entity_dict: Dict):
