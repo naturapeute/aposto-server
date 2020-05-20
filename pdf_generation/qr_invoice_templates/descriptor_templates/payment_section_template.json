@@ -1,0 +1,38 @@
+[
+    {
+        "text": "Section paiement",
+        "left": 67,
+        "top": 200.881,
+        "style": "QRInvoiceMainTitleTextStyle"
+    },
+    {
+        "text": "Monnaie",
+        "left": 67,
+        "top": 262.822,
+        "style": "QRInvoicePaymentSectionHeaderTextStyle"
+    },
+    {
+        "text": "Montant",
+        "left": 88.05,
+        "top": 262.822,
+        "style": "QRInvoicePaymentSectionHeaderTextStyle"
+    },
+    {
+        "text": "Compte / Payable à",
+        "left": 118,
+        "top": 199.822,
+        "style": "QRInvoicePaymentSectionHeaderTextStyle"
+    },
+    {
+        "text": "Référence",
+        "left": 118,
+        "top": 220.978,
+        "style": "QRInvoicePaymentSectionHeaderTextStyle"
+    },
+    {
+        "text": "Payable par",
+        "left": 118,
+        "top": 231.524,
+        "style": "QRInvoicePaymentSectionHeaderTextStyle"
+    }
+]
