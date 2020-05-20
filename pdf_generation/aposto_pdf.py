@@ -88,6 +88,22 @@ class ApostoCanvas(canvas.Canvas):
             height=datamatrix.dim,
         )
 
+    def draw_scissors_template(self, scissors_template_path: Path):
+        scissors_image: Image = Image.open("./pdf_generation/img/scissors.png")
+        template: List[Graphic] = GraphicTemplate(scissors_template_path).load_template()
+
+        for scissors in template:
+            if scissors.rotate:
+                scissors_image = scissors_image.rotate(scissors.rotate, expand=True)
+
+            self.drawImage(
+                ImageReader(scissors_image),
+                scissors.left,
+                scissors.bottom,
+                width=scissors.width,
+                height=scissors.height,
+            )
+
     def draw_full_invoice(
         self,
         descriptor_template_paths: List[Path],
