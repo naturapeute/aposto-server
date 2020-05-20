@@ -14,13 +14,13 @@
     {
         "text": "Référence",
         "left": 5,
-        "top": 224.641,
+        "top": 225.167,
         "style": "QRInvoiceReceiptHeaderTextStyle"
     },
     {
         "text": "Payable par",
         "left": 5,
-        "top": 232.913,
+        "top": 234.692,
         "style": "QRInvoiceReceiptHeaderTextStyle"
     },
     {
@@ -32,13 +32,13 @@
     {
         "text": "Montant",
         "left": 20,
-        "top": 262.177,
+        "top": 262.117,
         "style": "QRInvoiceReceiptHeaderTextStyle"
     },
     {
         "text": "Point de dépôt",
         "left": 57,
-        "top": 276.177,
+        "top": 276.117,
         "style": "QRInvoiceReceiptHeaderRightTextStyle"
     }
 ]

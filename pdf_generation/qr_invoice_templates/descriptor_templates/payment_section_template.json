@@ -26,13 +26,13 @@
     {
         "text": "Référence",
         "left": 118,
-        "top": 220.978,
+        "top": 223.108,
         "style": "QRInvoicePaymentSectionHeaderTextStyle"
     },
     {
         "text": "Payable par",
         "left": 118,
-        "top": 231.524,
+        "top": 234.751,
         "style": "QRInvoicePaymentSectionHeaderTextStyle"
     }
 ]
