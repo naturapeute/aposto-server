@@ -48,6 +48,7 @@ class ApostoCanvas(canvas.Canvas):
             self.drawString(text)
 
     def draw_frame_template(self, frame_template_path: Path):
+        self.setLineWidth(0.75)
         template: List[Frame] = FrameTemplate(frame_template_path).load_template()
 
         for frame in template:
