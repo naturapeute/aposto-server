@@ -5,9 +5,13 @@ from PIL import Image
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 
-from pdf_generation.content import Datamatrix, Frame, Text, Value
+from pdf_generation.content import Datamatrix, Graphic, Text, Value
 from pdf_generation.invoice_content import InvoiceContent
-from pdf_generation.template import DescriptorTemplate, FrameTemplate, ValueTemplate
+from pdf_generation.template import (
+    DescriptorTemplate,
+    GraphicTemplate,
+    ValueTemplate,
+)
 from pdf_generation.text_style import TextStyle, TTFontToRegister
 
 
@@ -36,7 +40,7 @@ class ApostoCanvas(canvas.Canvas):
         else:
             super().drawString(text.left, text.bottom, text.text)
 
-    def draw_frame(self, frame: Frame):
+    def draw_frame(self, frame: Graphic):
         self.rect(frame.left, frame.bottom, frame.width, frame.height, stroke=1)
 
     def draw_descriptor_template(self, descriptor_template_path: Path):
@@ -49,7 +53,7 @@ class ApostoCanvas(canvas.Canvas):
 
     def draw_frame_template(self, frame_template_path: Path):
         self.setLineWidth(0.75)
-        template: List[Frame] = FrameTemplate(frame_template_path).load_template()
+        template: List[Graphic] = GraphicTemplate(frame_template_path).load_template()
 
         for frame in template:
             self.draw_frame(frame)

@@ -41,11 +41,12 @@ class Text(Content):
         self._top += shift
 
 
-class Frame(Content):
+class Graphic(Content):
     def __init__(self, dict_frame: Dict):
         super().__init__(dict_frame)
         self._width: float = dict_frame["width"]
         self._height: float = dict_frame["height"]
+        self._rotate: float = dict_frame["rotate"] if "rotate" in dict_frame else None
 
     @property
     def width(self):
@@ -54,6 +55,10 @@ class Frame(Content):
     @property
     def height(self):
         return self.to_mm(self._height)
+
+    @property
+    def rotate(self):
+        return self._rotate
 
 
 class Value(Content):
