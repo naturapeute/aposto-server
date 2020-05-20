@@ -1,0 +1,16 @@
+[
+    {
+        "qr_code": {
+            "left": 67,
+            "top": 255,
+            "width": 46,
+            "height": 46
+        },
+        "swiss_cross": {
+            "left": 86.5,
+            "top": 235.5,
+            "width": 7,
+            "height": 7
+        }
+    }
+]
