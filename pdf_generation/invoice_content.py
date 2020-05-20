@@ -128,6 +128,11 @@ class InvoiceContent:
     def total_amount(self) -> str:
         return "%.2f" % self._total_amount
 
+    @property
+    def QR_reference(self) -> str:
+        # TODO
+        return ""
+
     @staticmethod
     def timestamp_to_datetime(timestamp: float) -> datetime:
         return datetime.utcfromtimestamp(timestamp / 1000).replace(tzinfo=timezone.utc)
@@ -251,6 +256,19 @@ class Author(Entity):
         return self._author_dict["email"]
 
     @property
+    def IBAN(self) -> str:
+        # TODO
+        return ""
+
+    @property
+    def street(self) -> str:
+        return self._entity_dict["street"]
+
+    @property
+    def ZIP_city(self) -> str:
+        return f"{self._entity_dict['ZIP']} {self._entity_dict['city']}"
+
+    @property
     def ESR_coding_line(self) -> str:
         # TODO : This should become compulsory with QR-invoice
         return self._author_dict["ESR"] if "ESR" in self._author_dict else None
@@ -312,7 +330,7 @@ class Patient:
         return f"{self.first_name} {self.last_name}"
 
     @property
-    def zip_city(self) -> str:
+    def ZIP_city(self) -> str:
         return f"{self.ZIP} {self.city}"
 
     @property

@@ -60,7 +60,7 @@
         "style": "ValueTextStyle"
     },
     {
-        "key": "patient.zip_city",
+        "key": "patient.ZIP_city",
         "left": 118.557,
         "top": 68.442,
         "style": "ValueTextStyle"
