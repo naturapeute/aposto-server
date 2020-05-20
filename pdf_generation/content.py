@@ -75,3 +75,9 @@ class Value(Content):
                 "style": type(self.style).__name__,
             }
         )
+
+
+class SwissQRCode:
+    def __init__(self, dict_swiss_qr_code: Dict):
+        self.qr_code: Graphic = Graphic(dict_swiss_qr_code["qr_code"])
+        self.swiss_cross: Graphic = Graphic(dict_swiss_qr_code["swiss_cross"])

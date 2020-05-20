@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 from typing import List
 
-from pdf_generation.content import Content, Graphic, Text, Value
+from pdf_generation.content import Content, Graphic, SwissQRCode, Text, Value
 
 
 class Template:
@@ -35,3 +35,12 @@ class ValueTemplate(Template):
     def load_template(self):
         with open(self.path.resolve().as_posix()) as json_template:
             return list(Value(dict_value) for dict_value in json.load(json_template))
+
+
+class SwissQRCodeTemplate(Template):
+    def load_template(self) -> List[SwissQRCode]:
+        with open(self.path.resolve().as_posix()) as json_template:
+            return list(
+                SwissQRCode(dict_swiss_qr_code)
+                for dict_swiss_qr_code in json.load(json_template)
+            )
