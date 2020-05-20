@@ -1,0 +1,62 @@
+[
+    {
+        "key": "currency",
+        "left": 67,
+        "top": 267.408,
+        "style": "QRInvoicePaymentSectionTextStyle"
+    },
+    {
+        "key": "total_amount",
+        "left": 88.05,
+        "top": 267.408,
+        "style": "QRInvoicePaymentSectionTextStyle"
+    },
+    {
+        "key": "author.IBAN",
+        "left": 118,
+        "top": 203.703,
+        "style": "QRInvoicePaymentSectionTextStyle"
+    },
+    {
+        "key": "author.name",
+        "left": 118,
+        "top": 207.584,
+        "style": "QRInvoicePaymentSectionTextStyle"
+    },
+    {
+        "key": "author.street",
+        "left": 118,
+        "top": 211.465,
+        "style": "QRInvoicePaymentSectionTextStyle"
+    },
+    {
+        "key": "author.ZIP_city",
+        "left": 118,
+        "top": 215.346,
+        "style": "QRInvoicePaymentSectionTextStyle"
+    },
+    {
+        "key": "QR_reference",
+        "left": 118,
+        "top": 226.989,
+        "style": "QRInvoicePaymentSectionTextStyle"
+    },
+    {
+        "key": "patient.names",
+        "left": 118,
+        "top": 238.632,
+        "style": "QRInvoicePaymentSectionTextStyle"
+    },
+    {
+        "key": "patient.street",
+        "left": 118,
+        "top": 242.513,
+        "style": "QRInvoicePaymentSectionTextStyle"
+    },
+    {
+        "key": "patient.ZIP_city",
+        "left": 118,
+        "top": 246.394,
+        "style": "QRInvoicePaymentSectionTextStyle"
+    }
+]
