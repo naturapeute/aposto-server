@@ -173,7 +173,7 @@ def generate_invoice(invoice_content: InvoiceContent) -> Path:
     if not invoice_path.exists():
         cvs: ApostoCanvas = ApostoCanvas(invoice_path.as_posix())
 
-        cvs.draw_full_invoice(
+        cvs.draw_invoice(
             [
                 Path(
                     "pdf_generation/invoice_templates/descriptor_templates/header_template.json"
@@ -216,10 +216,14 @@ def generate_invoice(invoice_content: InvoiceContent) -> Path:
                     "pdf_generation/invoice_templates/value_templates/footer_template.json"
                 ),
             ],
+            [
+                Path(
+                    "pdf_generation/invoice_templates/graphic_templates/datamatrix_template.json"
+                ),
+            ],
             invoice_content,
         )
 
-        cvs.showPage()
         cvs.save()
 
     return invoice_path

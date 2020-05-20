@@ -1,7 +1,6 @@
 from functools import reduce
 from typing import Dict, Union
 
-from PIL import Image
 from reportlab.lib.units import mm
 
 import pdf_generation
@@ -15,11 +14,11 @@ class Content:
         self._top: float = dict_content["top"]
 
     @property
-    def left(self):
+    def left(self) -> float:
         return Content.to_mm(self._left)
 
     @property
-    def bottom(self):
+    def bottom(self) -> float:
         return Content.top_to_bottom(self._top)
 
     @staticmethod
@@ -49,15 +48,15 @@ class Graphic(Content):
         self._rotate: float = dict_frame["rotate"] if "rotate" in dict_frame else None
 
     @property
-    def width(self):
+    def width(self) -> float:
         return self.to_mm(self._width)
 
     @property
-    def height(self):
+    def height(self) -> float:
         return self.to_mm(self._height)
 
     @property
-    def rotate(self):
+    def rotate(self) -> float:
         return self._rotate
 
 
@@ -76,10 +75,3 @@ class Value(Content):
                 "style": type(self.style).__name__,
             }
         )
-
-
-class Datamatrix(Content):
-    def __init__(self, image: Image):
-        super().__init__({"left": 15.817, "top": 276.856})
-        self.image: Image = image
-        self.dim: float = 16.462 * mm

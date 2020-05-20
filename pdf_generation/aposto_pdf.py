@@ -5,7 +5,7 @@ from PIL import Image
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 
-from pdf_generation.content import Datamatrix, Graphic, Text, Value
+from pdf_generation.content import Graphic, Text, Value
 from pdf_generation.invoice_content import InvoiceContent
 from pdf_generation.template import (
     DescriptorTemplate,
@@ -73,20 +73,26 @@ class ApostoCanvas(canvas.Canvas):
                     text.shift_top(index * self.SERVICE_TOP_SHIFT)
                     self.drawString(text)
 
-    def draw_datamatrix(self, invoice_content: InvoiceContent):
+    def draw_datamatrix(
+        self, datamatrix_template_path: Path, invoice_content: InvoiceContent
+    ):
         datamatrix_image: Image = invoice_content.generate_datamatrix()
 
         if not datamatrix_image:
             return
 
-        datamatrix: Datamatrix = Datamatrix(datamatrix_image)
-        self.drawImage(
-            ImageReader(datamatrix.image),
-            datamatrix.left,
-            datamatrix.bottom,
-            width=datamatrix.dim,
-            height=datamatrix.dim,
-        )
+        template: List[Graphic] = GraphicTemplate(
+            datamatrix_template_path
+        ).load_template()
+
+        for datamatrix in template:
+            self.drawImage(
+                ImageReader(datamatrix_image),
+                datamatrix.left,
+                datamatrix.bottom,
+                datamatrix.width,
+                datamatrix.height,
+            )
 
     def draw_scissors_template(self, scissors_template_path: Path):
         scissors_image: Image = Image.open("./pdf_generation/img/scissors.png")
@@ -104,11 +110,12 @@ class ApostoCanvas(canvas.Canvas):
                 height=scissors.height,
             )
 
-    def draw_full_invoice(
+    def draw_invoice(
         self,
         descriptor_template_paths: List[Path],
         frame_template_paths: List[Path],
         value_template_paths: List[Path],
+        datamatrix_template_paths: List[Path],
         invoice_content: InvoiceContent,
     ):
         for descriptor_template_path in descriptor_template_paths:
@@ -120,4 +127,7 @@ class ApostoCanvas(canvas.Canvas):
         for value_template_path in value_template_paths:
             self.draw_value_template(value_template_path, invoice_content)
 
-        self.draw_datamatrix(invoice_content)
+        for datamatrix_template_path in datamatrix_template_paths:
+            self.draw_datamatrix(datamatrix_template_path, invoice_content)
+
+        self.showPage()
