@@ -1,6 +1,6 @@
 [
     {
-        "key": "author.IBAN",
+        "key": "author.QR_IBAN",
         "left": 5,
         "top": 209.292,
         "style": "QRInvoiceReceiptTextStyle"

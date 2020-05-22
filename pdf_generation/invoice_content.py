@@ -1,12 +1,11 @@
 import base64
 from datetime import datetime, timezone
-from dateutil import tz
 from typing import Dict, List
 
 import ujson
+from dateutil import tz
 from PIL import Image
-from pystrich.datamatrix import DataMatrixEncoder
-from pystrich.datamatrix.renderer import DataMatrixRenderer
+from pystrich.datamatrix import DataMatrixEncoder, DataMatrixRenderer
 
 from pdf_generation.service_codes import SERVICE_CODES
 
@@ -209,7 +208,7 @@ class InvoiceContent:
 
         return datamatrix_string
 
-    def generate_datamatrix(self) -> Image:
+    def generate_datamatrix(self) -> Image.Image:
         datamatrix_string: str = self.generate_datamatrix_string()
 
         if not datamatrix_string:
@@ -218,11 +217,7 @@ class InvoiceContent:
         encoder: DataMatrixEncoder = DataMatrixEncoder(datamatrix_string)
         renderer: DataMatrixRenderer = DataMatrixRenderer(encoder.matrix, encoder.regions)
 
-        return renderer.get_pilimage(5)
-
-    def generate_qr_code(self) -> Image:
-        # TODO : Implement QR code generation
-        return None
+        return renderer.get_pilimage(10)
 
 
 class Entity:
@@ -260,7 +255,7 @@ class Author(Entity):
         return self._author_dict["email"]
 
     @property
-    def IBAN(self) -> str:
+    def QR_IBAN(self) -> str:
         # TODO
         return ""
 
