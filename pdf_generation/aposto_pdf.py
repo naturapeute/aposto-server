@@ -7,6 +7,7 @@ from reportlab.pdfgen import canvas
 
 from pdf_generation.content import Graphic, SwissQRCode, Text, Value
 from pdf_generation.invoice_content import InvoiceContent
+from pdf_generation.qr_invoice import QRInvoice
 from pdf_generation.template import (
     DescriptorTemplate,
     GraphicTemplate,
@@ -44,7 +45,7 @@ class ApostoCanvas(canvas.Canvas):
     def draw_frame(self, frame: Graphic):
         self.rect(frame.left, frame.bottom, frame.width, frame.height, stroke=1)
 
-    def draw_image(self, image: Image, graphic: Graphic):
+    def draw_image(self, image: Image.Image, graphic: Graphic):
         self.drawImage(
             ImageReader(image),
             graphic.left,
@@ -86,7 +87,7 @@ class ApostoCanvas(canvas.Canvas):
     def draw_datamatrix(
         self, datamatrix_template_path: Path, invoice_content: InvoiceContent
     ):
-        datamatrix_image: Image = invoice_content.generate_datamatrix()
+        datamatrix_image: Image.Image = invoice_content.generate_datamatrix()
 
         if not datamatrix_image:
             return
@@ -111,8 +112,10 @@ class ApostoCanvas(canvas.Canvas):
     def draw_swiss_qr_code_template(
         self, swiss_qr_code_template_path: Path, invoice_content: InvoiceContent
     ):
-        qr_code_image: Image = invoice_content.generate_qr_code()
-        swiss_cross_image: Image = Image.open("./pdf_generation/img/swiss_cross.png")
+        qr_code_image: Image.Image = QRInvoice(invoice_content).generate_qr_code()
+        swiss_cross_image: Image.Image = Image.open(
+            "./pdf_generation/img/swiss_cross.png"
+        )
         template: List[SwissQRCode] = SwissQRCodeTemplate(
             swiss_qr_code_template_path
         ).load_template()
