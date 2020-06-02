@@ -60,24 +60,6 @@
         "style": "BoldDescriptorRightTextStyle"
     },
     {
-        "text": "0.00",
-        "left": 85.918,
-        "top": 265.037,
-        "style": "SmallValueRightTextStyle"
-    },
-    {
-        "text": "0.00",
-        "left": 85.927,
-        "top": 267.785,
-        "style": "SmallValueRightTextStyle"
-    },
-    {
-        "text": "0.00",
-        "left": 85.922,
-        "top": 270.536,
-        "style": "SmallValueRightTextStyle"
-    },
-    {
         "text": "N° TVA:",
         "left": 115.125,
         "top": 261.831,

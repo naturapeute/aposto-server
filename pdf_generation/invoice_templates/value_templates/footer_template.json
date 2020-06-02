@@ -18,6 +18,24 @@
         "style": "SmallValueRightTextStyle"
     },
     {
+        "key": "tax_rate_0_amount",
+        "left": 85.918,
+        "top": 265.037,
+        "style": "SmallValueRightTextStyle"
+    },
+    {
+        "key": "tax_rate_1_amount",
+        "left": 85.927,
+        "top": 267.785,
+        "style": "SmallValueRightTextStyle"
+    },
+    {
+        "key": "tax_rate_2_amount",
+        "left": 85.922,
+        "top": 270.536,
+        "style": "SmallValueRightTextStyle"
+    },
+    {
         "key": "currency",
         "left": 121.095,
         "top": 264.861,

@@ -93,7 +93,7 @@ class InvoiceContent:
 
     @property
     def therapy_dates(self) -> str:
-        return f"{self._therapy_start_date.strftime('%d.%m.%Y')} - {self._therapy_end_date.strftime('%d.%m.%Y')}"
+        return f"{self._therapy_start_date.astimezone(tz.gettz('Europe/Zurich')).strftime('%d.%m.%Y')} - {self._therapy_end_date.astimezone(tz.gettz('Europe/Zurich')).strftime('%d.%m.%Y')}"
 
     @property
     def therapy_reason(self) -> str:
@@ -108,15 +108,51 @@ class InvoiceContent:
         return f"1/{self.author.gln} 2/{self.therapist.gln}"
 
     @property
+    def total_amount_medical(self) -> str:
+        return self.total_amount
+
+    @property
+    def total_amount_medicines(self) -> str:
+        return "0.00"
+
+    @property
+    def total_amount_laboratory(self) -> str:
+        return "0.00"
+
+    @property
+    def total_amount_medical_device(self) -> str:
+        return "0.00"
+
+    @property
+    def total_amount_other(self) -> str:
+        return "0.00"
+
+    @property
     def total_amount_tax_rate_0(self) -> str:
         return self.total_amount
+
+    @property
+    def tax_rate_0_amount(self) -> str:
+        return "0.00"
 
     @property
     def total_amount_tax_rate_1(self) -> str:
         return "0.00"
 
     @property
+    def tax_rate_1_amount(self) -> str:
+        return "0.00"
+
+    @property
     def total_amount_tax_rate_2(self) -> str:
+        return "0.00"
+
+    @property
+    def tax_rate_2_amount(self) -> str:
+        return "0.00"
+
+    @property
+    def total_amount_tax_rate(self) -> str:
         return "0.00"
 
     @property
@@ -126,6 +162,14 @@ class InvoiceContent:
     @property
     def total_amount(self) -> str:
         return "%.2f" % self._total_amount
+
+    @property
+    def paid_amount(self) -> str:
+        return self.total_amount
+
+    @property
+    def owed_amount(self) -> str:
+        return "0.00"
 
     @property
     def qr_reference(self) -> str:
@@ -189,7 +233,9 @@ class InvoiceContent:
             return None
 
         separator: str = "#"
-        therapy_start_date = self._therapy_start_date.strftime("%d.%m.%Y")
+        therapy_start_date = self._therapy_start_date.astimezone(
+            tz.gettz("Europe/Zurich")
+        ).strftime("%d.%m.%Y")
         due_amount: str = "0"
 
         datamatrix_string = f"{self.author.esr_coding_line}{separator}{self.author.gln}{separator}{self.therapist.gln}{separator}"
