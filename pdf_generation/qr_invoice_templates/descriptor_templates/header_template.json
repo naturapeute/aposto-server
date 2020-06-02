@@ -1,0 +1,32 @@
+[
+    {
+        "text": "Facture du patient",
+        "left": 13.245,
+        "top": 18.345,
+        "style": "TitleTextStyle"
+    },
+    {
+        "text": "Cette page est pour vos archives",
+        "left": 12.998,
+        "top": 21.74,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Release 4.5R/fr",
+        "left": 197.519,
+        "top": 15.514,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "Veuillez envoyer le justificatif de remboursement annexé",
+        "left": 199.188,
+        "top": 21.739,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "à votre caisse maladie ou à l'assurance",
+        "left": 199.597,
+        "top": 24.092,
+        "style": "DescriptorRightTextStyle"
+    }
+]
