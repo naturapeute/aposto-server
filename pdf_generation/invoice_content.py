@@ -173,8 +173,12 @@ class InvoiceContent:
 
     @property
     def qr_reference(self) -> str:
-        # TODO
-        return ""
+        # TODO : Update when moving to QR-invoice
+        return (
+            self._invoice_content_dict["QRReference"]
+            if "QRReference" in self._invoice_content_dict
+            else None
+        )
 
     @staticmethod
     def timestamp_to_datetime(timestamp: float) -> datetime:
@@ -229,6 +233,7 @@ class InvoiceContent:
         self._total_amount: float = total_amount
 
     def generate_datamatrix_string(self) -> str:
+        # TODO : Update when moving to QR-invoice
         if not self.author.esr_coding_line or not self.patient.ssn:
             return None
 
@@ -257,6 +262,7 @@ class InvoiceContent:
     def generate_datamatrix(self) -> Image.Image:
         datamatrix_string: str = self.generate_datamatrix_string()
 
+        # TODO : Update when moving to QR-invoice
         if not datamatrix_string:
             return None
 
@@ -314,12 +320,12 @@ class Author(Entity):
 
     @property
     def qr_iban(self) -> str:
-        # TODO
-        return ""
+        # TODO : Update when moving to QR-invoice
+        return self._author_dict["QRIBAN"] if "QRIBAN" in self._author_dict else None
 
     @property
     def esr_coding_line(self) -> str:
-        # TODO : This should become compulsory with QR-invoice
+        # TODO : Update when moving to QR-invoice
         return self._author_dict["ESR"] if "ESR" in self._author_dict else None
 
 
@@ -388,6 +394,7 @@ class Patient:
 
     @property
     def ssn(self) -> str:
+        # TOOD : Update when SSN is available
         return self._patient_dict["SSN"] if "SSN" in self._patient_dict else None
 
     @property

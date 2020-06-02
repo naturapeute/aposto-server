@@ -173,6 +173,64 @@ def generate_invoice(invoice_content: InvoiceContent) -> Path:
     if not invoice_path.exists():
         cvs: ApostoCanvas = ApostoCanvas(invoice_path.as_posix())
 
+        if invoice_content.qr_reference and invoice_content.author.qr_iban:
+            cvs.draw_invoice(
+                [
+                    Path(
+                        "pdf_generation/qr_invoice_templates/descriptor_templates/header_template.json"
+                    ),
+                    Path(
+                        "pdf_generation/qr_invoice_templates/descriptor_templates/author_template.json"
+                    ),
+                    Path(
+                        "pdf_generation/qr_invoice_templates/descriptor_templates/patient_template.json"
+                    ),
+                    Path(
+                        "pdf_generation/qr_invoice_templates/descriptor_templates/invoice_template.json"
+                    ),
+                    Path(
+                        "pdf_generation/qr_invoice_templates/descriptor_templates/receipt_template.json"
+                    ),
+                    Path(
+                        "pdf_generation/qr_invoice_templates/descriptor_templates/payment_section_template.json"
+                    ),
+                ],
+                [
+                    Path(
+                        "pdf_generation/qr_invoice_templates/graphic_templates/frame_template.json"
+                    )
+                ],
+                [
+                    Path(
+                        "pdf_generation/qr_invoice_templates/value_templates/author_template.json"
+                    ),
+                    Path(
+                        "pdf_generation/qr_invoice_templates/value_templates/patient_template.json"
+                    ),
+                    Path(
+                        "pdf_generation/qr_invoice_templates/value_templates/invoice_template.json"
+                    ),
+                    Path(
+                        "pdf_generation/qr_invoice_templates/value_templates/receipt_template.json"
+                    ),
+                    Path(
+                        "pdf_generation/qr_invoice_templates/value_templates/payment_section_template.json"
+                    ),
+                ],
+                [],
+                [
+                    Path(
+                        "pdf_generation/qr_invoice_templates/graphic_templates/scissors_template.json"
+                    ),
+                ],
+                [
+                    Path(
+                        "pdf_generation/qr_invoice_templates/graphic_templates/swiss_qr_code_template.json"
+                    ),
+                ],
+                invoice_content,
+            )
+
         cvs.draw_invoice(
             [
                 Path(
@@ -221,6 +279,8 @@ def generate_invoice(invoice_content: InvoiceContent) -> Path:
                     "pdf_generation/invoice_templates/graphic_templates/datamatrix_template.json"
                 ),
             ],
+            [],
+            [],
             invoice_content,
         )
 

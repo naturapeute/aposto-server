@@ -130,6 +130,8 @@ class ApostoCanvas(canvas.Canvas):
         frame_template_paths: List[Path],
         value_template_paths: List[Path],
         datamatrix_template_paths: List[Path],
+        scissors_template_path: List[Path],
+        swiss_qr_codes_template_path: List[Path],
         invoice_content: InvoiceContent,
     ):
         for descriptor_template_path in descriptor_template_paths:
@@ -143,5 +145,11 @@ class ApostoCanvas(canvas.Canvas):
 
         for datamatrix_template_path in datamatrix_template_paths:
             self.draw_datamatrix(datamatrix_template_path, invoice_content)
+
+        for scissor_template_path in scissors_template_path:
+            self.draw_scissors_template(scissor_template_path)
+
+        for swiss_qr_code_template_path in swiss_qr_codes_template_path:
+            self.draw_swiss_qr_code_template(swiss_qr_code_template_path, invoice_content)
 
         self.showPage()
