@@ -1,0 +1,44 @@
+[
+    {
+        "key": "patient.name",
+        "left": 117.809,
+        "top": 60.878,
+        "style": "LargeValueTextStyle"
+    },
+    {
+        "key": "patient.street",
+        "left": 117.199,
+        "top": 64.83,
+        "style": "LargeValueTextStyle"
+    },
+    {
+        "key": "patient.zip_city",
+        "left": 117.789,
+        "top": 68.744,
+        "style": "LargeValueTextStyle"
+    },
+    {
+        "key": "patient.name",
+        "left": 117.755,
+        "top": 99.745,
+        "style": "ValueTextStyle"
+    },
+    {
+        "key": "patient.street",
+        "left": 117.747,
+        "top": 102.867,
+        "style": "ValueTextStyle"
+    },
+    {
+        "key": "patient.zip_city",
+        "left": 117.739,
+        "top": 105.991,
+        "style": "ValueTextStyle"
+    },
+    {
+        "key": "patient.birthday_with_header_and_gender",
+        "left": 117.747,
+        "top": 112.2,
+        "style": "ValueTextStyle"
+    }
+]
