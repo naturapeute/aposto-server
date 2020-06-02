@@ -29,11 +29,11 @@ class ApostoCanvas(canvas.Canvas):
         TTFontToRegister(Path("fonts/Arial Bold.ttf"), "Arial B").register()
         TTFontToRegister(Path("fonts/OCRB.ttf"), "ORCB").register()
 
-    def setFont(self, style: TextStyle):
+    def set_font(self, style: TextStyle):
         return super().setFont(style.family, style.size)
 
-    def drawString(self, text: Text):
-        self.setFont(text.style)
+    def draw_string(self, text: Text):
+        self.set_font(text.style)
 
         if text.style.align == "R":
             super().drawRightString(text.left, text.bottom, text.text)
@@ -60,7 +60,7 @@ class ApostoCanvas(canvas.Canvas):
         ).load_template()
 
         for text in template:
-            self.drawString(text)
+            self.draw_string(text)
 
     def draw_frame_template(self, frame_template_path: Path):
         self.setLineWidth(0.75)
@@ -76,13 +76,13 @@ class ApostoCanvas(canvas.Canvas):
 
         if "services" not in value_template_path.as_posix():
             for value in template:
-                self.drawString(value.to_text(invoice_content))
+                self.draw_string(value.to_text(invoice_content))
         else:
             for index, service in enumerate(invoice_content.services.services):
                 for value in template:
                     text: Text = value.to_text(service)
                     text.shift_top(index * self.SERVICE_TOP_SHIFT)
-                    self.drawString(text)
+                    self.draw_string(text)
 
     def draw_datamatrix(
         self, datamatrix_template_path: Path, invoice_content: InvoiceContent
