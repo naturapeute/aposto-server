@@ -14,7 +14,7 @@ class QRInvoice:
         return "\r\n"
 
     @property
-    def header_QR_type(self) -> str:
+    def header_qr_type(self) -> str:
         return "SPC"
 
     @property
@@ -27,15 +27,15 @@ class QRInvoice:
 
     @property
     def header(self) -> str:
-        return f"{self.header_QR_type}{self.separator}{self.header_version}{self.separator}{self.header_coding}"
+        return f"{self.header_qr_type}{self.separator}{self.header_version}{self.separator}{self.header_coding}"
 
     @property
-    def cdtr_inf_IBAN(self) -> str:
-        return self.invoice_content.author.QR_IBAN
+    def cdtr_inf_iban(self) -> str:
+        return self.invoice_content.author.qr_iban
 
     @property
     def cdtr_inf(self) -> str:
-        return self.cdtr_inf_IBAN
+        return self.cdtr_inf_iban
 
     @property
     def cdtr_adr_tp(self) -> str:
@@ -51,7 +51,7 @@ class QRInvoice:
 
     @property
     def cdtr_bldg_nb_or_adr_line2(self) -> str:
-        return self.invoice_content.author.ZIP_city
+        return self.invoice_content.author.zip_city
 
     @property
     def cdtr_pst_cd(self) -> str:
@@ -95,7 +95,7 @@ class QRInvoice:
 
     @property
     def ultmt_dbtr_name(self) -> str:
-        return self.invoice_content.patient.names
+        return self.invoice_content.patient.name
 
     @property
     def ultmt_dbtr_strt_nm_or_adr_line1(self) -> str:
@@ -103,7 +103,7 @@ class QRInvoice:
 
     @property
     def ultmt_dbtr_bldg_nb_or_adr_line2(self) -> str:
-        return self.invoice_content.patient.ZIP_city
+        return self.invoice_content.patient.zip_city
 
     @property
     def ultmt_dbtr_pst_cd(self) -> str:
@@ -135,7 +135,7 @@ class QRInvoice:
 
     @property
     def rmt_inf_ref(self) -> str:
-        return self.invoice_content.QR_reference
+        return self.invoice_content.qr_reference
 
     @property
     def rmt_inf(self) -> str:

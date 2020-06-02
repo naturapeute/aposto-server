@@ -162,8 +162,8 @@ async def icon(_: Request):
 
 def generate_invoice(invoice_content: InvoiceContent) -> Path:
     invoice_dir_str = (
-        f"./out/{invoice_content.terrapeute_ID}"
-        if invoice_content.terrapeute_ID
+        f"./out/{invoice_content.terrapeute_id}"
+        if invoice_content.terrapeute_id
         else "./out/demo"
     )
     invoice_dir: Path = Path(invoice_dir_str)

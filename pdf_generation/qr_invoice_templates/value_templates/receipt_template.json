@@ -1,6 +1,6 @@
 [
     {
-        "key": "author.QR_IBAN",
+        "key": "author.qr_iban",
         "left": 5,
         "top": 209.292,
         "style": "QRInvoiceReceiptTextStyle"
@@ -18,19 +18,19 @@
         "style": "QRInvoiceReceiptTextStyle"
     },
     {
-        "key": "author.ZIP_city",
+        "key": "author.zip_city",
         "left": 5,
         "top": 218.817,
         "style": "QRInvoiceReceiptTextStyle"
     },
     {
-        "key": "QR_reference",
+        "key": "qr_reference",
         "left": 5,
         "top": 228.342,
         "style": "QRInvoiceReceiptTextStyle"
     },
     {
-        "key": "patient.names",
+        "key": "patient.name",
         "left": 5,
         "top": 237.867,
         "style": "QRInvoiceReceiptTextStyle"
@@ -42,7 +42,7 @@
         "style": "QRInvoiceReceiptTextStyle"
     },
     {
-        "key": "patient.ZIP_city",
+        "key": "patient.zip_city",
         "left": 5,
         "top": 244.217,
         "style": "QRInvoiceReceiptTextStyle"

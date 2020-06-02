@@ -18,13 +18,13 @@
         "style": "SmallValueTextStyle"
     },
     {
-        "key": "author.GLN",
+        "key": "author.gln",
         "left": 59.031,
         "top": 25.048,
         "style": "ValueTextStyle"
     },
     {
-        "key": "author.RCC",
+        "key": "author.rcc",
         "left": 59.187,
         "top": 28.853,
         "style": "ValueTextStyle"
@@ -48,13 +48,13 @@
         "style": "SmallValueTextStyle"
     },
     {
-        "key": "therapist.GLN",
+        "key": "therapist.gln",
         "left": 59.085,
         "top": 32.734,
         "style": "ValueTextStyle"
     },
     {
-        "key": "therapist.RCC",
+        "key": "therapist.rcc",
         "left": 59.178,
         "top": 36.535,
         "style": "ValueTextStyle"

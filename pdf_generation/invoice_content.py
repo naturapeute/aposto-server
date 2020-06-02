@@ -62,7 +62,7 @@ class InvoiceContent:
         self.init_total_amount()
 
     @property
-    def terrapeute_ID(self) -> str:
+    def terrapeute_id(self) -> str:
         return (
             self._invoice_content_dict["terrapeuteID"]
             if "terrapeuteID" in self._invoice_content_dict
@@ -104,8 +104,8 @@ class InvoiceContent:
         return f"{self._date.strftime('%d.%m.%Y')} / {self.timestamp}"
 
     @property
-    def GLN_list(self) -> str:
-        return f"1/{self.author.GLN} 2/{self.therapist.GLN}"
+    def gln_list(self) -> str:
+        return f"1/{self.author.gln} 2/{self.therapist.gln}"
 
     @property
     def total_amount_tax_rate_0(self) -> str:
@@ -128,7 +128,7 @@ class InvoiceContent:
         return "%.2f" % self._total_amount
 
     @property
-    def QR_reference(self) -> str:
+    def qr_reference(self) -> str:
         # TODO
         return ""
 
@@ -185,15 +185,15 @@ class InvoiceContent:
         self._total_amount: float = total_amount
 
     def generate_datamatrix_string(self) -> str:
-        if not self.author.ESR_coding_line or not self.patient.SSN:
+        if not self.author.esr_coding_line or not self.patient.ssn:
             return None
 
         separator: str = "#"
         therapy_start_date = self._therapy_start_date.strftime("%d.%m.%Y")
         due_amount: str = "0"
 
-        datamatrix_string = f"{self.author.ESR_coding_line}{separator}{self.author.GLN}{separator}{self.therapist.GLN}{separator}"
-        datamatrix_string = f"{datamatrix_string}{therapy_start_date}{separator}{self.patient.SSN}{separator}{self.patient.birthdate}{separator}"
+        datamatrix_string = f"{self.author.esr_coding_line}{separator}{self.author.gln}{separator}{self.therapist.gln}{separator}"
+        datamatrix_string = f"{datamatrix_string}{therapy_start_date}{separator}{self.patient.ssn}{separator}{self.patient.birthday}{separator}"
         datamatrix_string = f"{datamatrix_string}{due_amount}{separator}"
 
         for service in self.services.services:
@@ -225,11 +225,11 @@ class Entity:
         self._entity_dict: Dict = entity_dict
 
     @property
-    def GLN(self) -> str:
+    def gln(self) -> str:
         return "2099999999999"
 
     @property
-    def RCC(self) -> str:
+    def rcc(self) -> str:
         return self._entity_dict["RCC"]
 
     @property
@@ -237,12 +237,12 @@ class Entity:
         return self._entity_dict["street"]
 
     @property
-    def ZIP_city(self) -> str:
+    def zip_city(self) -> str:
         return f"{self._entity_dict['ZIP']} {self._entity_dict['city']}"
 
     @property
     def address(self) -> str:
-        return f"{self.street} · {self.ZIP_city}"
+        return f"{self.street} · {self.zip_city}"
 
     @property
     def phone(self) -> str:
@@ -267,12 +267,12 @@ class Author(Entity):
         return self._author_dict["email"]
 
     @property
-    def QR_IBAN(self) -> str:
+    def qr_iban(self) -> str:
         # TODO
         return ""
 
     @property
-    def ESR_coding_line(self) -> str:
+    def esr_coding_line(self) -> str:
         # TODO : This should become compulsory with QR-invoice
         return self._author_dict["ESR"] if "ESR" in self._author_dict else None
 
@@ -304,7 +304,7 @@ class Patient:
         return self._patient_dict["street"]
 
     @property
-    def ZIP(self) -> str:
+    def zip(self) -> str:
         return self._patient_dict["ZIP"]
 
     @property
@@ -312,7 +312,7 @@ class Patient:
         return self._patient_dict["city"]
 
     @property
-    def birthdate(self) -> str:
+    def birthday(self) -> str:
         return InvoiceContent.timestamp_to_datetime(
             self._patient_dict["birthdate"]
         ).strftime("%d.%m.%Y")
@@ -329,20 +329,24 @@ class Patient:
         return self._patient_dict["canton"]
 
     @property
-    def names(self) -> str:
+    def name(self) -> str:
         return f"{self.first_name} {self.last_name}"
 
     @property
-    def ZIP_city(self) -> str:
-        return f"{self.ZIP} {self.city}"
+    def zip_city(self) -> str:
+        return f"{self.zip} {self.city}"
 
     @property
     def email(self) -> str:
         return self._patient_dict["email"]
 
     @property
-    def SSN(self) -> str:
+    def ssn(self) -> str:
         return self._patient_dict["SSN"] if "SSN" in self._patient_dict else None
+
+    @property
+    def birthday_with_header_and_gender(self) -> str:
+        return f"Date de naissance {self.birthday}/{self.gender}"
 
 
 class ServiceList:

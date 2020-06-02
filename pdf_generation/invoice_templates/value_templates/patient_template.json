@@ -18,7 +18,7 @@
         "style": "ValueTextStyle"
     },
     {
-        "key": "patient.ZIP",
+        "key": "patient.zip",
         "left": 59.158,
         "top": 52.199,
         "style": "ValueTextStyle"
@@ -30,7 +30,7 @@
         "style": "ValueTextStyle"
     },
     {
-        "key": "patient.birthdate",
+        "key": "patient.birthday",
         "left": 59.105,
         "top": 59.883,
         "style": "ValueTextStyle"
@@ -48,7 +48,7 @@
         "style": "ValueTextStyle"
     },
     {
-        "key": "patient.names",
+        "key": "patient.name",
         "left": 118.65,
         "top": 60.578,
         "style": "ValueTextStyle"
@@ -60,7 +60,7 @@
         "style": "ValueTextStyle"
     },
     {
-        "key": "patient.ZIP_city",
+        "key": "patient.zip_city",
         "left": 118.557,
         "top": 68.442,
         "style": "ValueTextStyle"

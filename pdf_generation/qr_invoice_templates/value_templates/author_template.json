@@ -12,7 +12,7 @@
         "style": "ValueTextStyle"
     },
     {
-        "key": "author.ZIP_city",
+        "key": "author.zip_city",
         "left": 13.096,
         "top": 78.24,
         "style": "ValueTextStyle"
@@ -36,7 +36,7 @@
         "style": "ValueTextStyle"
     },
     {
-        "key": "therapist.ZIP_city",
+        "key": "therapist.zip_city",
         "left": 13.12,
         "top": 105.957,
         "style": "ValueTextStyle"
