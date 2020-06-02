@@ -84,6 +84,12 @@ class BoldValueRightTextStyle(ValueTextStyle):
         self.align = "R"
 
 
+class LargeValueTextStyle(ValueTextStyle):
+    def __init__(self):
+        super().__init__()
+        self.size = 10
+
+
 class SmallValueTextStyle(ValueTextStyle):
     def __init__(self):
         super().__init__()

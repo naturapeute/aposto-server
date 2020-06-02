@@ -51,19 +51,19 @@
         "key": "patient.name",
         "left": 118.65,
         "top": 60.578,
-        "style": "ValueTextStyle"
+        "style": "LargeValueTextStyle"
     },
     {
         "key": "patient.street",
         "left": 118.389,
         "top": 64.509,
-        "style": "ValueTextStyle"
+        "style": "LargeValueTextStyle"
     },
     {
         "key": "patient.zip_city",
         "left": 118.557,
         "top": 68.442,
-        "style": "ValueTextStyle"
+        "style": "LargeValueTextStyle"
     },
     {
         "key": "therapy_dates",
