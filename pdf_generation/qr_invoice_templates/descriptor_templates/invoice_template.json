@@ -1,0 +1,128 @@
+[
+    {
+        "text": "Données de la facture",
+        "left": 13.106,
+        "top": 155.882,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "N° TVA:",
+        "left": 39.791,
+        "top": 160.235,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "Date facture:",
+        "left": 39.648,
+        "top": 163.391,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "N° facture:",
+        "left": 39.724,
+        "top": 166.513,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "Traitement:",
+        "left": 38.946,
+        "top": 169.635,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "Domaine",
+        "left": 86.171,
+        "top": 155.882,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "Total/CHF",
+        "left": 128.089,
+        "top": 155.883,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "Médicale:",
+        "left": 109.944,
+        "top": 160.268,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "Médicaments:",
+        "left": 109.811,
+        "top": 163.391,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "Laboratoire:",
+        "left": 109.882,
+        "top": 166.513,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "LiMA:",
+        "left": 110.08,
+        "top": 169.602,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "Autres:",
+        "left": 110.049,
+        "top": 172.758,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "Montant total:",
+        "left": 110.467,
+        "top": 177.283,
+        "style": "BoldDescriptorRightTextStyle"
+    },
+    {
+        "text": "Acompte:",
+        "left": 109.918,
+        "top": 181.016,
+        "style": "BoldDescriptorRightTextStyle"
+    },
+    {
+        "text": "Montant dû:",
+        "left": 110.536,
+        "top": 183.704,
+        "style": "BoldDescriptorRightTextStyle"
+    },
+    {
+        "text": "Taux/%",
+        "left": 142.16,
+        "top": 155.923,
+        "style": "DescriptorTextStyle"
+    },
+    {
+        "text": "TVA/CHF",
+        "left": 182.606,
+        "top": 155.883,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "0.00",
+        "left": 152.538,
+        "top": 160.27,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "2.50",
+        "left": 152.538,
+        "top": 163.392,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "7.70",
+        "left": 152.538,
+        "top": 166.515,
+        "style": "DescriptorRightTextStyle"
+    },
+    {
+        "text": "Total:",
+        "left": 142.15,
+        "top": 177.283,
+        "style": "BoldDescriptorTextStyle"
+    }
+]
