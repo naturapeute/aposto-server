@@ -1,0 +1,92 @@
+[
+    {
+        "key": "date_string",
+        "left": 41.34,
+        "top": 163.393,
+        "style": "QRInvoiceInvoiceTextStyle"
+    },
+    {
+        "key": "timestamp",
+        "left": 41.31,
+        "top": 166.48,
+        "style": "QRInvoiceInvoiceTextStyle"
+    },
+    {
+        "key": "therapy_dates",
+        "left": 41.524,
+        "top": 169.638,
+        "style": "QRInvoiceInvoiceTextStyle"
+    },
+    {
+        "key": "total_amount_medical",
+        "left": 125.921,
+        "top": 160.271,
+        "style": "QRInvoiceInvoiceRightTextStyle"
+    },
+    {
+        "key": "total_amount_medicines",
+        "left": 125.945,
+        "top": 163.392,
+        "style": "QRInvoiceInvoiceRightTextStyle"
+    },
+    {
+        "key": "total_amount_laboratory",
+        "left": 125.99,
+        "top": 166.515,
+        "style": "QRInvoiceInvoiceRightTextStyle"
+    },
+    {
+        "key": "total_amount_medical_device",
+        "left": 125.99,
+        "top": 169.638,
+        "style": "QRInvoiceInvoiceRightTextStyle"
+    },
+    {
+        "key": "total_amount_other",
+        "left": 126.031,
+        "top": 172.759,
+        "style": "QRInvoiceInvoiceRightTextStyle"
+    },
+    {
+        "key": "total_amount",
+        "left": 125.939,
+        "top": 177.284,
+        "style": "BoldQRInvoiceInvoiceRightTextStyle"
+    },
+    {
+        "key": "total_amount",
+        "left": 126.026,
+        "top": 180.496,
+        "style": "BoldQRInvoiceInvoiceRightTextStyle"
+    },
+    {
+        "key": "owed_amount",
+        "left": 125.939,
+        "top": 183.705,
+        "style": "BoldQRInvoiceInvoiceRightTextStyle"
+    },
+    {
+        "key": "tax_rate_0_amount",
+        "left": 181.643,
+        "top": 160.27,
+        "style": "QRInvoiceInvoiceRightTextStyle"
+    },
+    {
+        "key": "tax_rate_1_amount",
+        "left": 181.654,
+        "top": 163.392,
+        "style": "QRInvoiceInvoiceRightTextStyle"
+    },
+    {
+        "key": "tax_rate_2_amount",
+        "left": 181.654,
+        "top": 166.515,
+        "style": "QRInvoiceInvoiceRightTextStyle"
+    },
+    {
+        "key": "total_amount_tax_rate",
+        "left": 182.173,
+        "top": 177.285,
+        "style": "BoldQRInvoiceInvoiceRightTextStyle"
+    }
+]

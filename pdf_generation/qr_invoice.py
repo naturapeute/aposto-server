@@ -175,7 +175,7 @@ class QRInvoice:
             return None
 
         qr_code: QRCode = QRCode(
-            version=25, error_correction=qrcode.constants.ERROR_CORRECT_M, border=0,
+            version=10, error_correction=qrcode.constants.ERROR_CORRECT_M, border=0,
         )
         qr_code.add_data(qr_code_string)
         qr_code.make()
