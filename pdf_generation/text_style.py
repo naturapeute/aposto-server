@@ -125,6 +125,29 @@ class QRInvoiceMainTitleTextStyle(TextStyle):
         super().__init__("Arial B", 11)
 
 
+class QRInvoiceInvoiceTextStyle(TextStyle):
+    def __init__(self):
+        super().__init__(size=8)
+
+
+class QRInvoiceInvoiceRightTextStyle(QRInvoiceInvoiceTextStyle):
+    def __init__(self):
+        super().__init__()
+        self.align = "R"
+
+
+class BoldQRInvoiceInvoiceTextStyle(QRInvoiceInvoiceTextStyle):
+    def __init__(self):
+        super().__init__()
+        self.family = "Arial B"
+
+
+class BoldQRInvoiceInvoiceRightTextStyle(QRInvoiceInvoiceRightTextStyle):
+    def __init__(self):
+        super().__init__()
+        self.family = "Arial B"
+
+
 class QRInvoicePaymentSectionTextStyle(TextStyle):
     def __init__(self):
         super().__init__(size=10)

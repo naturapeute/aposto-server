@@ -21,24 +21,24 @@
         "key": "patient.name",
         "left": 117.755,
         "top": 99.745,
-        "style": "ValueTextStyle"
+        "style": "QRInvoiceInvoiceTextStyle"
     },
     {
         "key": "patient.street",
         "left": 117.747,
         "top": 102.867,
-        "style": "ValueTextStyle"
+        "style": "QRInvoiceInvoiceTextStyle"
     },
     {
         "key": "patient.zip_city",
         "left": 117.739,
         "top": 105.991,
-        "style": "ValueTextStyle"
+        "style": "QRInvoiceInvoiceTextStyle"
     },
     {
         "key": "patient.birthday_with_header_and_gender",
         "left": 117.747,
         "top": 112.2,
-        "style": "ValueTextStyle"
+        "style": "QRInvoiceInvoiceTextStyle"
     }
 ]
