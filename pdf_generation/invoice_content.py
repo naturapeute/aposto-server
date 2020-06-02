@@ -233,12 +233,24 @@ class Entity:
         return self._entity_dict["RCC"]
 
     @property
+    def street(self) -> str:
+        return self._entity_dict["street"]
+
+    @property
+    def ZIP_city(self) -> str:
+        return f"{self._entity_dict['ZIP']} {self._entity_dict['city']}"
+
+    @property
     def address(self) -> str:
-        return f"{self._entity_dict['street']} · {self._entity_dict['ZIP']} {self._entity_dict['city']}"
+        return f"{self.street} · {self.ZIP_city}"
 
     @property
     def phone(self) -> str:
         return self._entity_dict["phone"]
+
+    @property
+    def phone_with_header(self) -> str:
+        return f"Tél.  {self._entity_dict['phone']}"
 
 
 class Author(Entity):
@@ -258,14 +270,6 @@ class Author(Entity):
     def QR_IBAN(self) -> str:
         # TODO
         return ""
-
-    @property
-    def street(self) -> str:
-        return self._entity_dict["street"]
-
-    @property
-    def ZIP_city(self) -> str:
-        return f"{self._entity_dict['ZIP']} {self._entity_dict['city']}"
 
     @property
     def ESR_coding_line(self) -> str:
