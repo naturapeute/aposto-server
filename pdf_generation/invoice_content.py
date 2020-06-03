@@ -37,7 +37,7 @@ class InvoiceContent:
             "ZIP": {},
             "city": {},
             "canton": {},
-            "birthdate": {},
+            "birthday": {},
             "gender": {},
             "email": {},
         },
@@ -377,7 +377,7 @@ class Patient:
     @property
     def birthday(self) -> str:
         return InvoiceContent.timestamp_to_datetime(
-            self._patient_dict["birthdate"]
+            self._patient_dict["birthday"]
         ).strftime("%d.%m.%Y")
 
     @property
