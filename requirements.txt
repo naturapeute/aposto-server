@@ -8,4 +8,4 @@ pyStrich==0.8
 reportlab==3.5.42
 responses==0.10.12
 python-dateutil==2.8.1
-qrcode[pil]=6.1
+qrcode[pil]==6.1
