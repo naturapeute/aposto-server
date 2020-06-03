@@ -171,9 +171,6 @@ class QRInvoice:
     def generate_qr_code(self) -> Image.Image:
         qr_code_string: str = self._generate_qr_code_string()
 
-        if not qr_code_string:
-            return None
-
         qr_code: QRCode = QRCode(
             version=10, error_correction=qrcode.constants.ERROR_CORRECT_M, border=0,
         )

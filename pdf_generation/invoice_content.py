@@ -1,6 +1,6 @@
 import base64
 from datetime import datetime, timezone
-from typing import Dict, List
+from typing import Dict, List, Union
 
 import ujson
 from dateutil import tz
@@ -63,11 +63,7 @@ class InvoiceContent:
 
     @property
     def terrapeute_id(self) -> str:
-        return (
-            self._invoice_content_dict["terrapeuteID"]
-            if "terrapeuteID" in self._invoice_content_dict
-            else None
-        )
+        return self._invoice_content_dict.get("terrapeuteID", None)
 
     @property
     def timestamp(self) -> str:
@@ -172,13 +168,20 @@ class InvoiceContent:
         return "0.00"
 
     @property
-    def qr_reference(self) -> str:
+    def qr_reference(self) -> Union[str, None]:
         # TODO : Update when moving to QR-invoice
-        return (
-            self._invoice_content_dict["QRReference"]
-            if "QRReference" in self._invoice_content_dict
-            else None
+        _qr_reference: Union[str, None] = self._invoice_content_dict.get(
+            "QRReference", None
         )
+
+        if _qr_reference:
+            _qr_reference: str = _qr_reference.replace(" ", "")
+            _qr_reference: str = " ".join(
+                [_qr_reference[0:2]]
+                + [_qr_reference[i : i + 5] for i in range(2, len(_qr_reference), 5)]
+            )
+
+        return _qr_reference
 
     @staticmethod
     def timestamp_to_datetime(timestamp: float) -> datetime:
@@ -232,7 +235,7 @@ class InvoiceContent:
 
         self._total_amount: float = total_amount
 
-    def generate_datamatrix_string(self) -> str:
+    def generate_datamatrix_string(self) -> Union[str, None]:
         # TODO : Update when moving to QR-invoice
         if not self.author.esr_coding_line or not self.patient.ssn:
             return None
@@ -259,7 +262,7 @@ class InvoiceContent:
 
         return datamatrix_string
 
-    def generate_datamatrix(self) -> Image.Image:
+    def generate_datamatrix(self) -> Union[Image.Image, None]:
         datamatrix_string: str = self.generate_datamatrix_string()
 
         # TODO : Update when moving to QR-invoice
@@ -319,14 +322,22 @@ class Author(Entity):
         return self._author_dict["email"]
 
     @property
-    def qr_iban(self) -> str:
+    def qr_iban(self) -> Union[str, None]:
         # TODO : Update when moving to QR-invoice
-        return self._author_dict["QRIBAN"] if "QRIBAN" in self._author_dict else None
+        _qr_iban: Union[str, None] = self._author_dict.get("QRIBAN", None)
+
+        if _qr_iban:
+            _qr_iban: str = _qr_iban.replace(" ", "")
+            _qr_iban: str = " ".join(
+                [_qr_iban[i : i + 4] for i in range(0, len(_qr_iban), 4)]
+            )
+
+        return _qr_iban
 
     @property
-    def esr_coding_line(self) -> str:
+    def esr_coding_line(self) -> Union[str, None]:
         # TODO : Update when moving to QR-invoice
-        return self._author_dict["ESR"] if "ESR" in self._author_dict else None
+        return self._author_dict.get("ESR", None)
 
 
 class Therapist(Entity):
@@ -393,9 +404,9 @@ class Patient:
         return self._patient_dict["email"]
 
     @property
-    def ssn(self) -> str:
-        # TOOD : Update when SSN is available
-        return self._patient_dict["SSN"] if "SSN" in self._patient_dict else None
+    def ssn(self) -> Union[str, None]:
+        # TODO : Update when SSN is available
+        return self._patient_dict.get("SSN", None)
 
     @property
     def birthday_with_header_and_gender(self) -> str:

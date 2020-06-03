@@ -45,7 +45,7 @@ class Graphic(Content):
         super().__init__(dict_frame)
         self._width: float = dict_frame["width"]
         self._height: float = dict_frame["height"]
-        self._rotate: float = dict_frame["rotate"] if "rotate" in dict_frame else None
+        self._rotate: float = dict_frame.get("rotate", None)
 
     @property
     def width(self) -> float:
