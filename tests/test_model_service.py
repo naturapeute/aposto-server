@@ -38,6 +38,11 @@ class ServiceTestCase(TestCase):
 
         self.assertEqual(service.date.tzinfo, timezone.utc)
 
+    def test_quantity(self):
+        service: Service = Service(**self.service_dict)
+
+        self.assertEqual(service.quantity, 9)
+
     def test_amount(self):
         service_price: int = 100
         service: Service = Service(**self.service_dict)

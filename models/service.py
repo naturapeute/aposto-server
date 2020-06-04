@@ -103,5 +103,9 @@ class Service(BaseModel):
         1210,
     ]
 
+    @property
+    def quantity(self) -> float:
+        return self.duration / 5
+
     def amount(self, service_price) -> float:
-        return (service_price / 12) * (self.duration / 5)
+        return (service_price / 12) * self.quantity

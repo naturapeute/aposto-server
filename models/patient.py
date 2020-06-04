@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime
 
 from pydantic import BaseModel, EmailStr, constr, root_validator
 from typing_extensions import Literal

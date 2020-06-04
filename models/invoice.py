@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional, List, Tuple
+from typing import List, Optional, Tuple
 
 from pydantic import BaseModel, conint, conlist, constr
 
@@ -16,7 +16,9 @@ class Invoice(BaseModel):
     patient: Patient
     servicePrice: conint(gt=0)
     services: conlist(Service, min_items=1)
-    QRReference: Optional[constr(strip_whitespace=True, regex=r"^[0-9]{27}$")] = None
+    QRReference: Optional[
+        constr(strip_whitespace=True, regex=r"^[0-9]{27}$")
+    ] = None  # TODO : Turn into compulsory field when moving to QR-invoice
     timestamp: datetime
 
     @property
