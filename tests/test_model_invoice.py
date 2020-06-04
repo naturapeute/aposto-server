@@ -166,17 +166,17 @@ class InvoiceTestCase(TestCase):
             Invoice(**self.invoice_dict)
 
     def test_wrong_qr_reference(self):
-        self.invoice_dict["QRReference"] = "azertyuiopqsdfghjklmwxcvbn"
+        self.invoice_dict["QRReference"] = "azertyuiopqsdfghjklmwxcvbna"
 
         with self.assertRaises(ValidationError):
             Invoice(**self.invoice_dict)
 
-        self.invoice_dict["QRReference"] = "1234567890123456789012345"
+        self.invoice_dict["QRReference"] = "12345678901234567890123456"
 
         with self.assertRaises(ValidationError):
             Invoice(**self.invoice_dict)
 
-        self.invoice_dict["QRReference"] = "123456789012345678901234567"
+        self.invoice_dict["QRReference"] = "1234567890123456789012345678"
 
         with self.assertRaises(ValidationError):
             Invoice(**self.invoice_dict)

@@ -11,3 +11,8 @@ class Author(BaseModel):
     phone: str
     email: EmailStr
     RCC: Optional[constr(regex=r"^[A-Z][0-9]{6}$")]
+    QRIBAN: Optional[
+        constr(strip_whitespace=True, regex=r"^CH[0-9]{2}3[0-1][0-9]{15}$")
+    ] = None
+    ESRId: Optional[constr(strip_whitespace=True, regex=r"^[0-9]{6}$")] = None
+    ESRBankId: Optional[constr(strip_whitespace=True, regex=r"^01[0-9]{7}$")] = None

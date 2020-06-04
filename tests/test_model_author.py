@@ -141,5 +141,68 @@ class AuthorTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
+    def test_wrong_qr_iban(self):
+        self.author_dict["QRIBAN"] = "114430999123000889012"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+        self.author_dict["QRIBAN"] = "AA4430999123000889012"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+        self.author_dict["QRIBAN"] = "AAA430999123000889012"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+        self.author_dict["QRIBAN"] = "CH4450999123000889012"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+        self.author_dict["QRIBAN"] = "CH4435999123000889012"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+    def test_wrong_esr_id(self):
+        self.author_dict["ESRId"] = "12345"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+        self.author_dict["ESRId"] = "1234567"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+        self.author_dict["ESRId"] = "AAAAAA"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+    def test_wrong_esr_bank_id(self):
+        self.author_dict["ESRBankId"] = "01123456"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+        self.author_dict["ESRBankId"] = "0112345612"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+        self.author_dict["ESRBankId"] = "111234561"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+        self.author_dict["ESRBankId"] = "01AAAAAA1"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
     def tearDown(self):
         self.author_dict = None
