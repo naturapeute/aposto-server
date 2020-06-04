@@ -26,7 +26,7 @@ class Invoice(BaseModel):
         _total_amount: float = 0.0
 
         for service in self.services:
-            _total_amount += service.amount(self.servicePrice)
+            _total_amount += service.amount(self.servicePrice / 12)
 
         return _total_amount
 

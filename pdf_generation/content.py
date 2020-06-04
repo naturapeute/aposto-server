@@ -4,7 +4,8 @@ from typing import Union
 from reportlab.lib.units import mm
 
 import pdf_generation
-from pdf_generation.invoice_content import InvoiceContent, Service
+from pdf_generation.contents.invoice_content import InvoiceContent
+from pdf_generation.contents.service_content import ServiceContent
 from pdf_generation.text_style import TextStyle
 
 
@@ -66,7 +67,7 @@ class Value(Content):
         self.key: str = dict_value["key"]
         self.style: TextStyle = getattr(pdf_generation.text_style, dict_value["style"])()
 
-    def to_text(self, content: Union[InvoiceContent, Service]) -> Text:
+    def to_text(self, content: Union[InvoiceContent, ServiceContent]) -> Text:
         return Text(
             {
                 "text": reduce(getattr, self.key.split("."), content),
