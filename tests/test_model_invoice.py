@@ -1,3 +1,4 @@
+from datetime import timezone
 from unittest import TestCase
 
 from pydantic import ValidationError
@@ -148,6 +149,11 @@ class InvoiceTestCase(TestCase):
 
         with self.assertRaises(ValidationError):
             Invoice.parse_obj(self.invoice_dict)
+
+    def test_timestamp_is_utc(self):
+        invoice: Invoice = Invoice.parse_obj(self.invoice_dict)
+
+        self.assertEqual(invoice.timestamp.tzinfo, timezone.utc)
 
     def test_missing_timestamp(self):
         self.invoice_dict.pop("timestamp")

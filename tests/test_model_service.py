@@ -1,3 +1,4 @@
+from datetime import timezone
 from unittest import TestCase
 
 from pydantic import ValidationError
@@ -31,6 +32,11 @@ class ServiceTestCase(TestCase):
         #     Service.parse_obj(self.service_dict)
         # except ValidationError:
         #     self.fail("Service is invalid while it should not.")
+
+    def test_date_is_utc(self):
+        invoice: Service = Service.parse_obj(self.service_dict)
+
+        self.assertEqual(invoice.date.tzinfo, timezone.utc)
 
     def test_missing_date(self):
         self.service_dict.pop("date")

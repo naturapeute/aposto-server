@@ -1,3 +1,4 @@
+from datetime import timezone
 from unittest import TestCase
 
 from pydantic import ValidationError
@@ -123,6 +124,11 @@ class PatientTestCase(TestCase):
 
         with self.assertRaises(ValidationError):
             Patient.parse_obj(self.patient_dict)
+
+    def test_birthday_is_utc(self):
+        invoice: Patient = Patient.parse_obj(self.patient_dict)
+
+        self.assertEqual(invoice.birthday.tzinfo, timezone.utc)
 
     def test_missing_birthday(self):
         self.patient_dict.pop("birthday")
