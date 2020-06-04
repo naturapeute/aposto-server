@@ -6,7 +6,7 @@ from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 
 from pdf_generation.content import Graphic, SwissQRCode, Text, Value
-from pdf_generation.invoice_content import InvoiceContent
+from pdf_generation.contents.invoice_content import InvoiceContent
 from pdf_generation.qr_invoice import QRInvoice
 from pdf_generation.template import (
     DescriptorTemplate,

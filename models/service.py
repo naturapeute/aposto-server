@@ -107,5 +107,5 @@ class Service(BaseModel):
     def quantity(self) -> float:
         return self.duration / 5
 
-    def amount(self, service_price) -> float:
-        return (service_price / 12) * self.quantity
+    def amount(self, service_unit_price) -> float:
+        return service_unit_price * self.quantity
