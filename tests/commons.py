@@ -30,7 +30,6 @@ class InvoiceContentTestCase(TestCase):
                 "RCC": "V123123",
             },
             "patient": {
-                "_id": "1585048758890",
                 "firstName": "Nicholas",
                 "lastName": "Ailleboust",
                 "street": "Tösstalstrasse 97",
@@ -75,7 +74,6 @@ class InvoiceContentDemoModeTestCase(TestCase):
                 "RCC": "V123123",
             },
             "patient": {
-                "_id": "1585048758890",
                 "firstName": "Nicholas",
                 "lastName": "Ailleboust",
                 "street": "Tösstalstrasse 97",
@@ -140,7 +138,6 @@ class InvoiceContentMissingParamTestCase(TestCase):
                 "RCC": "V123123",
             },
             "patient": {
-                "_id": "1585048758890",
                 "firstName": "Nicholas",
                 "lastName": "Ailleboust",
                 "street": "Tösstalstrasse 97",
