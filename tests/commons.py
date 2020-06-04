@@ -7,111 +7,38 @@ from app import config
 
 class InvoiceContentTestCase(TestCase):
     def setUp(self):
-        self.invoice_content_base_64: str = "eyJ0ZXJyYXBldXRlSUQiOiIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJhdXRob3IiOnsibmFtZSI6IkNhYmluZXQgZGUgTGVyb3kiLCJzdHJlZXQiOiJWaWEgZGVsbGUgVmlnbmUgMSIsIlpJUCI6IjcxNDkiLCJjaXR5IjoiVnJpbiIsImVtYWlsIjoiTGVyb3lGcmVjaGV0dGVAYXJteXNweS5jb20iLCJwaG9uZSI6IjA4MSA2NjAgNjggMzYiLCJSQ0MiOiJWMTIzMTIzIn0sInRoZXJhcGlzdCI6eyJmaXJzdE5hbWUiOiJMZXJveSIsImxhc3ROYW1lIjoiRnLpY2hldHRlIiwic3RyZWV0IjoiVmlhIGRlbGxlIFZpZ25lIDEiLCJaSVAiOiI3MTQ5IiwiY2l0eSI6IlZyaW4iLCJlbWFpbCI6Ikxlcm95RnJlY2hldHRlQGFybXlzcHkuY29tIiwicGhvbmUiOiIwODEgNjYwIDY4IDM2IiwiUkNDIjoiVjEyMzEyMyJ9LCJwYXRpZW50Ijp7Il9pZCI6IjE1ODUwNDg3NTg4OTAiLCJmaXJzdE5hbWUiOiJOaWNob2xhcyIsImxhc3ROYW1lIjoiQWlsbGVib3VzdCIsInN0cmVldCI6IlT2c3N0YWxzdHJhc3NlIDk3IiwiWklQIjoiODg3MiIsImNpdHkiOiJXZWVzZW4iLCJjYW50b24iOiJTRyIsImJpcnRoZGF5IjotMTExODEwMjQwMDAwMCwiZ2VuZGVyIjoiZmVtYWxlIiwiZW1haWwiOiJOaWNob2xhc0FpbGxlYm91c3RAdGVsZXdvcm0udXMifSwic2VydmljZVByaWNlIjoxMDAsInNlcnZpY2VzIjpbeyJkYXRlIjoxNTg1MDA4MDAwMDAwLCJjb2RlIjoxMDAzLCJkdXJhdGlvbiI6NjB9XSwidGltZXN0YW1wIjoxNTg1MDQ5MTE4NDg1fQ=="
-        self.invoice_content_dict: dict = {
-            "naturapeuteID": "000000000000000000000000",
-            "author": {
-                "name": "Cabinet de Leroy",
-                "street": "Via delle Vigne 1",
-                "ZIP": "7149",
-                "city": "Vrin",
-                "email": "LeroyFrechette@armyspy.com",
-                "phone": "081 660 68 36",
-                "RCC": "V123123",
-            },
-            "therapist": {
-                "firstName": "Leroy",
-                "lastName": "Fréchette",
-                "street": "Via delle Vigne 1",
-                "ZIP": "7149",
-                "city": "Vrin",
-                "email": "LeroyFrechette@armyspy.com",
-                "phone": "081 660 68 36",
-                "RCC": "V123123",
-            },
-            "patient": {
-                "firstName": "Nicholas",
-                "lastName": "Ailleboust",
-                "street": "Tösstalstrasse 97",
-                "ZIP": "8872",
-                "city": "Weesen",
-                "canton": "SG",
-                "birthday": -1118102400000,
-                "gender": "female",
-                "email": "NicholasAilleboust@teleworm.us",
-            },
-            "servicePrice": 100,
-            "services": [{"date": 1585008000000, "code": 1003, "duration": 60}],
-            "timestamp": 1585049118485,
-        }
+        self.invoice_json: str = '{"terrapeuteID":"000000000000000000000000","author":{"name":"Cabinet de Leroy","street":"Via delle Vigne 1","ZIP":"7149","city":"Vrin","email":"LeroyFrechette@armyspy.com","phone":"081 660 68 36","RCC":"V123123"},"therapist":{"firstName":"Leroy","lastName":"Fréchette","street":"Via delle Vigne 1","ZIP":"7149","city":"Vrin","phone":"081 660 68 36","RCC":"V123123"},"patient":{"firstName":"Nicholas","lastName":"Ailleboust","street":"Tösstalstrasse 97","ZIP":"8872","city":"Weesen","canton":"SG","birthday":-1118102400,"gender":"female","email":"NicholasAilleboust@teleworm.us"},"servicePrice":100,"services":[{"date":1584921600000,"code":1003,"duration":60},{"date":1585008000000,"code":1004,"duration":30}],"timestamp":1585049118.485}'
 
     def tearDown(self):
-        self.invoice_content_base_64 = None
-        self.invoice_content_dict = None
+        self.invoice_json = None
 
 
 class InvoiceContentDemoModeTestCase(TestCase):
     def setUp(self):
-        self.invoice_content_demo_base_64: str = "eyJhdXRob3IiOnsibmFtZSI6IkNhYmluZXQgZGUgTGVyb3kiLCJzdHJlZXQiOiJWaWEgZGVsbGUgVmlnbmUgMSIsIlpJUCI6IjcxNDkiLCJjaXR5IjoiVnJpbiIsImVtYWlsIjoiTGVyb3lGcmVjaGV0dGVAYXJteXNweS5jb20iLCJwaG9uZSI6IjA4MSA2NjAgNjggMzYiLCJSQ0MiOiJWMTIzMTIzIn0sInRoZXJhcGlzdCI6eyJmaXJzdE5hbWUiOiJMZXJveSIsImxhc3ROYW1lIjoiRnLpY2hldHRlIiwic3RyZWV0IjoiVmlhIGRlbGxlIFZpZ25lIDEiLCJaSVAiOiI3MTQ5IiwiY2l0eSI6IlZyaW4iLCJlbWFpbCI6Ikxlcm95RnJlY2hldHRlQGFybXlzcHkuY29tIiwicGhvbmUiOiIwODEgNjYwIDY4IDM2IiwiUkNDIjoiVjEyMzEyMyJ9LCJwYXRpZW50Ijp7Il9pZCI6IjE1ODUwNDg3NTg4OTAiLCJmaXJzdE5hbWUiOiJOaWNob2xhcyIsImxhc3ROYW1lIjoiQWlsbGVib3VzdCIsInN0cmVldCI6IlT2c3N0YWxzdHJhc3NlIDk3IiwiWklQIjoiODg3MiIsImNpdHkiOiJXZWVzZW4iLCJjYW50b24iOiJTRyIsImJpcnRoZGF5IjotMTExODEwMjQwMDAwMCwiZ2VuZGVyIjoiZmVtYWxlIiwiZW1haWwiOiJOaWNob2xhc0FpbGxlYm91c3RAdGVsZXdvcm0udXMifSwic2VydmljZVByaWNlIjoxMDAsInNlcnZpY2VzIjpbeyJkYXRlIjoxNTg1MDA4MDAwMDAwLCJjb2RlIjoxMDAzLCJkdXJhdGlvbiI6NjB9XSwidGltZXN0YW1wIjoxNTg1MDQ5MTE4NDg1fQ=="
-        self.invoice_content_demo_dict: dict = {
-            "author": {
-                "name": "Cabinet de Leroy",
-                "street": "Via delle Vigne 1",
-                "ZIP": "7149",
-                "city": "Vrin",
-                "email": "LeroyFrechette@armyspy.com",
-                "phone": "081 660 68 36",
-                "RCC": "V123123",
-            },
-            "therapist": {
-                "firstName": "Leroy",
-                "lastName": "Fréchette",
-                "street": "Via delle Vigne 1",
-                "ZIP": "7149",
-                "city": "Vrin",
-                "email": "LeroyFrechette@armyspy.com",
-                "phone": "081 660 68 36",
-                "RCC": "V123123",
-            },
-            "patient": {
-                "firstName": "Nicholas",
-                "lastName": "Ailleboust",
-                "street": "Tösstalstrasse 97",
-                "ZIP": "8872",
-                "city": "Weesen",
-                "canton": "SG",
-                "birthday": -1118102400000,
-                "gender": "female",
-                "email": "NicholasAilleboust@teleworm.us",
-            },
-            "servicePrice": 100,
-            "services": [{"date": 1585008000000, "code": 1003, "duration": 60}],
-            "timestamp": 1585049118485,
-        }
+        self.invoice_demo_json: str = '{"author":{"name":"Cabinet de Leroy","street":"Via delle Vigne 1","ZIP":"7149","city":"Vrin","email":"LeroyFrechette@armyspy.com","phone":"081 660 68 36","RCC":"V123123"},"therapist":{"firstName":"Leroy","lastName":"Fréchette","street":"Via delle Vigne 1","ZIP":"7149","city":"Vrin","phone":"081 660 68 36","RCC":"V123123"},"patient":{"firstName":"Nicholas","lastName":"Ailleboust","street":"Tösstalstrasse 97","ZIP":"8872","city":"Weesen","canton":"SG","birthday":-1118102400,"gender":"female","email":"NicholasAilleboust@teleworm.us"},"servicePrice":100,"services":[{"date":1584921600000,"code":1003,"duration":60},{"date":1585008000000,"code":1004,"duration":30}],"timestamp":1585049118.485}'
 
     def tearDown(self):
-        self.invoice_content_demo_base_64 = None
-        self.invoice_content_demo_dict = None
+        self.invoice_demo_json = None
 
 
-class InvoiceContentImproperBase64TestCase(TestCase):
-    FAILURE_JSON = {"error": "Improper base64 provided"}
+class InvoiceContentInvalidTestCase(TestCase):
+    FAILURE_JSON = '[\n  {\n    "loc": [\n      "author",\n      "name"\n    ],\n    "msg": "field required",\n    "type": "value_error.missing"\n  },\n  {\n    "loc": [\n      "author",\n      "ZIP"\n    ],\n    "msg": "ensure this value has at most 16 characters",\n    "type": "value_error.any_str.max_length",\n    "ctx": {\n      "limit_value": 16\n    }\n  },\n  {\n    "loc": [\n      "author",\n      "RCC"\n    ],\n    "msg": "string does not match regex \\"^[A-Z][0-9]{6}$\\"",\n    "type": "value_error.str.regex",\n    "ctx": {\n      "pattern": "^[A-Z][0-9]{6}$"\n    }\n  },\n  {\n    "loc": [\n      "patient",\n      "email"\n    ],\n    "msg": "value is not a valid email address",\n    "type": "value_error.email"\n  }\n]'
 
     def setUp(self):
-        self.invoice_content_improper_base_base_64: str = "azeaze"
+        self.invoice_invalid_json: str = '{"terrapeuteID":"000000000000000000000000","author":{"street":"Via delle Vigne 1","ZIP":"7149 7149 7149 7149","city":"Vrin","email":"LeroyFrechette@armyspy.com","phone":"081 660 68 36","RCC":"V12312"},"therapist":{"firstName":"Leroy","lastName":"Fréchette","street":"Via delle Vigne 1","ZIP":"7149","city":"Vrin","phone":"081 660 68 36","RCC":"V123123"},"patient":{"firstName":"Nicholas","lastName":"Ailleboust","street":"Tösstalstrasse 97","ZIP":"8872","city":"Weesen","canton":"SG","birthday":-1118102400,"gender":"female","email":"NicholasAilleboust@teleworm."},"servicePrice":100,"services":[{"date":1584921600000,"code":1003,"duration":60},{"date":1585008000000,"code":1004,"duration":30}],"timestamp":1585049118.485}'
 
     def tearDown(self):
-        self.invoice_content_improper_base_base_64 = None
+        self.invoice_invalid_json = None
 
 
 class InvoiceContentImproperJSONTestCase(TestCase):
-    FAILURE_JSON = {"error": "Improper JSON provided inside base64"}
+    FAILURE_JSON = '[\n  {\n    "loc": [\n      "__root__"\n    ],\n    "msg": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",\n    "type": "value_error.jsondecode",\n    "ctx": {\n      "msg": "Expecting property name enclosed in double quotes",\n      "doc": "{terrapeuteID:\\"000000000000000000000000\\"}",\n      "pos": 1,\n      "lineno": 1,\n      "colno": 2\n    }\n  }\n]'
 
     def setUp(self):
-        self.invoice_content_improper_json_base_64: str = "dGVzdA=="
+        self.invoice_improper_json: str = '{terrapeuteID:"000000000000000000000000"}'
 
     def tearDown(self):
-        self.invoice_content_improper_json_base_64 = None
+        self.invoice_improper_json = None
 
 
 class InvoiceContentMissingParamTestCase(TestCase):
