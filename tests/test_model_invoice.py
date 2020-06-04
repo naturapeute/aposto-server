@@ -1,4 +1,4 @@
-from datetime import timezone
+from datetime import datetime, timezone
 from unittest import TestCase
 
 from pydantic import ValidationError
@@ -42,7 +42,7 @@ class InvoiceTestCase(TestCase):
             },
             "servicePrice": 100,
             "services": [
-                {"date": 1585008000000, "code": 1003, "duration": 60},
+                {"date": 1584921600000, "code": 1003, "duration": 60},
                 {"date": 1585008000000, "code": 1004, "duration": 30},
             ],
             "timestamp": 1585049118.485,
@@ -83,6 +83,13 @@ class InvoiceTestCase(TestCase):
         invoice: Invoice = Invoice(**self.invoice_dict)
 
         self.assertEqual(invoice.total_amount, 150)
+
+    def test_therapy_dates(self):
+        invoice: Invoice = Invoice(**self.invoice_dict)
+        (therapy_start_date, therapy_end_date) = invoice.therapy_dates
+
+        self.assertEqual(datetime.timestamp(therapy_start_date), 1584921600.000)
+        self.assertEqual(datetime.timestamp(therapy_end_date), 1585008000.000)
 
     def test_empty(self):
         with self.assertRaises(ValidationError):

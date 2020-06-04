@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List, Tuple
 
 from pydantic import BaseModel, conint, conlist
 
@@ -26,3 +26,9 @@ class Invoice(BaseModel):
             _total_amount += service.amount(self.servicePrice)
 
         return _total_amount
+
+    @property
+    def therapy_dates(self) -> Tuple[datetime, datetime]:
+        services_dates: List[datetime] = list(service.date for service in self.services)
+
+        return (min(services_dates), max(services_dates))
