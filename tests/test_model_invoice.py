@@ -41,20 +41,23 @@ class InvoiceTestCase(TestCase):
                 "email": "NicholasAilleboust@teleworm.us",
             },
             "servicePrice": 100,
-            "services": [{"date": 1585008000000, "code": 1003, "duration": 60}],
+            "services": [
+                {"date": 1585008000000, "code": 1003, "duration": 60},
+                {"date": 1585008000000, "code": 1004, "duration": 30},
+            ],
             "timestamp": 1585049118.485,
         }
 
     def test_valid(self):
         try:
-            Invoice.parse_obj(self.invoice_dict)
+            Invoice(**self.invoice_dict)
         except ValidationError:
             self.fail("Invoice is invalid while it should not.")
 
         self.invoice_dict["timestamp"] = 1585049118485
 
         try:
-            Invoice.parse_obj(self.invoice_dict)
+            Invoice(**self.invoice_dict)
         except ValidationError:
             self.fail("Invoice is invalid while it should not.")
 
@@ -64,7 +67,7 @@ class InvoiceTestCase(TestCase):
         # self.invoice_dict["birthday"] = -1585049118485
 
         # try:
-        #     Invoice.parse_obj(self.invoice_dict)
+        #     Invoice(**self.invoice_dict)
         # except ValidationError:
         #     self.fail("Invoice is invalid while it should not.")
 
@@ -72,86 +75,91 @@ class InvoiceTestCase(TestCase):
         self.invoice_dict.pop("terrapeuteID")
 
         try:
-            Invoice.parse_obj(self.invoice_dict)
+            Invoice(**self.invoice_dict)
         except ValidationError:
             self.fail("Invoice is invalid while it should not.")
 
+    def test_total_amount(self):
+        invoice: Invoice = Invoice(**self.invoice_dict)
+
+        self.assertEqual(invoice.total_amount, 150)
+
     def test_empty(self):
         with self.assertRaises(ValidationError):
-            Invoice.parse_obj({})
+            Invoice(**{})
 
     def test_missing_author(self):
         self.invoice_dict.pop("author")
 
         with self.assertRaises(ValidationError):
-            Invoice.parse_obj(self.invoice_dict)
+            Invoice(**self.invoice_dict)
 
     def test_wrong_author(self):
         self.invoice_dict["author"].pop("name")
 
         with self.assertRaises(ValidationError):
-            Invoice.parse_obj(self.invoice_dict)
+            Invoice(**self.invoice_dict)
 
     def test_missing_therapist(self):
         self.invoice_dict.pop("therapist")
 
         with self.assertRaises(ValidationError):
-            Invoice.parse_obj(self.invoice_dict)
+            Invoice(**self.invoice_dict)
 
     def test_wrong_therapist(self):
         self.invoice_dict["therapist"].pop("firstName")
 
         with self.assertRaises(ValidationError):
-            Invoice.parse_obj(self.invoice_dict)
+            Invoice(**self.invoice_dict)
 
     def test_missing_patient(self):
         self.invoice_dict.pop("patient")
 
         with self.assertRaises(ValidationError):
-            Invoice.parse_obj(self.invoice_dict)
+            Invoice(**self.invoice_dict)
 
     def test_wrong_patient(self):
         self.invoice_dict["patient"].pop("firstName")
 
         with self.assertRaises(ValidationError):
-            Invoice.parse_obj(self.invoice_dict)
+            Invoice(**self.invoice_dict)
 
     def test_missing_service_price(self):
         self.invoice_dict.pop("servicePrice")
 
         with self.assertRaises(ValidationError):
-            Invoice.parse_obj(self.invoice_dict)
+            Invoice(**self.invoice_dict)
 
     def test_wrong_service_price(self):
         self.invoice_dict["servicePrice"] = 0
 
         with self.assertRaises(ValidationError):
-            Invoice.parse_obj(self.invoice_dict)
+            Invoice(**self.invoice_dict)
 
     def test_missing_services(self):
         self.invoice_dict.pop("services")
 
         with self.assertRaises(ValidationError):
-            Invoice.parse_obj(self.invoice_dict)
+            Invoice(**self.invoice_dict)
 
     def test_wrong_services(self):
         self.invoice_dict["services"] = []
 
         with self.assertRaises(ValidationError):
-            Invoice.parse_obj(self.invoice_dict)
+            Invoice(**self.invoice_dict)
 
         self.invoice_dict["services"] = [1, 2]
 
         with self.assertRaises(ValidationError):
-            Invoice.parse_obj(self.invoice_dict)
+            Invoice(**self.invoice_dict)
 
         self.invoice_dict["services"] = [{"code": 1003, "duration": 60}]
 
         with self.assertRaises(ValidationError):
-            Invoice.parse_obj(self.invoice_dict)
+            Invoice(**self.invoice_dict)
 
     def test_timestamp_is_utc(self):
-        invoice: Invoice = Invoice.parse_obj(self.invoice_dict)
+        invoice: Invoice = Invoice(**self.invoice_dict)
 
         self.assertEqual(invoice.timestamp.tzinfo, timezone.utc)
 
@@ -159,13 +167,13 @@ class InvoiceTestCase(TestCase):
         self.invoice_dict.pop("timestamp")
 
         with self.assertRaises(ValidationError):
-            Invoice.parse_obj(self.invoice_dict)
+            Invoice(**self.invoice_dict)
 
     def test_wrong_timestamp(self):
         self.invoice_dict["timestamp"] = "test"
 
         with self.assertRaises(ValidationError):
-            Invoice.parse_obj(self.invoice_dict)
+            Invoice(**self.invoice_dict)
 
     def tearDown(self):
         self.author_dict = None

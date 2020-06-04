@@ -22,14 +22,14 @@ class PatientTestCase(TestCase):
 
     def test_valid(self):
         try:
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
         except ValidationError:
             self.fail("Patient is invalid while it should not.")
 
         self.patient_dict["birthday"] = 1118102400000
 
         try:
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
         except ValidationError:
             self.fail("Patient is invalid while it should not.")
 
@@ -39,25 +39,25 @@ class PatientTestCase(TestCase):
         # self.patient_dict["birthday"] = -1118102400000
 
         # try:
-        #     Patient.parse_obj(self.patient_dict)
+        #     Patient(**self.patient_dict)
         # except ValidationError:
         #     self.fail("Patient is invalid while it should not.")
 
     def test_empty(self):
         with self.assertRaises(ValidationError):
-            Patient.parse_obj({})
+            Patient(**{})
 
     def test_missing_first_name(self):
         self.patient_dict.pop("firstName")
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
     def test_missing_last_name(self):
         self.patient_dict.pop("lastName")
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
     def test_too_long_name(self):
         self.patient_dict[
@@ -65,7 +65,7 @@ class PatientTestCase(TestCase):
         ] = "Nicholas Nicholas Nicholas Nicholas Nicholas Nicholas Nicholas"
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
         self.patient_dict["firstName"] = "Nicholas"
         self.patient_dict[
@@ -73,13 +73,13 @@ class PatientTestCase(TestCase):
         ] = "Ailleboust Ailleboust Ailleboust Ailleboust Ailleboust Ailleboust"
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
     def test_missing_street(self):
         self.patient_dict.pop("street")
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
     def test_too_long_street(self):
         self.patient_dict[
@@ -87,46 +87,46 @@ class PatientTestCase(TestCase):
         ] = "Tösstalstrasse 97 Tösstalstrasse 97 Tösstalstrasse 97 Tösstalstrasse 97"
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
     def test_missing_zip(self):
         self.patient_dict.pop("ZIP")
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
     def test_too_long_zip(self):
         self.patient_dict["ZIP"] = "8872 8872 8872 8872"
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
     def test_missing_city(self):
         self.patient_dict.pop("city")
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
     def test_too_long_city(self):
         self.patient_dict["city"] = "Weesen Weesen Weesen Weesen Weesen Weesen"
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
     def test_missing_canton(self):
         self.patient_dict.pop("canton")
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
     def test_wrong_canton(self):
         self.patient_dict["canton"] = "ZZ"
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
     def test_birthday_is_utc(self):
-        invoice: Patient = Patient.parse_obj(self.patient_dict)
+        invoice: Patient = Patient(**self.patient_dict)
 
         self.assertEqual(invoice.birthday.tzinfo, timezone.utc)
 
@@ -134,52 +134,52 @@ class PatientTestCase(TestCase):
         self.patient_dict.pop("birthday")
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
     def test_wrong_birthday(self):
         self.patient_dict["birthday"] = "test"
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
     def test_missing_gender(self):
         self.patient_dict.pop("gender")
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
     def test_wrong_gender(self):
         self.patient_dict["gender"] = "test"
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
     def test_missing_email(self):
         self.patient_dict.pop("email")
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
     def test_wrong_email(self):
         self.patient_dict["email"] = "NicholasAilleboust@teleworm."
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
         self.patient_dict["email"] = "NicholasAilleboust@teleworm"
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
         self.patient_dict["email"] = "NicholasAilleboust@"
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
         self.patient_dict["email"] = "NicholasAilleboust"
 
         with self.assertRaises(ValidationError):
-            Patient.parse_obj(self.patient_dict)
+            Patient(**self.patient_dict)
 
     def tearDown(self):
         self.author_dict = None
