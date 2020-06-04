@@ -1,6 +1,6 @@
-from typing import Dict, List
+from typing import List
 
-SERVICE_CODES: List[Dict] = [
+SERVICE_CODES: List[dict] = [
     {"value": 1003, "label": "Acupressure, par période de 5 minutes"},
     {"value": 1004, "label": "Acupuncture, par période de 5 minutes"},
     {

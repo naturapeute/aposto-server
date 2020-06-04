@@ -1,5 +1,5 @@
 from functools import reduce
-from typing import Dict, Union
+from typing import Union
 
 from reportlab.lib.units import mm
 
@@ -9,7 +9,7 @@ from pdf_generation.text_style import TextStyle
 
 
 class Content:
-    def __init__(self, dict_content: Dict):
+    def __init__(self, dict_content: dict):
         self._left: float = dict_content["left"]
         self._top: float = dict_content["top"]
 
@@ -31,7 +31,7 @@ class Content:
 
 
 class Text(Content):
-    def __init__(self, dict_text: Dict):
+    def __init__(self, dict_text: dict):
         super().__init__(dict_text)
         self.text: str = dict_text["text"]
         self.style: TextStyle = getattr(pdf_generation.text_style, dict_text["style"])()
@@ -41,7 +41,7 @@ class Text(Content):
 
 
 class Graphic(Content):
-    def __init__(self, dict_frame: Dict):
+    def __init__(self, dict_frame: dict):
         super().__init__(dict_frame)
         self._width: float = dict_frame["width"]
         self._height: float = dict_frame["height"]
@@ -61,7 +61,7 @@ class Graphic(Content):
 
 
 class Value(Content):
-    def __init__(self, dict_value: Dict):
+    def __init__(self, dict_value: dict):
         super().__init__(dict_value)
         self.key: str = dict_value["key"]
         self.style: TextStyle = getattr(pdf_generation.text_style, dict_value["style"])()
@@ -78,6 +78,6 @@ class Value(Content):
 
 
 class SwissQRCode:
-    def __init__(self, dict_swiss_qr_code: Dict):
+    def __init__(self, dict_swiss_qr_code: dict):
         self.qr_code: Graphic = Graphic(dict_swiss_qr_code["qr_code"])
         self.swiss_cross: Graphic = Graphic(dict_swiss_qr_code["swiss_cross"])

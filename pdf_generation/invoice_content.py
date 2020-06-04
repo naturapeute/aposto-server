@@ -276,8 +276,8 @@ class InvoiceContent:
 
 
 class Entity:
-    def __init__(self, entity_dict: Dict):
-        self._entity_dict: Dict = entity_dict
+    def __init__(self, entity_dict: dict):
+        self._entity_dict: dict = entity_dict
 
     @property
     def gln(self) -> str:
@@ -309,9 +309,9 @@ class Entity:
 
 
 class Author(Entity):
-    def __init__(self, author_dict: Dict):
+    def __init__(self, author_dict: dict):
         super().__init__(author_dict)
-        self._author_dict: Dict = author_dict
+        self._author_dict: dict = author_dict
 
     @property
     def name(self) -> str:
@@ -341,9 +341,9 @@ class Author(Entity):
 
 
 class Therapist(Entity):
-    def __init__(self, therapist_dict: Dict):
+    def __init__(self, therapist_dict: dict):
         super().__init__(therapist_dict)
-        self._therapist_dict: Dict = therapist_dict
+        self._therapist_dict: dict = therapist_dict
 
     @property
     def name(self) -> str:
@@ -351,8 +351,8 @@ class Therapist(Entity):
 
 
 class Patient:
-    def __init__(self, patient_dict: Dict):
-        self._patient_dict: Dict = patient_dict
+    def __init__(self, patient_dict: dict):
+        self._patient_dict: dict = patient_dict
 
     @property
     def first_name(self) -> str:
@@ -414,7 +414,7 @@ class Patient:
 
 
 class ServiceList:
-    def __init__(self, services_dict: Dict, service_price: float):
+    def __init__(self, services_dict: dict, service_price: float):
         self.service_price: float = service_price / 12
         self.services: List[Service] = list(
             Service(service, self.service_price) for service in services_dict
@@ -422,8 +422,8 @@ class ServiceList:
 
 
 class Service:
-    def __init__(self, service_dict: Dict, service_price: float):
-        self._service_dict: Dict = service_dict
+    def __init__(self, service_dict: dict, service_price: float):
+        self._service_dict: dict = service_dict
         self._service_price: float = service_price
         self._quantity: float = self._service_dict["duration"] / 5
 

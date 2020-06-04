@@ -1,4 +1,3 @@
-from typing import Dict
 from unittest import TestCase
 
 from responses import POST, Response
@@ -9,7 +8,7 @@ from app import config
 class InvoiceContentTestCase(TestCase):
     def setUp(self):
         self.invoice_content_base_64: str = "eyJ0ZXJyYXBldXRlSUQiOiIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJhdXRob3IiOnsibmFtZSI6IkNhYmluZXQgZGUgTGVyb3kiLCJzdHJlZXQiOiJWaWEgZGVsbGUgVmlnbmUgMSIsIlpJUCI6IjcxNDkiLCJjaXR5IjoiVnJpbiIsImVtYWlsIjoiTGVyb3lGcmVjaGV0dGVAYXJteXNweS5jb20iLCJwaG9uZSI6IjA4MSA2NjAgNjggMzYiLCJSQ0MiOiJWMTIzMTIzIn0sInRoZXJhcGlzdCI6eyJmaXJzdE5hbWUiOiJMZXJveSIsImxhc3ROYW1lIjoiRnLpY2hldHRlIiwic3RyZWV0IjoiVmlhIGRlbGxlIFZpZ25lIDEiLCJaSVAiOiI3MTQ5IiwiY2l0eSI6IlZyaW4iLCJlbWFpbCI6Ikxlcm95RnJlY2hldHRlQGFybXlzcHkuY29tIiwicGhvbmUiOiIwODEgNjYwIDY4IDM2IiwiUkNDIjoiVjEyMzEyMyJ9LCJwYXRpZW50Ijp7Il9pZCI6IjE1ODUwNDg3NTg4OTAiLCJmaXJzdE5hbWUiOiJOaWNob2xhcyIsImxhc3ROYW1lIjoiQWlsbGVib3VzdCIsInN0cmVldCI6IlT2c3N0YWxzdHJhc3NlIDk3IiwiWklQIjoiODg3MiIsImNpdHkiOiJXZWVzZW4iLCJjYW50b24iOiJTRyIsImJpcnRoZGF5IjotMTExODEwMjQwMDAwMCwiZ2VuZGVyIjoiZmVtYWxlIiwiZW1haWwiOiJOaWNob2xhc0FpbGxlYm91c3RAdGVsZXdvcm0udXMifSwic2VydmljZVByaWNlIjoxMDAsInNlcnZpY2VzIjpbeyJkYXRlIjoxNTg1MDA4MDAwMDAwLCJjb2RlIjoxMDAzLCJkdXJhdGlvbiI6NjB9XSwidGltZXN0YW1wIjoxNTg1MDQ5MTE4NDg1fQ=="
-        self.invoice_content_dict: Dict = {
+        self.invoice_content_dict: dict = {
             "terrapeuteID": "000000000000000000000000",
             "author": {
                 "name": "Cabinet de Leroy",
@@ -55,7 +54,7 @@ class InvoiceContentTestCase(TestCase):
 class InvoiceContentDemoModeTestCase(TestCase):
     def setUp(self):
         self.invoice_content_demo_base_64: str = "eyJhdXRob3IiOnsibmFtZSI6IkNhYmluZXQgZGUgTGVyb3kiLCJzdHJlZXQiOiJWaWEgZGVsbGUgVmlnbmUgMSIsIlpJUCI6IjcxNDkiLCJjaXR5IjoiVnJpbiIsImVtYWlsIjoiTGVyb3lGcmVjaGV0dGVAYXJteXNweS5jb20iLCJwaG9uZSI6IjA4MSA2NjAgNjggMzYiLCJSQ0MiOiJWMTIzMTIzIn0sInRoZXJhcGlzdCI6eyJmaXJzdE5hbWUiOiJMZXJveSIsImxhc3ROYW1lIjoiRnLpY2hldHRlIiwic3RyZWV0IjoiVmlhIGRlbGxlIFZpZ25lIDEiLCJaSVAiOiI3MTQ5IiwiY2l0eSI6IlZyaW4iLCJlbWFpbCI6Ikxlcm95RnJlY2hldHRlQGFybXlzcHkuY29tIiwicGhvbmUiOiIwODEgNjYwIDY4IDM2IiwiUkNDIjoiVjEyMzEyMyJ9LCJwYXRpZW50Ijp7Il9pZCI6IjE1ODUwNDg3NTg4OTAiLCJmaXJzdE5hbWUiOiJOaWNob2xhcyIsImxhc3ROYW1lIjoiQWlsbGVib3VzdCIsInN0cmVldCI6IlT2c3N0YWxzdHJhc3NlIDk3IiwiWklQIjoiODg3MiIsImNpdHkiOiJXZWVzZW4iLCJjYW50b24iOiJTRyIsImJpcnRoZGF5IjotMTExODEwMjQwMDAwMCwiZ2VuZGVyIjoiZmVtYWxlIiwiZW1haWwiOiJOaWNob2xhc0FpbGxlYm91c3RAdGVsZXdvcm0udXMifSwic2VydmljZVByaWNlIjoxMDAsInNlcnZpY2VzIjpbeyJkYXRlIjoxNTg1MDA4MDAwMDAwLCJjb2RlIjoxMDAzLCJkdXJhdGlvbiI6NjB9XSwidGltZXN0YW1wIjoxNTg1MDQ5MTE4NDg1fQ=="
-        self.invoice_content_demo_dict: Dict = {
+        self.invoice_content_demo_dict: dict = {
             "author": {
                 "name": "Cabinet de Leroy",
                 "street": "Via delle Vigne 1",
@@ -121,7 +120,7 @@ class InvoiceContentMissingParamTestCase(TestCase):
     FAILURE_JSON = {"author.name": "Missing parameter"}
 
     def setUp(self):
-        self.invoice_content_missing_param_dict: Dict = {
+        self.invoice_content_missing_param_dict: dict = {
             "author": {
                 "street": "Via delle Vigne 1",
                 "ZIP": "7149",
@@ -162,7 +161,7 @@ class InvoiceContentMissingParamTestCase(TestCase):
 
 
 class SendInBlueMock:
-    FAILURE_JSON: Dict = {"code": "400", "message": "Invalid parameter"}
+    FAILURE_JSON: dict = {"code": "400", "message": "Invalid parameter"}
 
     @staticmethod
     def smtp_email_success_request() -> Response:
