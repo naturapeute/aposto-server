@@ -102,3 +102,6 @@ class Service(BaseModel):
         1207,
         1210,
     ]
+
+    def amount(self, service_price) -> float:
+        return (service_price / 12) * (self.duration / 5)

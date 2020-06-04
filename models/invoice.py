@@ -17,3 +17,12 @@ class Invoice(BaseModel):
     servicePrice: conint(gt=0)
     services: conlist(Service, min_items=1)
     timestamp: datetime
+
+    @property
+    def total_amount(self) -> float:
+        _total_amount: float = 0.0
+
+        for service in self.services:
+            _total_amount += service.amount(self.servicePrice)
+
+        return _total_amount
