@@ -25,6 +25,23 @@ class PatientTestCase(TestCase):
         except ValidationError:
             self.fail("Patient is invalid while it should not.")
 
+        self.patient_dict["birthday"] = 1118102400000
+
+        try:
+            Patient.parse_obj(self.patient_dict)
+        except ValidationError:
+            self.fail("Patient is invalid while it should not.")
+
+        # FIXME : pydantic actually does not support JavaScript negative timestamp
+        #           Enable this code when it will be properly parsed.
+        #           See https://github.com/samuelcolvin/pydantic/issues/1600
+        # self.patient_dict["birthday"] = -1118102400000
+
+        # try:
+        #     Patient.parse_obj(self.patient_dict)
+        # except ValidationError:
+        #     self.fail("Patient is invalid while it should not.")
+
     def test_empty(self):
         with self.assertRaises(ValidationError):
             Patient.parse_obj({})
