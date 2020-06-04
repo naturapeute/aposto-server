@@ -12,25 +12,25 @@
         "style": "QRInvoicePaymentSectionTextStyle"
     },
     {
-        "key": "author.qr_iban",
+        "key": "author_content.qr_iban",
         "left": 118,
         "top": 203.703,
         "style": "QRInvoicePaymentSectionTextStyle"
     },
     {
-        "key": "author.name",
+        "key": "author_content.name",
         "left": 118,
         "top": 207.584,
         "style": "QRInvoicePaymentSectionTextStyle"
     },
     {
-        "key": "author.street",
+        "key": "author_content.street",
         "left": 118,
         "top": 211.465,
         "style": "QRInvoicePaymentSectionTextStyle"
     },
     {
-        "key": "author.zip_city",
+        "key": "author_content.zip_city",
         "left": 118,
         "top": 215.346,
         "style": "QRInvoicePaymentSectionTextStyle"
@@ -42,19 +42,19 @@
         "style": "QRInvoicePaymentSectionTextStyle"
     },
     {
-        "key": "patient.name",
+        "key": "patient_content.name",
         "left": 118,
         "top": 238.632,
         "style": "QRInvoicePaymentSectionTextStyle"
     },
     {
-        "key": "patient.street",
+        "key": "patient_content.street",
         "left": 118,
         "top": 242.513,
         "style": "QRInvoicePaymentSectionTextStyle"
     },
     {
-        "key": "patient.zip_city",
+        "key": "patient_content.zip_city",
         "left": 118,
         "top": 246.394,
         "style": "QRInvoicePaymentSectionTextStyle"

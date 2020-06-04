@@ -21,12 +21,12 @@ class InvoiceContent:
         )
         self.patient_content: PatientContent = PatientContent(self._invoice.patient)
         self.services_content: List[ServiceContent] = list(
-            ServiceContent(service, self._invoice.service_price / 12)
+            ServiceContent(service, self._invoice.servicePrice / 12)
             for service in self._invoice.services
         )
 
     @property
-    def terrapeute_id(self) -> Union[int, None]:
+    def terrapeute_id(self) -> Union[str, None]:
         return self._invoice.terrapeuteID
 
     @property

@@ -1,42 +1,42 @@
 [
     {
-        "key": "patient.name",
+        "key": "patient_content.name",
         "left": 117.809,
         "top": 60.878,
         "style": "LargeValueTextStyle"
     },
     {
-        "key": "patient.street",
+        "key": "patient_content.street",
         "left": 117.199,
         "top": 64.83,
         "style": "LargeValueTextStyle"
     },
     {
-        "key": "patient.zip_city",
+        "key": "patient_content.zip_city",
         "left": 117.789,
         "top": 68.744,
         "style": "LargeValueTextStyle"
     },
     {
-        "key": "patient.name",
+        "key": "patient_content.name",
         "left": 117.755,
         "top": 99.745,
         "style": "QRInvoiceInvoiceTextStyle"
     },
     {
-        "key": "patient.street",
+        "key": "patient_content.street",
         "left": 117.747,
         "top": 102.867,
         "style": "QRInvoiceInvoiceTextStyle"
     },
     {
-        "key": "patient.zip_city",
+        "key": "patient_content.zip_city",
         "left": 117.739,
         "top": 105.991,
         "style": "QRInvoiceInvoiceTextStyle"
     },
     {
-        "key": "patient.birthday_with_header_and_gender",
+        "key": "patient_content.birthday_with_header_and_gender",
         "left": 117.747,
         "top": 112.2,
         "style": "QRInvoiceInvoiceTextStyle"

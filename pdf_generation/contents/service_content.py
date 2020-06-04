@@ -17,7 +17,7 @@ class ServiceContent:
 
     @property
     def code(self) -> str:
-        return self._service.code
+        return str(self._service.code)
 
     @property
     def session(self) -> str:

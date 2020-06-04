@@ -78,9 +78,9 @@ class ApostoCanvas(canvas.Canvas):
             for value in template:
                 self.draw_string(value.to_text(invoice_content))
         else:
-            for index, service in enumerate(invoice_content.services.services):
+            for index, service_content in enumerate(invoice_content.services_content):
                 for value in template:
-                    text: Text = value.to_text(service)
+                    text: Text = value.to_text(service_content)
                     text.shift_top(index * self.SERVICE_TOP_SHIFT)
                     self.draw_string(text)
 

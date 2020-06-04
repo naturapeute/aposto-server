@@ -1,66 +1,66 @@
 [
     {
-        "key": "patient.last_name",
+        "key": "patient_content.last_name",
         "left": 59.242,
         "top": 40.664,
         "style": "ValueTextStyle"
     },
     {
-        "key": "patient.first_name",
+        "key": "patient_content.first_name",
         "left": 59.251,
         "top": 44.505,
         "style": "ValueTextStyle"
     },
     {
-        "key": "patient.street",
+        "key": "patient_content.street",
         "left": 59.242,
         "top": 48.352,
         "style": "ValueTextStyle"
     },
     {
-        "key": "patient.zip",
+        "key": "patient_content.zip",
         "left": 59.158,
         "top": 52.199,
         "style": "ValueTextStyle"
     },
     {
-        "key": "patient.city",
+        "key": "patient_content.city",
         "left": 59.242,
         "top": 56.041,
         "style": "ValueTextStyle"
     },
     {
-        "key": "patient.birthday",
+        "key": "patient_content.birthday",
         "left": 59.105,
         "top": 59.883,
         "style": "ValueTextStyle"
     },
     {
-        "key": "patient.gender",
+        "key": "patient_content.gender",
         "left": 59.267,
         "top": 63.69,
         "style": "ValueTextStyle"
     },
     {
-        "key": "patient.canton",
+        "key": "patient_content.canton",
         "left": 59.239,
         "top": 86.791,
         "style": "ValueTextStyle"
     },
     {
-        "key": "patient.name",
+        "key": "patient_content.name",
         "left": 118.65,
         "top": 60.578,
         "style": "LargeValueTextStyle"
     },
     {
-        "key": "patient.street",
+        "key": "patient_content.street",
         "left": 118.389,
         "top": 64.509,
         "style": "LargeValueTextStyle"
     },
     {
-        "key": "patient.zip_city",
+        "key": "patient_content.zip_city",
         "left": 118.557,
         "top": 68.442,
         "style": "LargeValueTextStyle"

@@ -12,61 +12,61 @@
         "style": "SmallValueTextStyle"
     },
     {
-        "key": "author.name",
+        "key": "author_content.name",
         "left": 84.873,
         "top": 24.796,
         "style": "SmallValueTextStyle"
     },
     {
-        "key": "author.gln",
+        "key": "author_content.gln",
         "left": 59.031,
         "top": 25.048,
         "style": "ValueTextStyle"
     },
     {
-        "key": "author.rcc",
+        "key": "author_content.rcc",
         "left": 59.187,
         "top": 28.853,
         "style": "ValueTextStyle"
     },
     {
-        "key": "author.address",
+        "key": "author_content.address",
         "left": 84.873,
         "top": 28.673,
         "style": "SmallValueTextStyle"
     },
     {
-        "key": "author.phone",
+        "key": "author_content.phone",
         "left": 176.555,
         "top": 24.826,
         "style": "SmallValueTextStyle"
     },
     {
-        "key": "therapist.name",
+        "key": "therapist_content.name",
         "left": 84.894,
         "top": 32.506,
         "style": "SmallValueTextStyle"
     },
     {
-        "key": "therapist.gln",
+        "key": "therapist_content.gln",
         "left": 59.085,
         "top": 32.734,
         "style": "ValueTextStyle"
     },
     {
-        "key": "therapist.rcc",
+        "key": "therapist_content.rcc",
         "left": 59.178,
         "top": 36.535,
         "style": "ValueTextStyle"
     },
     {
-        "key": "therapist.address",
+        "key": "therapist_content.address",
         "left": 84.693,
         "top": 36.323,
         "style": "SmallValueTextStyle"
     },
     {
-        "key": "therapist.phone",
+        "key": "therapist_content.phone",
         "left": 176.555,
         "top": 32.508,
         "style": "SmallValueTextStyle"
