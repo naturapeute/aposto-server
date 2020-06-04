@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional, List, Tuple
 
-from pydantic import BaseModel, conint, conlist
+from pydantic import BaseModel, conint, conlist, constr
 
 from models.author import Author
 from models.patient import Patient
@@ -16,6 +16,7 @@ class Invoice(BaseModel):
     patient: Patient
     servicePrice: conint(gt=0)
     services: conlist(Service, min_items=1)
+    QRReference: Optional[constr(strip_whitespace=True, regex=r"^[0-9]{26}$")]
     timestamp: datetime
 
     @property

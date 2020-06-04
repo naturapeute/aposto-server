@@ -165,6 +165,22 @@ class InvoiceTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Invoice(**self.invoice_dict)
 
+    def test_wrong_qr_reference(self):
+        self.invoice_dict["QRReference"] = "azertyuiopqsdfghjklmwxcvbn"
+
+        with self.assertRaises(ValidationError):
+            Invoice(**self.invoice_dict)
+
+        self.invoice_dict["QRReference"] = "1234567890123456789012345"
+
+        with self.assertRaises(ValidationError):
+            Invoice(**self.invoice_dict)
+
+        self.invoice_dict["QRReference"] = "123456789012345678901234567"
+
+        with self.assertRaises(ValidationError):
+            Invoice(**self.invoice_dict)
+
     def test_timestamp_is_utc(self):
         invoice: Invoice = Invoice(**self.invoice_dict)
 
