@@ -9,3 +9,5 @@ reportlab==3.5.42
 responses==0.10.12
 python-dateutil==2.8.1
 qrcode[pil]==6.1
+spectree==0.3.3
+email-validator==1.1.1
