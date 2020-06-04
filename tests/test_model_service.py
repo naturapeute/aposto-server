@@ -44,10 +44,10 @@ class ServiceTestCase(TestCase):
         self.assertEqual(service.quantity, 9)
 
     def test_amount(self):
-        service_price: int = 100
+        service_unit_price: int = 100 / 12
         service: Service = Service(**self.service_dict)
 
-        self.assertEqual(service.amount(service_price), 75.0)
+        self.assertEqual(service.amount(service_unit_price), 75.0)
 
     def test_missing_date(self):
         self.service_dict.pop("date")
