@@ -1,6 +1,6 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
-from pydantic import BaseModel, EmailStr, constr, validator
+from pydantic import BaseModel, EmailStr, constr, root_validator
 from typing_extensions import Literal
 
 
@@ -47,10 +47,17 @@ class Patient(BaseModel):
     gender: Literal["male", "female"]
     email: EmailStr
 
-    @validator("lastName")
+    @root_validator
     @classmethod
-    def check_name(cls, value, values):
-        if "firstName" in values and len(f"{values['firstName']} {value}") > 70:
+    def check_name(cls, values):
+        first_name: str = values.get("firstName")
+        last_name: str = values.get("lastName")
+
+        if (
+            first_name is not None
+            and last_name is not None
+            and len(f"{first_name} {last_name}") > 70
+        ):
             raise ValueError(f"The therapist name is longer than 70 caracters.")
 
-        return value
+        return values
