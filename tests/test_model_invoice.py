@@ -9,7 +9,7 @@ from models.invoice import Invoice
 class InvoiceTestCase(TestCase):
     def setUp(self):
         self.invoice_dict: dict = {
-            "terrapeuteID": "000000000000000000000000",
+            "naturapeuteID": "000000000000000000000000",
             "author": {
                 "name": "Cabinet de Leroy",
                 "street": "Via delle Vigne 1",
@@ -71,8 +71,8 @@ class InvoiceTestCase(TestCase):
         # except ValidationError:
         #     self.fail("Invoice is invalid while it should not.")
 
-    def test_valid_without_terrapeute_id(self):
-        self.invoice_dict.pop("terrapeuteID")
+    def test_valid_without_naturapeute_id(self):
+        self.invoice_dict.pop("naturapeuteID")
 
         try:
             Invoice(**self.invoice_dict)

@@ -10,7 +10,7 @@ from models.therapist import Therapist
 
 
 class Invoice(BaseModel):
-    terrapeuteID: Optional[str] = None
+    naturapeuteID: Optional[str] = None
     author: Author
     therapist: Therapist
     patient: Patient

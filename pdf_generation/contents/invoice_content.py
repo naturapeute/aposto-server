@@ -26,8 +26,8 @@ class InvoiceContent:
         )
 
     @property
-    def terrapeute_id(self) -> Union[str, None]:
-        return self._invoice.terrapeuteID
+    def naturapeute_id(self) -> Union[str, None]:
+        return self._invoice.naturapeuteID
 
     @property
     def timestamp(self) -> str:
