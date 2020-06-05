@@ -10,7 +10,7 @@ from models.therapist import Therapist
 
 
 class Invoice(BaseModel):
-    naturapeuteID: Optional[str] = None
+    naturapeuteID: Optional[constr(regex=r"^[a-fA-F0-9]{24}$")] = None
     author: Author
     therapist: Therapist
     patient: Patient
