@@ -1,5 +1,6 @@
 import base64
 import os
+from json.decoder import JSONDecodeError
 from pathlib import Path
 from typing import Dict, List
 
@@ -47,9 +48,16 @@ api.register(app)
 @app.route("/pdf/{name}", methods=["POST"])
 async def download_invoice(request: Request):
     try:
-        invoice: Invoice = Invoice.parse_raw(await request.json())
+        invoice_dict: dict = await request.json()
+    except JSONDecodeError as json_error:
+        error_msg: str = f"{json_error.msg}: line {json_error.lineno} column {json_error.colno} (char {json_error.pos})"
+
+        return UJSONResponse({"json_error": error_msg}, status_code=HTTP_400_BAD_REQUEST)
+
+    try:
+        invoice: Invoice = Invoice(**invoice_dict)
     except ValidationError as validation_error:
-        return UJSONResponse(validation_error.json(), status_code=HTTP_400_BAD_REQUEST)
+        return UJSONResponse(validation_error.errors(), status_code=HTTP_400_BAD_REQUEST)
 
     invoice_content: InvoiceContent = InvoiceContent(invoice)
 
@@ -62,9 +70,16 @@ async def download_invoice(request: Request):
 @app.route("/email", methods=["POST"])
 async def email_invoice(request: Request):
     try:
-        invoice: Invoice = Invoice.parse_raw(await request.json())
+        invoice_dict: dict = await request.json()
+    except JSONDecodeError as json_error:
+        error_msg: str = f"{json_error.msg}: line {json_error.lineno} column {json_error.colno} (char {json_error.pos})"
+
+        return UJSONResponse({"json_error": error_msg}, status_code=HTTP_400_BAD_REQUEST)
+
+    try:
+        invoice: Invoice = Invoice(**invoice_dict)
     except ValidationError as validation_error:
-        return UJSONResponse(validation_error.json(), status_code=HTTP_400_BAD_REQUEST)
+        return UJSONResponse(validation_error.errors(), status_code=HTTP_400_BAD_REQUEST)
 
     invoice_content: InvoiceContent = InvoiceContent(invoice)
 
