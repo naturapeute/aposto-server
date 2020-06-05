@@ -13,8 +13,8 @@ class EntityContent:
         return "2099999999999"
 
     @property
-    def rcc(self) -> Union[str, None]:
-        return self._entity.RCC
+    def rcc(self) -> str:
+        return self._entity.RCC if self._entity.RCC else ""
 
     @property
     def street(self) -> str:
