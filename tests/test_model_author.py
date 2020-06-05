@@ -41,10 +41,15 @@ class AuthorTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
-    def test_too_long_name(self):
+    def test_wrong_name(self):
         self.author_dict[
             "name"
         ] = "Cabinet de Leroy Cabinet de Leroy Cabinet de Leroy Cabinet de Leroy Cabinet"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+        self.author_dict["name"] = ""
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
@@ -55,10 +60,13 @@ class AuthorTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
-    def test_too_long_street(self):
-        self.author_dict[
-            "street"
-        ] = "Via delle Vigne 1 Via delle Vigne 1 Via delle Vigne 1 Via delle Vigne 1"
+    def test_wrong_street(self):
+        self.author_dict["street"] = "Via delle Vigne 1 Via delle Vigne 1 Via"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+        self.author_dict["street"] = ""
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
@@ -69,8 +77,13 @@ class AuthorTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
-    def test_too_long_zip(self):
-        self.author_dict["ZIP"] = "7149 7149 7149 7149"
+    def test_wrong_zip(self):
+        self.author_dict["ZIP"] = "7149714971"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+        self.author_dict["ZIP"] = ""
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
@@ -81,14 +94,30 @@ class AuthorTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
-    def test_too_long_city(self):
+    def test_wrong_city(self):
         self.author_dict["city"] = "Vrin Vrin Vrin Vrin Vrin Vrin Vrin Vrin"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+        self.author_dict["city"] = ""
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
     def test_missing_phone(self):
         self.author_dict.pop("phone")
+
+    def test_wrong_phone(self):
+        self.author_dict["phone"] = "081 660 68 36 081 660 68 36"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+        self.author_dict["phone"] = ""
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)

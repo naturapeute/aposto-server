@@ -4,11 +4,11 @@ from pydantic import BaseModel, EmailStr, constr
 
 
 class Author(BaseModel):
-    name: constr(max_length=70)
-    street: constr(max_length=70)
-    ZIP: constr(max_length=16)
-    city: constr(max_length=35)
-    phone: str
+    name: constr(min_length=1, max_length=70)
+    street: constr(min_length=1, max_length=35)
+    ZIP: constr(min_length=1, max_length=9)
+    city: constr(min_length=1, max_length=35)
+    phone: constr(strip_whitespace=True, min_length=1, max_length=25)
     email: EmailStr
     RCC: Optional[constr(regex=r"^[A-Z][0-9]{6}$")]
     QRIBAN: Optional[
