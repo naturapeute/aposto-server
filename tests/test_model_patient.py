@@ -53,24 +53,37 @@ class PatientTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
 
+    def test_wrong_first_name(self):
+        self.patient_dict["firstName"] = "Nicholas Nicholas Nicholas Nicholas Nicholas"
+
+        with self.assertRaises(ValidationError):
+            Patient(**self.patient_dict)
+
+        self.patient_dict["firstName"] = ""
+
+        with self.assertRaises(ValidationError):
+            Patient(**self.patient_dict)
+
     def test_missing_last_name(self):
         self.patient_dict.pop("lastName")
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
 
-    def test_too_long_name(self):
-        self.patient_dict[
-            "firstName"
-        ] = "Nicholas Nicholas Nicholas Nicholas Nicholas Nicholas Nicholas"
+    def test_wrong_last_name(self):
+        self.patient_dict["lastName"] = "Ailleboust Ailleboust Ailleboust Ailleboust"
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
 
-        self.patient_dict["firstName"] = "Nicholas"
-        self.patient_dict[
-            "lastName"
-        ] = "Ailleboust Ailleboust Ailleboust Ailleboust Ailleboust Ailleboust"
+        self.patient_dict["lastName"] = ""
+
+        with self.assertRaises(ValidationError):
+            Patient(**self.patient_dict)
+
+    def test_too_long_name(self):
+        self.patient_dict["firstName"] = "Nicholas Nicholas Nicholas Nicholas"
+        self.patient_dict["lastName"] = "Ailleboust Ailleboust Ailleboust Ai"
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
@@ -81,10 +94,13 @@ class PatientTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
 
-    def test_too_long_street(self):
-        self.patient_dict[
-            "street"
-        ] = "Tösstalstrasse 97 Tösstalstrasse 97 Tösstalstrasse 97 Tösstalstrasse 97"
+    def test_wrong_street(self):
+        self.patient_dict["street"] = "Tösstalstrasse 97 Tösstalstrasse 97 Tösstalstrasse"
+
+        with self.assertRaises(ValidationError):
+            Patient(**self.patient_dict)
+
+        self.patient_dict["street"] = ""
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
@@ -95,8 +111,13 @@ class PatientTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
 
-    def test_too_long_zip(self):
-        self.patient_dict["ZIP"] = "8872 8872 8872 8872"
+    def test_wrong_zip(self):
+        self.patient_dict["ZIP"] = "8872887288"
+
+        with self.assertRaises(ValidationError):
+            Patient(**self.patient_dict)
+
+        self.patient_dict["ZIP"] = ""
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
@@ -107,8 +128,13 @@ class PatientTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
 
-    def test_too_long_city(self):
+    def test_wrong_city(self):
         self.patient_dict["city"] = "Weesen Weesen Weesen Weesen Weesen Weesen"
+
+        with self.assertRaises(ValidationError):
+            Patient(**self.patient_dict)
+
+        self.patient_dict["city"] = ""
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
@@ -182,4 +208,4 @@ class PatientTestCase(TestCase):
             Patient(**self.patient_dict)
 
     def tearDown(self):
-        self.author_dict = None
+        self.patient_dict = None

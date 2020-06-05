@@ -215,4 +215,4 @@ class InvoiceTestCase(TestCase):
             Invoice(**self.invoice_dict)
 
     def tearDown(self):
-        self.author_dict = None
+        self.invoice_dict = None
