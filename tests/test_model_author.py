@@ -108,6 +108,9 @@ class AuthorTestCase(TestCase):
     def test_missing_phone(self):
         self.author_dict.pop("phone")
 
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
     def test_wrong_phone(self):
         self.author_dict["phone"] = "081 660 68 36 081 660 68 36"
 
@@ -115,9 +118,6 @@ class AuthorTestCase(TestCase):
             Author(**self.author_dict)
 
         self.author_dict["phone"] = ""
-
-        with self.assertRaises(ValidationError):
-            Author(**self.author_dict)
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
