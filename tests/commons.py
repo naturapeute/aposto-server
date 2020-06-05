@@ -9,7 +9,7 @@ class InvoiceContentTestCase(TestCase):
     def setUp(self):
         self.invoice_content_base_64: str = "eyJ0ZXJyYXBldXRlSUQiOiIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJhdXRob3IiOnsibmFtZSI6IkNhYmluZXQgZGUgTGVyb3kiLCJzdHJlZXQiOiJWaWEgZGVsbGUgVmlnbmUgMSIsIlpJUCI6IjcxNDkiLCJjaXR5IjoiVnJpbiIsImVtYWlsIjoiTGVyb3lGcmVjaGV0dGVAYXJteXNweS5jb20iLCJwaG9uZSI6IjA4MSA2NjAgNjggMzYiLCJSQ0MiOiJWMTIzMTIzIn0sInRoZXJhcGlzdCI6eyJmaXJzdE5hbWUiOiJMZXJveSIsImxhc3ROYW1lIjoiRnLpY2hldHRlIiwic3RyZWV0IjoiVmlhIGRlbGxlIFZpZ25lIDEiLCJaSVAiOiI3MTQ5IiwiY2l0eSI6IlZyaW4iLCJlbWFpbCI6Ikxlcm95RnJlY2hldHRlQGFybXlzcHkuY29tIiwicGhvbmUiOiIwODEgNjYwIDY4IDM2IiwiUkNDIjoiVjEyMzEyMyJ9LCJwYXRpZW50Ijp7Il9pZCI6IjE1ODUwNDg3NTg4OTAiLCJmaXJzdE5hbWUiOiJOaWNob2xhcyIsImxhc3ROYW1lIjoiQWlsbGVib3VzdCIsInN0cmVldCI6IlT2c3N0YWxzdHJhc3NlIDk3IiwiWklQIjoiODg3MiIsImNpdHkiOiJXZWVzZW4iLCJjYW50b24iOiJTRyIsImJpcnRoZGF5IjotMTExODEwMjQwMDAwMCwiZ2VuZGVyIjoiZmVtYWxlIiwiZW1haWwiOiJOaWNob2xhc0FpbGxlYm91c3RAdGVsZXdvcm0udXMifSwic2VydmljZVByaWNlIjoxMDAsInNlcnZpY2VzIjpbeyJkYXRlIjoxNTg1MDA4MDAwMDAwLCJjb2RlIjoxMDAzLCJkdXJhdGlvbiI6NjB9XSwidGltZXN0YW1wIjoxNTg1MDQ5MTE4NDg1fQ=="
         self.invoice_content_dict: dict = {
-            "terrapeuteID": "000000000000000000000000",
+            "naturapeuteID": "000000000000000000000000",
             "author": {
                 "name": "Cabinet de Leroy",
                 "street": "Via delle Vigne 1",

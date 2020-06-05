@@ -62,8 +62,8 @@ class InvoiceContent:
         self.init_total_amount()
 
     @property
-    def terrapeute_id(self) -> str:
-        return self._invoice_content_dict.get("terrapeuteID", None)
+    def naturapeute_id(self) -> str:
+        return self._invoice_content_dict.get("naturapeuteID", None)
 
     @property
     def timestamp(self) -> str:

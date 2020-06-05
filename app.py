@@ -157,13 +157,13 @@ async def email_invoice(request: Request):
 
 @app.route("/favicon.ico")
 async def icon(_: Request):
-    return RedirectResponse("https://terrapeute.ch/img/favicon.png")
+    return RedirectResponse("https://naturapeute.ch/img/favicon.png")
 
 
 def generate_invoice(invoice_content: InvoiceContent) -> Path:
     invoice_dir_str = (
-        f"./out/{invoice_content.terrapeute_id}"
-        if invoice_content.terrapeute_id
+        f"./out/{invoice_content.naturapeute_id}"
+        if invoice_content.naturapeute_id
         else "./out/demo"
     )
     invoice_dir: Path = Path(invoice_dir_str)

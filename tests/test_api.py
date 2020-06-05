@@ -37,7 +37,7 @@ class PDFEndpointTest(
         InvoiceContentImproperJSONTestCase.setUp(self)
 
         self.invoice_path: Path = Path(
-            f"./out/{self.invoice_content_dict['terrapeuteID']}/invoice-{int(self.invoice_content_dict['timestamp'] / 1000)}.pdf"
+            f"./out/{self.invoice_content_dict['naturapeuteID']}/invoice-{int(self.invoice_content_dict['timestamp'] / 1000)}.pdf"
         )
 
         if self.invoice_path.is_file():
