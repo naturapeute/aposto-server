@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List, Optional, Tuple
 
-from pydantic import BaseModel, conint, conlist, constr
+from pydantic import BaseModel, conint, conlist, constr, validator
 
 from models.author import Author
 from models.patient import Patient
@@ -20,6 +20,17 @@ class Invoice(BaseModel):
         constr(strip_whitespace=True, regex=r"^[0-9]{27}$")
     ] = None  # TODO : Turn into compulsory field when moving to QR-invoice
     timestamp: datetime
+
+    # FIXME : pydantic actually does not support JavaScript negative timestamp
+    #           Remove this code when it will be properly parsed.
+    #           See https://github.com/samuelcolvin/pydantic/issues/1600
+    @validator("timestamp", pre=True)
+    @classmethod
+    def check_valid_pydantic_date(cls, value):
+        if value < -int(2e10):
+            raise ValueError(f"Negative timestamps bigger than {2e10} are not allowed.")
+
+        return value
 
     @property
     def total_amount(self) -> float:
