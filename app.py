@@ -101,7 +101,8 @@ async def email_invoice(request: Request):
             "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {invoice.patient.firstName} {invoice.patient.lastName},</p><p>Vous pouvez dès à présent consulter votre facture du {invoice_content.date_string} en pièce jointe.</p><p>À très bientôt,<br>{invoice.author.name}</p>",
             "subject": "Aposto - Votre nouvelle facture",
             "attachment": [{"content": invoice_file_base_64, "name": invoice_path.name}],
-        }
+        },
+        reject_bytes=False,
     )
 
     headers: Dict[str, str] = {
