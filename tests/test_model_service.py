@@ -96,4 +96,4 @@ class ServiceTestCase(TestCase):
             Service(**self.service_dict)
 
     def tearDown(self):
-        self.author_dict = None
+        self.service_dict = None

@@ -42,8 +42,30 @@ class TherapistTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
 
+    def test_wrong_first_name(self):
+        self.therapist_dict["firstName"] = "Leroy Leroy Leroy Leroy Leroy Leroy Leroy"
+
+        with self.assertRaises(ValidationError):
+            Therapist(**self.therapist_dict)
+
+        self.therapist_dict["firstName"] = ""
+
+        with self.assertRaises(ValidationError):
+            Therapist(**self.therapist_dict)
+
     def test_missing_last_name(self):
         self.therapist_dict.pop("lastName")
+
+        with self.assertRaises(ValidationError):
+            Therapist(**self.therapist_dict)
+
+    def test_wrong_last_name(self):
+        self.therapist_dict["lastName"] = "Fréchette Fréchette Fréchette Fréchette"
+
+        with self.assertRaises(ValidationError):
+            Therapist(**self.therapist_dict)
+
+        self.therapist_dict["lastName"] = ""
 
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
@@ -54,8 +76,30 @@ class TherapistTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
 
+    def test_wrong_street(self):
+        self.therapist_dict["street"] = "Via delle Vigne 1 Via delle Vigne 1 Via"
+
+        with self.assertRaises(ValidationError):
+            Therapist(**self.therapist_dict)
+
+        self.therapist_dict["street"] = ""
+
+        with self.assertRaises(ValidationError):
+            Therapist(**self.therapist_dict)
+
     def test_missing_zip(self):
         self.therapist_dict.pop("ZIP")
+
+        with self.assertRaises(ValidationError):
+            Therapist(**self.therapist_dict)
+
+    def test_wrong_zip(self):
+        self.therapist_dict["ZIP"] = "7149714971"
+
+        with self.assertRaises(ValidationError):
+            Therapist(**self.therapist_dict)
+
+        self.therapist_dict["ZIP"] = ""
 
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
@@ -66,8 +110,30 @@ class TherapistTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
 
+    def test_wrong_city(self):
+        self.therapist_dict["city"] = "Vrin Vrin Vrin Vrin Vrin Vrin Vrin Vrin"
+
+        with self.assertRaises(ValidationError):
+            Therapist(**self.therapist_dict)
+
+        self.therapist_dict["city"] = ""
+
+        with self.assertRaises(ValidationError):
+            Therapist(**self.therapist_dict)
+
     def test_missing_phone(self):
         self.therapist_dict.pop("phone")
+
+        with self.assertRaises(ValidationError):
+            Therapist(**self.therapist_dict)
+
+    def test_wrong_phone(self):
+        self.therapist_dict["phone"] = "081 660 68 36 081 660 68 36"
+
+        with self.assertRaises(ValidationError):
+            Therapist(**self.therapist_dict)
+
+        self.therapist_dict["phone"] = ""
 
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)

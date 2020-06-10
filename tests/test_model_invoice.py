@@ -9,7 +9,7 @@ from models.invoice import Invoice
 class InvoiceTestCase(TestCase):
     def setUp(self):
         self.invoice_dict: dict = {
-            "naturapeuteID": "000000000000000000000000",
+            "naturapeuteID": "abcdef1234567890abcdef12",
             "author": {
                 "name": "Cabinet de Leroy",
                 "street": "Via delle Vigne 1",
@@ -94,6 +94,22 @@ class InvoiceTestCase(TestCase):
     def test_empty(self):
         with self.assertRaises(ValidationError):
             Invoice(**{})
+
+    def test_wrong_naturapeute_id(self):
+        self.invoice_dict["naturapeuteID"] = "abcdef1234567890abcdef1"
+
+        with self.assertRaises(ValidationError):
+            Invoice(**self.invoice_dict)
+
+        self.invoice_dict["naturapeuteID"] = "abcdef1234567890abcdef123"
+
+        with self.assertRaises(ValidationError):
+            Invoice(**self.invoice_dict)
+
+        self.invoice_dict["naturapeuteID"] = "abcdef1234567890abcdef1_"
+
+        with self.assertRaises(ValidationError):
+            Invoice(**self.invoice_dict)
 
     def test_missing_author(self):
         self.invoice_dict.pop("author")
@@ -199,4 +215,4 @@ class InvoiceTestCase(TestCase):
             Invoice(**self.invoice_dict)
 
     def tearDown(self):
-        self.author_dict = None
+        self.invoice_dict = None

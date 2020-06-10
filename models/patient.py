@@ -5,11 +5,11 @@ from typing_extensions import Literal
 
 
 class Patient(BaseModel):
-    firstName: str
-    lastName: str
-    street: constr(max_length=70)
-    ZIP: constr(max_length=16)
-    city: constr(max_length=35)
+    firstName: constr(min_length=1, max_length=35)
+    lastName: constr(min_length=1, max_length=35)
+    street: constr(min_length=1, max_length=35)
+    ZIP: constr(min_length=1, max_length=9)
+    city: constr(min_length=1, max_length=35)
     canton: Literal[
         "AG",
         "AI",
