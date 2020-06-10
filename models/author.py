@@ -49,11 +49,11 @@ class Author(BaseModel):
         regex=r"^[A-Z][0-9]{6}$",
     )
 
-    QRIBAN: Optional[str] = Field(
+    IBAN: Optional[str] = Field(
         None,
-        title="QR-IBAN",
-        description="The author QR-IBAN. The QR-IBAN must correspond to the bank account that cashes invoices",
-        regex=r"^CH[0-9]{2}3[0-1][0-9]{15}$",
+        title="IBAN",
+        description="The author's IBAN. The IBAN must correspond to the bank account that cashes invoices. It can be an IBAN or a QR-IBAN",
+        regex=r"^CH[0-9]{19}$",
     )  # TODO : Turn into compulsory field when moving to QR-invoice
 
     ESRId: Optional[str] = Field(

@@ -1,6 +1,6 @@
 [
     {
-        "key": "author_content.qr_iban",
+        "key": "author_content.iban",
         "left": 5,
         "top": 209.292,
         "style": "QRInvoiceReceiptTextStyle"
@@ -24,7 +24,7 @@
         "style": "QRInvoiceReceiptTextStyle"
     },
     {
-        "key": "qr_reference",
+        "key": "reference",
         "left": 5,
         "top": 228.342,
         "style": "QRInvoiceReceiptTextStyle"

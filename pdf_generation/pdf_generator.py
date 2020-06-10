@@ -53,8 +53,8 @@ class PDFGenerator:
                 cvs.draw_value_template(qr_invoice_value_template, self._invoice_content)
 
             if (
-                self._invoice_content.qr_reference
-                and self._invoice_content.author.qr_iban
+                self._invoice_content.reference
+                and self._invoice_content.author_content.iban
             ):
                 # QR-invoice part in QR-invoice page
                 for (

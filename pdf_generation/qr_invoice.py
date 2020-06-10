@@ -31,7 +31,7 @@ class QRInvoice:
 
     @property
     def cdtr_inf_iban(self) -> str:
-        return self.invoice_content.author_content.qr_iban
+        return self.invoice_content.author_content.iban
 
     @property
     def cdtr_inf(self) -> str:
@@ -135,7 +135,7 @@ class QRInvoice:
 
     @property
     def rmt_inf_ref(self) -> str:
-        return self.invoice_content.qr_reference
+        return self.invoice_content.reference
 
     @property
     def rmt_inf(self) -> str:
