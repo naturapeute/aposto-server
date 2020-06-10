@@ -1,48 +1,48 @@
 [
     {
-        "key": "author.name",
+        "key": "author_content.name",
         "left": 13.096,
         "top": 71.995,
         "style": "QRInvoiceInvoiceTextStyle"
     },
     {
-        "key": "author.street",
+        "key": "author_content.street",
         "left": 12.892,
         "top": 75.118,
         "style": "QRInvoiceInvoiceTextStyle"
     },
     {
-        "key": "author.zip_city",
+        "key": "author_content.zip_city",
         "left": 13.096,
         "top": 78.24,
         "style": "QRInvoiceInvoiceTextStyle"
     },
     {
-        "key": "author.phone_with_header",
+        "key": "author_content.phone_with_header",
         "left": 12.93,
         "top": 81.396,
         "style": "QRInvoiceInvoiceTextStyle"
     },
     {
-        "key": "therapist.name",
+        "key": "therapist_content.name",
         "left": 13.12,
         "top": 99.745,
         "style": "QRInvoiceInvoiceTextStyle"
     },
     {
-        "key": "therapist.street",
+        "key": "therapist_content.street",
         "left": 13.106,
         "top": 102.867,
         "style": "QRInvoiceInvoiceTextStyle"
     },
     {
-        "key": "therapist.zip_city",
+        "key": "therapist_content.zip_city",
         "left": 13.12,
         "top": 105.957,
         "style": "QRInvoiceInvoiceTextStyle"
     },
     {
-        "key": "therapist.phone_with_header",
+        "key": "therapist_content.phone_with_header",
         "left": 12.892,
         "top": 109.079,
         "style": "QRInvoiceInvoiceTextStyle"

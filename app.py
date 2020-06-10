@@ -1,71 +1,25 @@
 import base64
-import binascii
 import os
-import re
+from json.decoder import JSONDecodeError
 from pathlib import Path
 from typing import Dict, List
 
 import requests
 import ujson
 from dotenv import load_dotenv
+from pydantic import ValidationError
 from requests import Response as RequestsResponse
+from spectree import Response, SpecTree
 from starlette.applications import Starlette
 from starlette.middleware import Middleware
-from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
-from starlette.responses import (
-    FileResponse,
-    RedirectResponse,
-    Response,
-    UJSONResponse,
-)
+from starlette.responses import FileResponse, RedirectResponse, UJSONResponse
 from starlette.status import HTTP_400_BAD_REQUEST
 
+from models.invoice import Invoice
 from pdf_generation.aposto_pdf import ApostoCanvas
-from pdf_generation.invoice_content import InvoiceContent
-
-
-class InvoiceContentMiddleware(BaseHTTPMiddleware):
-    INVOICE_CONTENT_ROUTES = [
-        r"^/pdf/([^/]*)/.*$",
-        r"^/email/([^/]*)$",
-    ]
-
-    async def dispatch(self, request: Request, call_next) -> Response:
-        invoice_content_base_64: str = ""
-        error_message: Dict = {}
-
-        for invoice_content_route in self.INVOICE_CONTENT_ROUTES:
-            match = re.search(invoice_content_route, request.url.path)
-
-            if match:
-                invoice_content_base_64 = match.group(1)
-                break
-
-        if invoice_content_base_64:
-            invoice_content_dict = {}
-
-            try:
-                invoice_content_dict: Dict = InvoiceContent.parse(invoice_content_base_64)
-
-                try:
-                    InvoiceContent.validate(invoice_content_dict)
-
-                    request.state.invoice_content: InvoiceContent = InvoiceContent(
-                        invoice_content_dict
-                    )
-                except ValueError as missing_params:
-                    error_message = missing_params.args[0]
-            except binascii.Error:
-                error_message = {"error": "Improper base64 provided"}
-            except ValueError:
-                error_message = {"error": "Improper JSON provided inside base64"}
-
-            request.state.error_message: Dict = error_message
-
-        return await call_next(request)
-
+from pdf_generation.contents.invoice_content import InvoiceContent
 
 load_dotenv()
 SEND_IN_BLUE_API_KEY = os.getenv("SEND_IN_BLUE_API_KEY")
@@ -75,8 +29,9 @@ with open("config.json", "r") as configData:
     fullConfig: Dict[str, Dict[str, str]] = ujson.load(configData)
     config: Dict[str, str] = fullConfig["PROD"] if ENV == "PROD" else fullConfig["DEV"]
 
+api: SpecTree = SpecTree("starlette")
+
 middleware: List[Middleware] = [
-    Middleware(InvoiceContentMiddleware),
     Middleware(
         CORSMiddleware,
         allow_origins=[config["apostoAppURL"], config["apostoBetaURL"]],
@@ -86,30 +41,47 @@ middleware: List[Middleware] = [
 ]
 
 app: Starlette = Starlette(debug=True, middleware=middleware)
+api.register(app)
 
 
-@app.route("/pdf/{invoice_content_base_64}/{name}")
+@api.validate(json=Invoice, tags=["api"])
+@app.route("/pdf/{name}", methods=["POST"])
 async def download_invoice(request: Request):
-    invoice_content: InvoiceContent = None
+    try:
+        invoice_dict: dict = await request.json()
+    except JSONDecodeError as json_error:
+        error_msg: str = f"{json_error.msg}: line {json_error.lineno} column {json_error.colno} (char {json_error.pos})"
+
+        return UJSONResponse({"json_error": error_msg}, status_code=HTTP_400_BAD_REQUEST)
 
     try:
-        invoice_content = request.state.invoice_content
-    except AttributeError:
-        return UJSONResponse(request.state.error_message, HTTP_400_BAD_REQUEST)
+        invoice: Invoice = Invoice(**invoice_dict)
+    except ValidationError as validation_error:
+        return UJSONResponse(validation_error.errors(), status_code=HTTP_400_BAD_REQUEST)
+
+    invoice_content: InvoiceContent = InvoiceContent(invoice)
 
     invoice_path: Path = generate_invoice(invoice_content)
 
     return FileResponse(invoice_path.as_posix())
 
 
-@app.route("/email/{invoice_content_base_64}")
+@api.validate(json=Invoice, resp=Response(HTTP_201=None, HTTP_400=None), tags=["api"])
+@app.route("/email", methods=["POST"])
 async def email_invoice(request: Request):
-    invoice_content: InvoiceContent = None
+    try:
+        invoice_dict: dict = await request.json()
+    except JSONDecodeError as json_error:
+        error_msg: str = f"{json_error.msg}: line {json_error.lineno} column {json_error.colno} (char {json_error.pos})"
+
+        return UJSONResponse({"json_error": error_msg}, status_code=HTTP_400_BAD_REQUEST)
 
     try:
-        invoice_content = request.state.invoice_content
-    except AttributeError:
-        return UJSONResponse(request.state.error_message, HTTP_400_BAD_REQUEST)
+        invoice: Invoice = Invoice(**invoice_dict)
+    except ValidationError as validation_error:
+        return UJSONResponse(validation_error.errors(), status_code=HTTP_400_BAD_REQUEST)
+
+    invoice_content: InvoiceContent = InvoiceContent(invoice)
 
     invoice_path: Path = generate_invoice(invoice_content)
 
@@ -121,17 +93,12 @@ async def email_invoice(request: Request):
             "sender": {"email": "facture@app.aposto.ch", "name": "Aposto"},
             "to": [
                 {
-                    "email": invoice_content.patient.email,
-                    "name": f"{invoice_content.patient.first_name} {invoice_content.patient.last_name}",
+                    "email": invoice.patient.email,
+                    "name": f"{invoice.patient.firstName} {invoice.patient.lastName}",
                 }
             ],
-            "bcc": [
-                {
-                    "email": invoice_content.author.email,
-                    "name": invoice_content.author.name,
-                }
-            ],
-            "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {invoice_content.patient.first_name} {invoice_content.patient.last_name},</p><p>Vous pouvez dès à présent consulter votre facture du {invoice_content.date_string} en pièce jointe.</p><p>À très bientôt,<br>{invoice_content.author.name}</p>",
+            "bcc": [{"email": invoice.author.email, "name": invoice.author.name,}],
+            "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {invoice.patient.firstName} {invoice.patient.lastName},</p><p>Vous pouvez dès à présent consulter votre facture du {invoice_content.date_string} en pièce jointe.</p><p>À très bientôt,<br>{invoice.author.name}</p>",
             "subject": "Aposto - Votre nouvelle facture",
             "attachment": [{"content": invoice_file_base_64, "name": invoice_path.name}],
         },
@@ -151,9 +118,7 @@ async def email_invoice(request: Request):
     if response.status_code == 201:
         return UJSONResponse()
 
-    response_content: Dict[str, str] = ujson.loads(response.text)
-
-    return UJSONResponse(response_content, status_code=HTTP_400_BAD_REQUEST)
+    return UJSONResponse(ujson.loads(response.text), status_code=HTTP_400_BAD_REQUEST)
 
 
 @app.route("/favicon.ico")

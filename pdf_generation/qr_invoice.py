@@ -2,7 +2,7 @@ import qrcode
 from PIL import Image
 from qrcode import QRCode
 
-from pdf_generation.invoice_content import InvoiceContent
+from pdf_generation.contents.invoice_content import InvoiceContent
 
 
 class QRInvoice:
@@ -31,7 +31,7 @@ class QRInvoice:
 
     @property
     def cdtr_inf_iban(self) -> str:
-        return self.invoice_content.author.qr_iban
+        return self.invoice_content.author_content.qr_iban
 
     @property
     def cdtr_inf(self) -> str:
@@ -43,15 +43,15 @@ class QRInvoice:
 
     @property
     def cdtr_name(self) -> str:
-        return self.invoice_content.author.name
+        return self.invoice_content.author_content.name
 
     @property
     def cdtr_strt_nm_or_adr_line1(self) -> str:
-        return self.invoice_content.author.street
+        return self.invoice_content.author_content.street
 
     @property
     def cdtr_bldg_nb_or_adr_line2(self) -> str:
-        return self.invoice_content.author.zip_city
+        return self.invoice_content.author_content.zip_city
 
     @property
     def cdtr_pst_cd(self) -> str:
@@ -95,15 +95,15 @@ class QRInvoice:
 
     @property
     def ultmt_dbtr_name(self) -> str:
-        return self.invoice_content.patient.name
+        return self.invoice_content.patient_content.name
 
     @property
     def ultmt_dbtr_strt_nm_or_adr_line1(self) -> str:
-        return self.invoice_content.patient.street
+        return self.invoice_content.patient_content.street
 
     @property
     def ultmt_dbtr_bldg_nb_or_adr_line2(self) -> str:
-        return self.invoice_content.patient.zip_city
+        return self.invoice_content.patient_content.zip_city
 
     @property
     def ultmt_dbtr_pst_cd(self) -> str:
