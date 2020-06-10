@@ -103,9 +103,9 @@ class InvoiceContentInvalidTestCase(TestCase):
         },
         {
             "loc": ["author", "ZIP"],
-            "msg": "ensure this value has at most 16 characters",
+            "msg": "ensure this value has at most 9 characters",
             "type": "value_error.any_str.max_length",
-            "ctx": {"limit_value": 16},
+            "ctx": {"limit_value": 9},
         },
         {
             "loc": ["author", "RCC"],
