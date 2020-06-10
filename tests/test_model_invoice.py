@@ -201,6 +201,7 @@ class InvoiceTestCase(TestCase):
     def test_empty_reference(self):
         invoice: Invoice = Invoice(**self.invoice_dict)
 
+        self.assertEqual(invoice.reference_type, "NON")
         self.assertIsNone(invoice.reference)
 
     def test_creditor_reference(self):
@@ -208,6 +209,7 @@ class InvoiceTestCase(TestCase):
 
         invoice: Invoice = Invoice(**self.invoice_dict)
 
+        self.assertEqual(invoice.reference_type, "SCOR")
         self.assertTrue(invoice.reference.startswith("RF"))
         self.assertEqual(
             int(f"{invoice.reference[4:]}2715{invoice.reference[2:4]}") % 97, 1
@@ -218,6 +220,7 @@ class InvoiceTestCase(TestCase):
 
         invoice: Invoice = Invoice(**self.invoice_dict)
 
+        self.assertEqual(invoice.reference_type, "QRR")
         self.assertEqual(invoice.reference, "000000000000015850491184852")
 
     def tearDown(self):

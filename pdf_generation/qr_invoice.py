@@ -131,7 +131,7 @@ class QRInvoice:
 
     @property
     def rmt_inf_tp(self) -> str:
-        return "QRR"
+        return self.invoice_content.reference_type
 
     @property
     def rmt_inf_ref(self) -> str:

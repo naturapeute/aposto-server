@@ -136,11 +136,18 @@ class InvoiceContent:
         return "0.00"
 
     @property
+    def reference_type(self) -> str:
+        return self._invoice.reference_type
+
+    @property
     def reference(self) -> Union[str, None]:
         reference: Union[str, None] = self._invoice.reference
 
-        if reference:
-            reference: str = reference.replace(" ", "")
+        if self._invoice.reference_type == "SCOR":
+            reference: str = " ".join(
+                [reference[i : i + 4] for i in range(0, len(reference), 4)]
+            )
+        elif self._invoice.reference_type == "QRR":
             reference: str = " ".join(
                 [reference[0:2]]
                 + [reference[i : i + 5] for i in range(2, len(reference), 5)]

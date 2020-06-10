@@ -78,16 +78,26 @@ class Invoice(BaseModel):
         return (min(services_dates), max(services_dates))
 
     @property
-    def reference(self) -> Union[str, None]:
+    def reference_type(self) -> str:
         # TODO : When moving to QR-invoice, IBAN will become compulsory. So the reference will no
-        # longer be None. BUT, it seems that an empty reference may be provided in a QR-invoice.
-        # In this case, the Reference entry in the template has to be removed. So following
-        # information is shifted up. But adapting information position depending on the content is
+        # longer be None. BUT, it seems that an empty reference may be provided in a QR-invoice
+        # with an IBAN. In this case, the Reference entry in the template has to be removed. So
+        # following information is shifted up. But adapting information position depending on the content is
         # not supported as it is.
         if not self.author.IBAN:
-            return None
+            return "NON"
 
         if re.match(r"^CH[0-9]{2}3[0-1][0-9]{15}$", self.author.IBAN):
+            return "QRR"
+
+        return "SCOR"
+
+    @property
+    def reference(self) -> Union[str, None]:
+        if self.reference_type == "NON":
+            return None
+
+        if self.reference_type == "QRR":
             return self._qr_reference
 
         return self._creditor_reference
