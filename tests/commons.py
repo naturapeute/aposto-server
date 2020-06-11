@@ -16,7 +16,6 @@ class InvoiceContentTestCase(TestCase):
                 "city": "Vrin",
                 "email": "LeroyFrechette@armyspy.com",
                 "phone": "081 660 68 36",
-                "IBAN": "CH1231234567890123456",
                 "RCC": "V123123",
             },
             "therapist": {

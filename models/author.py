@@ -52,7 +52,7 @@ class Author(BaseModel):
     IBAN: Optional[str] = Field(
         None,
         title="IBAN",
-        description="The author's IBAN. The IBAN must correspond to the bank account that cashes invoices. It can be an IBAN or a QR-IBAN",
+        description="The author IBAN. The IBAN must correspond to the bank account that cashes invoices. It can be an IBAN or a QR-IBAN",
         regex=r"^CH[0-9]{19}$",
     )  # TODO : Turn into compulsory field when moving to QR-invoice
 
@@ -74,3 +74,11 @@ class Author(BaseModel):
     @classmethod
     def remove_phone_whitespace(cls, value: ModelField):
         return value.replace(" ", "")
+
+    @validator("IBAN")
+    @classmethod
+    def check_iban_checksum(cls, value: ModelField):
+        if str(98 - (int(f"{value[4:]}121700") % 97)) == value[2:4]:
+            return value
+
+        raise ValueError(f"IBAN checksum is invalid.")

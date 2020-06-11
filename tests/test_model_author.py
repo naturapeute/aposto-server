@@ -14,7 +14,7 @@ class AuthorTestCase(TestCase):
             "city": "Vrin",
             "email": "LeroyFrechette@armyspy.com",
             "phone": "081 660 68 36",
-            "IBAN": "CH1231234567890123456",
+            "IBAN": "CH5131234567890123456",
             "RCC": "V123123",
         }
 
@@ -24,7 +24,7 @@ class AuthorTestCase(TestCase):
         except ValidationError:
             self.fail("Author is invalid while it should not.")
 
-        self.author_dict["QRIBAN"] = "CH2631234567890123456"
+        self.author_dict["IBAN"] = "CH2641234567890123456"
 
         try:
             Author(**self.author_dict)
@@ -210,6 +210,11 @@ class AuthorTestCase(TestCase):
             Author(**self.author_dict)
 
         self.author_dict["IBAN"] = "CH44359991230008890121"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+        self.author_dict["IBAN"] = "CH1231234567890123456"
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)

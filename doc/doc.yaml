@@ -4,11 +4,6 @@ components:
       description: The `Invoice` model gathers all the information required for generating
         an invoice with Aposto, based on Tarif 590 and QR-invoice Swiss standards
       properties:
-        QRReference:
-          description: The invoice QR-reference
-          pattern: ^[0-9]{27}$
-          title: QR-reference
-          type: string
         author:
           allOf:
           - $ref: '#/definitions/Author'
@@ -108,11 +103,11 @@ definitions:
         pattern: ^[0-9]{6}$
         title: ESR ID
         type: string
-      QRIBAN:
-        description: The author QR-IBAN. The QR-IBAN must correspond to the bank account
-          that cashes invoices
-        pattern: ^CH[0-9]{2}3[0-1][0-9]{15}$
-        title: QR-IBAN
+      IBAN:
+        description: The author IBAN. The IBAN must correspond to the bank account
+          that cashes invoices. It can be an IBAN or a QR-IBAN
+        pattern: ^CH[0-9]{19}$
+        title: IBAN
         type: string
       RCC:
         description: The author RCC number. It can be the therapy society RCC number

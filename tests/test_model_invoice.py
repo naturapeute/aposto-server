@@ -205,7 +205,7 @@ class InvoiceTestCase(TestCase):
         self.assertIsNone(invoice.reference)
 
     def test_creditor_reference(self):
-        self.invoice_dict["author"]["IBAN"] = "CH1234567890123456789"
+        self.invoice_dict["author"]["IBAN"] = "CH2641234567890123456"
 
         invoice: Invoice = Invoice(**self.invoice_dict)
 
@@ -216,7 +216,7 @@ class InvoiceTestCase(TestCase):
         )
 
     def test_qr_reference(self):
-        self.invoice_dict["author"]["IBAN"] = "CH1231234567890123456"
+        self.invoice_dict["author"]["IBAN"] = "CH5131234567890123456"
 
         invoice: Invoice = Invoice(**self.invoice_dict)
 
