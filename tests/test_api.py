@@ -64,6 +64,32 @@ class PDFEndpointTest(
         self.assertTrue(f"/CreationDate (D:{test_time_str}" in response.text)
         self.assertTrue(self.invoice_path.is_file())
 
+    def test_pdf_endpoint_iban(self):
+        self.invoice["author"]["IBAN"] = "CH2641234567890123456"
+
+        test_time: datetime = datetime.now()
+        test_time_str: str = test_time.strftime("%Y%m%d%H%M%S")
+
+        response: Response = self.test_client.post(f"/pdf/invoice.pdf", json=self.invoice)
+
+        self.assertEqual(response.status_code, HTTP_200_OK)
+        self.assertEqual(response.headers["Content-Type"], "application/pdf")
+        self.assertTrue(f"/CreationDate (D:{test_time_str}" in response.text)
+        self.assertTrue(self.invoice_path.is_file())
+
+    def test_pdf_endpoint_qr_iban(self):
+        self.invoice["author"]["IBAN"] = "CH5131234567890123456"
+
+        test_time: datetime = datetime.now()
+        test_time_str: str = test_time.strftime("%Y%m%d%H%M%S")
+
+        response: Response = self.test_client.post(f"/pdf/invoice.pdf", json=self.invoice)
+
+        self.assertEqual(response.status_code, HTTP_200_OK)
+        self.assertEqual(response.headers["Content-Type"], "application/pdf")
+        self.assertTrue(f"/CreationDate (D:{test_time_str}" in response.text)
+        self.assertTrue(self.invoice_path.is_file())
+
     def test_pdf_endpoint_demo_mode(self):
         test_time: datetime = datetime.now()
         test_time_str: str = test_time.strftime("%Y%m%d%H%M%S")
