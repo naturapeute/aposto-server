@@ -23,6 +23,20 @@ class AuthorTestCase(TestCase):
         except ValidationError:
             self.fail("Author is invalid while it should not.")
 
+        self.author_dict["QRIBAN"] = "CH2631234567890123456"
+
+        try:
+            Author(**self.author_dict)
+        except ValidationError:
+            self.fail("Author is invalid while it should not.")
+
+        self.author_dict["phone"] = "081 660 68 36 081 660 68 36"
+
+        try:
+            Author(**self.author_dict)
+        except ValidationError:
+            self.fail("Author is invalid while it should not.")
+
     def test_valid_without_rcc(self):
         self.author_dict.pop("RCC")
 
@@ -112,7 +126,7 @@ class AuthorTestCase(TestCase):
             Author(**self.author_dict)
 
     def test_wrong_phone(self):
-        self.author_dict["phone"] = "081 660 68 36 081 660 68 36"
+        self.author_dict["phone"] = "08166068360816606836123123"
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)

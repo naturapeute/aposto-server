@@ -1,12 +1,23 @@
 from datetime import datetime
 
-from pydantic import BaseModel, conint
+from pydantic import BaseModel, Field
 from typing_extensions import Literal
 
 
 class Service(BaseModel):
-    date: datetime
-    duration: conint(ge=5, multiple_of=5)
+    """
+    A service performed. It corresponds to a therapy and its duration
+    """
+
+    date: datetime = Field(
+        title="Date",
+        description="The timestamp of the date the therapy was performed. The timestamp is expressed in milliseconds (JavaScript standard) except if negative (before 01/01/1970). If so, it is expressed in seconds",
+    )
+
+    duration: int = Field(
+        title="Duration", description="The therapy duration", ge=5, multiple_of=5
+    )
+
     code: Literal[
         1003,
         1004,
@@ -101,7 +112,9 @@ class Service(BaseModel):
         1206,
         1207,
         1210,
-    ]
+    ] = Field(
+        title="Code", description="The therapy code as defined in the Tarif 590 standard"
+    )
 
     @property
     def quantity(self) -> float:

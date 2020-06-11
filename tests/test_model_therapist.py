@@ -24,6 +24,13 @@ class TherapistTestCase(TestCase):
         except ValidationError:
             self.fail("Therapist is invalid while it should not.")
 
+        self.therapist_dict["phone"] = "081 660 68 36 081 660 68 36"
+
+        try:
+            Therapist(**self.therapist_dict)
+        except ValidationError:
+            self.fail("Therapist is invalid while it should not.")
+
     def test_valid_without_rcc(self):
         self.therapist_dict.pop("RCC")
 
@@ -128,7 +135,7 @@ class TherapistTestCase(TestCase):
             Therapist(**self.therapist_dict)
 
     def test_wrong_phone(self):
-        self.therapist_dict["phone"] = "081 660 68 36 081 660 68 36"
+        self.therapist_dict["phone"] = "08166068360816606836123123"
 
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
