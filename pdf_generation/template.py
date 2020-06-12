@@ -1,20 +1,18 @@
 import json
+from abc import ABC
 from pathlib import Path
 from typing import List
 
 from .content import Content, Graphic, SwissQRCode, Text, Value
 
 
-class Template:
+class Template(ABC):
     def __init__(self, path: Path):
         self.path: Path = path
         self.load_template()
 
     def load_template(self) -> List[Content]:
-        with open(self.path.resolve().as_posix()) as json_template:
-            return list(
-                Content(dict_content) for dict_content in json.load(json_template)
-            )
+        pass
 
 
 class DescriptorTemplate(Template):

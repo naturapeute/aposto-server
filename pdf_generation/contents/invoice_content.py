@@ -159,7 +159,7 @@ class InvoiceContent:
 
         return f"01{total_amount}>{self._invoice.author.ESRId}{self._invoice.QRReference}+ {self._invoice.author.ESRBankId}"
 
-    def generate_datamatrix_string(self) -> Union[str, None]:
+    def _generate_datamatrix_string(self) -> Union[str, None]:
         # TODO : Update when moving to QR-invoice
         if not self.esr_coding_line:
             return None
@@ -189,7 +189,7 @@ class InvoiceContent:
         return datamatrix_string
 
     def generate_datamatrix(self) -> Union[Image.Image, None]:
-        datamatrix_string: str = self.generate_datamatrix_string()
+        datamatrix_string: str = self._generate_datamatrix_string()
 
         # TODO : Update when moving to QR-invoice
         if not datamatrix_string:
