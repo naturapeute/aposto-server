@@ -1,27 +1,18 @@
-import base64
 import os
-from json.decoder import JSONDecodeError
 from pathlib import Path
 from typing import Dict, List
 
-import requests
 import ujson
 import yaml
 from dotenv import load_dotenv
-from pydantic import ValidationError
-from requests import Response as RequestsResponse
 from starlette.applications import Starlette
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
-from starlette.requests import Request
-from starlette.responses import FileResponse, RedirectResponse, UJSONResponse
 from starlette.schemas import SchemaGenerator
-from starlette.status import HTTP_400_BAD_REQUEST
 from swagger_ui import api_doc
 
 from models import Invoice
-from pdf_generation import PDFGenerator
-from pdf_generation.contents import InvoiceContent
+from routes import routes
 
 load_dotenv()
 SEND_IN_BLUE_API_KEY = os.getenv("SEND_IN_BLUE_API_KEY")
@@ -95,159 +86,13 @@ middleware: List[Middleware] = [
     ),
 ]
 
-app: Starlette = Starlette(debug=True, middleware=middleware)
-
-
-@app.route("/pdf/{name}", methods=["POST"])
-async def download_invoice(request: Request):
-    """
-    summary: Generate an invoice as PDF
-    description: Generate an invoice as PDF, based on Tarif 590 and QR-invoice Swiss standards
-
-    parameters:
-        -   in: path
-            name: name
-            schema:
-                type: string
-            required: true
-            description: The generated PDF invoice filename. It is needed when downloading the PDF from this endpoint or when opening the PDF in a browser directly from the endpoint URL. It should end with _.pdf_
-
-    requestBody:
-        summary: The content used to generate the PDF invoice
-        required: true
-        content:
-            application/json:
-                schema:
-                    $ref: '#/components/schemas/Invoice'
-
-    responses:
-        200:
-            description: The generated PDF invoice
-            content:
-                application/pdf:
-                    schema:
-                        type: string
-                        format: binary
-        400:
-            description: Bad Request Error
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            -   $ref: '#/components/schemas/JSON Error'
-                            -   type: array
-                                items:
-                                    $ref: '#/components/schemas/Validation Error'
-    """
-
-    try:
-        invoice_dict: dict = await request.json()
-    except JSONDecodeError as json_error:
-        error_msg: str = f"{json_error.msg}: line {json_error.lineno} column {json_error.colno} (char {json_error.pos})"
-
-        return UJSONResponse({"json_error": error_msg}, status_code=HTTP_400_BAD_REQUEST)
-
-    try:
-        invoice: Invoice = Invoice(**invoice_dict)
-    except ValidationError as validation_error:
-        return UJSONResponse(validation_error.errors(), status_code=HTTP_400_BAD_REQUEST)
-
-    invoice_content: InvoiceContent = InvoiceContent(invoice)
-
-    invoice_path: Path = PDFGenerator(invoice_content).generate_invoice()
-
-    return FileResponse(invoice_path.as_posix())
-
-
-@app.route("/email", methods=["POST"])
-async def email_invoice(request: Request):
-    """
-    summary: Send an invoice
-    description: Generate an invoice as PDF, based on Tarif 590 and QR-invoice Swiss standards and send it to the author's and patient's mail addresses
-
-    requestBody:
-        summary: The content used to generate the PDF invoice
-        required: true
-        content:
-            application/json:
-                schema:
-                    $ref: '#/components/schemas/Invoice'
-
-    responses:
-        201:
-            description: The invoice as been successfully sent
-        400:
-            description: Bad Request Error
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            -   $ref: '#/components/schemas/JSON Error'
-                            -   type: array
-                                items:
-                                    $ref: '#/components/schemas/Validation Error'
-                            -   $ref: '#/components/schemas/SendinBlue Error'
-    """
-
-    try:
-        invoice_dict: dict = await request.json()
-    except JSONDecodeError as json_error:
-        error_msg: str = f"{json_error.msg}: line {json_error.lineno} column {json_error.colno} (char {json_error.pos})"
-
-        return UJSONResponse({"json_error": error_msg}, status_code=HTTP_400_BAD_REQUEST)
-
-    try:
-        invoice: Invoice = Invoice(**invoice_dict)
-    except ValidationError as validation_error:
-        return UJSONResponse(validation_error.errors(), status_code=HTTP_400_BAD_REQUEST)
-
-    invoice_content: InvoiceContent = InvoiceContent(invoice)
-
-    invoice_path: Path = PDFGenerator(invoice_content).generate_invoice()
-
-    with open(invoice_path.as_posix(), "rb") as invoice_file:
-        invoice_file_base_64 = base64.b64encode(invoice_file.read())
-
-    data: str = ujson.dumps(
-        {
-            "sender": {"email": "facture@app.aposto.ch", "name": "Aposto"},
-            "to": [
-                {
-                    "email": invoice.patient.email,
-                    "name": f"{invoice.patient.firstName} {invoice.patient.lastName}",
-                }
-            ],
-            "bcc": [{"email": invoice.author.email, "name": invoice.author.name,}],
-            "htmlContent": f"<h1>Votre facture</h1><p>Bonjour {invoice.patient.firstName} {invoice.patient.lastName},</p><p>Vous pouvez dès à présent consulter votre facture du {invoice_content.date_string} en pièce jointe.</p><p>À très bientôt,<br>{invoice.author.name}</p>",
-            "subject": "Aposto - Votre nouvelle facture",
-            "attachment": [{"content": invoice_file_base_64, "name": invoice_path.name}],
-        },
-        reject_bytes=False,
-    )
-
-    headers: Dict[str, str] = {
-        "accept": "application/json",
-        "content-type": "application/json",
-        "api-key": SEND_IN_BLUE_API_KEY,
-    }
-
-    response: RequestsResponse = requests.post(
-        f"{config['sendInBlueAPIURL']}/smtp/email", data=data, headers=headers
-    )
-
-    if response.status_code == 201:
-        return UJSONResponse()
-
-    return UJSONResponse(ujson.loads(response.text), status_code=HTTP_400_BAD_REQUEST)
-
-
-@app.route("/favicon.ico", include_in_schema=False)
-async def icon(_: Request):
-    return RedirectResponse("https://naturapeute.ch/img/favicon.png")
-
-
-# NOTE : The schema generation is done after routes are defined so they are registered in the server
 with open("./doc/doc.yaml", "w") as doc_yaml:
-    doc_yaml.write(yaml.dump(schemas.get_schema(app.routes)))
+    doc_yaml.write(yaml.dump(schemas.get_schema(routes)))
+
+app: Starlette = Starlette(debug=True, middleware=middleware, routes=routes)
+app.state.SEND_IN_BLUE_API_KEY = os.getenv("SEND_IN_BLUE_API_KEY")
+
+for key in config.keys():
+    setattr(app.state, key, config[key])
 
 api_doc(app, config_path=Path("./doc/doc.yaml").as_posix(), url_prefix="/doc")

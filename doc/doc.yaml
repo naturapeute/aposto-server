@@ -598,7 +598,7 @@ paths:
                   type: array
                 - $ref: '#/components/schemas/SendinBlue Error'
           description: Bad Request Error
-      summary: Send an invoice
+      summary: Send an invoice by email
   /pdf/{name}:
     post:
       description: Generate an invoice as PDF, based on Tarif 590 and QR-invoice Swiss
