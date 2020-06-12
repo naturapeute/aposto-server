@@ -12,4 +12,4 @@ qrcode[pil]==6.1
 email-validator==1.1.1
 typing-extensions==3.7.4.2
 pydantic==1.5.1
-swagger-ui-py==0.30
+swagger-ui-py==0.3.0
