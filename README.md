@@ -27,6 +27,7 @@ In the terminal of your choice, go through the following steps:
 
 * Install the project: `make install` _→ It creates the Python virtual environment and installs all the needed Python modules._<br>**Note:** You only have to run this command the first time.
 * Start the project: `make start` _→ It launches the server on 4 workers._
+* **Or** start the project in developer mode: `make dev` _→ It starts the project with a watcher **but only 1 worker**. The server automatically reloads when you edit files._
 
 You're done! The server is now running on http://localhost:8080/. 🚀
 
