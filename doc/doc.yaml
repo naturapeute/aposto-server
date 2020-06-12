@@ -58,7 +58,7 @@ components:
       - timestamp
       title: Invoice
       type: object
-    JSON Error:
+    JSONError:
       description: An error occurring when the request body contains wrongly formatted
         JSON
       properties:
@@ -66,7 +66,7 @@ components:
           description: An error message describing the JSON error. The syntax error
             position is provided
           type: string
-    SendinBlue Error:
+    SendinBlueError:
       description: An error occurring when sending an email with SendinBlue service
         has failed
       properties:
@@ -76,7 +76,7 @@ components:
         message:
           description: A readable message associated with the failure
           type: string
-    Validation Error:
+    ValidationError:
       description: An error occurring when the invoice content is incorrect
       properties:
         loc:
@@ -582,8 +582,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Invoice'
+        description: The content used to generate the PDF invoice
         required: true
-        summary: The content used to generate the PDF invoice
       responses:
         201:
           description: The invoice as been successfully sent
@@ -592,11 +592,11 @@ paths:
             application/json:
               schema:
                 oneOf:
-                - $ref: '#/components/schemas/JSON Error'
+                - $ref: '#/components/schemas/JSONError'
                 - items:
-                    $ref: '#/components/schemas/Validation Error'
+                    $ref: '#/components/schemas/ValidationError'
                   type: array
-                - $ref: '#/components/schemas/SendinBlue Error'
+                - $ref: '#/components/schemas/SendinBlueError'
           description: Bad Request Error
       summary: Send an invoice by email
   /pdf/{name}:
@@ -617,8 +617,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Invoice'
+        description: The content used to generate the PDF invoice
         required: true
-        summary: The content used to generate the PDF invoice
       responses:
         200:
           content:
@@ -632,9 +632,9 @@ paths:
             application/json:
               schema:
                 oneOf:
-                - $ref: '#/components/schemas/JSON Error'
+                - $ref: '#/components/schemas/JSONError'
                 - items:
-                    $ref: '#/components/schemas/Validation Error'
+                    $ref: '#/components/schemas/ValidationError'
                   type: array
           description: Bad Request Error
       summary: Generate an invoice as PDF

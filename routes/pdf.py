@@ -25,7 +25,7 @@ async def pdf_endpoint(request: Request):
             description: The generated PDF invoice filename. It is needed when downloading the PDF from this endpoint or when opening the PDF in a browser directly from the endpoint URL. It should end with _.pdf_
 
     requestBody:
-        summary: The content used to generate the PDF invoice
+        description: The content used to generate the PDF invoice
         required: true
         content:
             application/json:
@@ -46,10 +46,10 @@ async def pdf_endpoint(request: Request):
                 application/json:
                     schema:
                         oneOf:
-                            -   $ref: '#/components/schemas/JSON Error'
+                            -   $ref: '#/components/schemas/JSONError'
                             -   type: array
                                 items:
-                                    $ref: '#/components/schemas/Validation Error'
+                                    $ref: '#/components/schemas/ValidationError'
     """
 
     try:

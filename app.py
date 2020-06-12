@@ -34,7 +34,7 @@ schemas: SchemaGenerator = SchemaGenerator(
         "components": {
             "schemas": {
                 "Invoice": invoice_schema,
-                "JSON Error": {
+                "JSONError": {
                     "description": "An error occurring when the request body contains wrongly formatted JSON",
                     "properties": {
                         "json_error": {
@@ -43,7 +43,7 @@ schemas: SchemaGenerator = SchemaGenerator(
                         }
                     },
                 },
-                "Validation Error": {
+                "ValidationError": {
                     "description": "An error occurring when the invoice content is incorrect",
                     "properties": {
                         "loc": {
@@ -61,7 +61,7 @@ schemas: SchemaGenerator = SchemaGenerator(
                         },
                     },
                 },
-                "SendinBlue Error": {
+                "SendinBlueError": {
                     "description": "An error occurring when sending an email with SendinBlue service has failed",
                     "properties": {
                         "code": {"description": "An error code", "type": "string"},

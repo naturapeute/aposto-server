@@ -22,7 +22,7 @@ async def email_endpoint(request: Request):
     description: Generate an invoice as PDF, based on Tarif 590 and QR-invoice Swiss standards and send it to the author's and patient's mail addresses
 
     requestBody:
-        summary: The content used to generate the PDF invoice
+        description: The content used to generate the PDF invoice
         required: true
         content:
             application/json:
@@ -38,11 +38,11 @@ async def email_endpoint(request: Request):
                 application/json:
                     schema:
                         oneOf:
-                            -   $ref: '#/components/schemas/JSON Error'
+                            -   $ref: '#/components/schemas/JSONError'
                             -   type: array
                                 items:
-                                    $ref: '#/components/schemas/Validation Error'
-                            -   $ref: '#/components/schemas/SendinBlue Error'
+                                    $ref: '#/components/schemas/ValidationError'
+                            -   $ref: '#/components/schemas/SendinBlueError'
     """
 
     try:
