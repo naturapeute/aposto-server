@@ -12,7 +12,8 @@ from .therapist import Therapist
 
 class Invoice(BaseModel):
     """
-    The `Invoice` model gathers all the information required for generating an invoice with Aposto, based on Tarif 590 and QR-invoice Swiss standards
+    The `Invoice` model gathers all the information required for generating an invoice with Aposto,
+    based on Tarif 590 and QR-invoice Swiss standards
     """
 
     naturapeuteID: Optional[str] = Field(

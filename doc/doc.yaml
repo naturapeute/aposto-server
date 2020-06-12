@@ -1,8 +1,10 @@
 components:
   schemas:
     Invoice:
-      description: The `Invoice` model gathers all the information required for generating
-        an invoice with Aposto, based on Tarif 590 and QR-invoice Swiss standards
+      description: 'The `Invoice` model gathers all the information required for generating
+        an invoice with Aposto,
+
+        based on Tarif 590 and QR-invoice Swiss standards'
       properties:
         QRReference:
           description: The invoice QR-reference
@@ -575,8 +577,10 @@ openapi: 3.0.0
 paths:
   /email:
     post:
-      description: Generate an invoice as PDF, based on Tarif 590 and QR-invoice Swiss
-        standards and send it to the author's and patient's mail addresses
+      description: 'Generate an invoice as PDF, based on Tarif 590 and QR-invoice
+        Swiss standards and send it to the author''s and patient''s mail addresses
+
+        '
       requestBody:
         content:
           application/json:
@@ -604,9 +608,11 @@ paths:
       description: Generate an invoice as PDF, based on Tarif 590 and QR-invoice Swiss
         standards
       parameters:
-      - description: The generated PDF invoice filename. It is needed when downloading
+      - description: 'The generated PDF invoice filename. It is needed when downloading
           the PDF from this endpoint or when opening the PDF in a browser directly
           from the endpoint URL. It should end with _.pdf_
+
+          '
         in: path
         name: name
         required: true

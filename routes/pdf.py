@@ -22,7 +22,10 @@ async def pdf_endpoint(request: Request):
             schema:
                 type: string
             required: true
-            description: The generated PDF invoice filename. It is needed when downloading the PDF from this endpoint or when opening the PDF in a browser directly from the endpoint URL. It should end with _.pdf_
+            description: >
+                The generated PDF invoice filename. It is needed when downloading the
+                PDF from this endpoint or when opening the PDF in a browser directly from the
+                endpoint URL. It should end with _.pdf_
 
     requestBody:
         description: The content used to generate the PDF invoice

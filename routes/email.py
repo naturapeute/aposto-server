@@ -19,7 +19,9 @@ from pdf_generation.contents import InvoiceContent
 async def email_endpoint(request: Request):
     """
     summary: Send an invoice by email
-    description: Generate an invoice as PDF, based on Tarif 590 and QR-invoice Swiss standards and send it to the author's and patient's mail addresses
+    description: >
+        Generate an invoice as PDF, based on Tarif 590 and QR-invoice Swiss standards and send it
+        to the author's and patient's mail addresses
 
     requestBody:
         description: The content used to generate the PDF invoice
