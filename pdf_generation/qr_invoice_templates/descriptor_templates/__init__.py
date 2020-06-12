@@ -25,6 +25,9 @@ descriptor_templates: List[List[Text]] = [
             "pdf_generation/qr_invoice_templates/descriptor_templates/patient_template.json"
         )
     ).load_template(),
+]
+
+qr_part_descriptor_templates: List[List[Text]] = [
     DescriptorTemplate(
         Path(
             "pdf_generation/qr_invoice_templates/descriptor_templates/payment_section_template.json"

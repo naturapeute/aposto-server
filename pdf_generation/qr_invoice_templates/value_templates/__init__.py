@@ -14,6 +14,9 @@ value_templates: List[List[Value]] = [
     ValueTemplate(
         Path("pdf_generation/qr_invoice_templates/value_templates/patient_template.json")
     ).load_template(),
+]
+
+qr_part_value_templates: List[List[Value]] = [
     ValueTemplate(
         Path(
             "pdf_generation/qr_invoice_templates/value_templates/payment_section_template.json"

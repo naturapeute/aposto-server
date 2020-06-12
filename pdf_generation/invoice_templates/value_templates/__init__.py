@@ -19,7 +19,8 @@ value_templates: List[List[Value]] = [
     ValueTemplate(
         Path("pdf_generation/invoice_templates/value_templates/patient_template.json")
     ).load_template(),
-    ValueTemplate(
-        Path("pdf_generation/invoice_templates/value_templates/services_template.json")
-    ).load_template(),
 ]
+
+services_template: List[Value] = ValueTemplate(
+    Path("pdf_generation/invoice_templates/value_templates/services_template.json")
+).load_template()
