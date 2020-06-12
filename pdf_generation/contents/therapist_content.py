@@ -1,4 +1,4 @@
-from models.therapist import Therapist
+from models import Therapist
 from pdf_generation.contents.entity_content import EntityContent
 
 

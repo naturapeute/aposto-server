@@ -8,7 +8,7 @@ from starlette.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from starlette.testclient import TestClient
 
 from app import app
-from models.invoice import Invoice
+from models import Invoice
 from tests.commons import (
     InvoiceContentDemoModeTestCase,
     InvoiceContentImproperJSONTestCase,

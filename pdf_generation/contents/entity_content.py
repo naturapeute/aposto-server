@@ -1,7 +1,6 @@
 from typing import Union
 
-from models.author import Author
-from models.therapist import Therapist
+from models import Author, Therapist
 
 
 class EntityContent:

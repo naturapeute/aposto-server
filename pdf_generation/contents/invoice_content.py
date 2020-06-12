@@ -4,7 +4,7 @@ from dateutil import tz
 from PIL import Image
 from pystrich.datamatrix import DataMatrixEncoder, DataMatrixRenderer
 
-from models.invoice import Invoice
+from models import Invoice
 from pdf_generation.contents.author_content import AuthorContent
 from pdf_generation.contents.patient_content import PatientContent
 from pdf_generation.contents.service_content import ServiceContent

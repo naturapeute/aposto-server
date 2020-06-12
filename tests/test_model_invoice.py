@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from pydantic import ValidationError
 
-from models.invoice import Invoice
+from models import Invoice
 
 
 class InvoiceTestCase(TestCase):

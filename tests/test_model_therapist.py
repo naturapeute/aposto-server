@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from pydantic import ValidationError
 
-from models.therapist import Therapist
+from models import Therapist
 
 
 class TherapistTestCase(TestCase):

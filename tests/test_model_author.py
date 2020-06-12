@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from pydantic import ValidationError
 
-from models.author import Author
+from models import Author
 
 
 class AuthorTestCase(TestCase):

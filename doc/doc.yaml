@@ -575,8 +575,8 @@ openapi: 3.0.0
 paths:
   /email:
     post:
-      description: Generate an invoice as PDF, based on Tarif 590 and QR-invoice standards
-        and send it to the author's and patient's mail addresses
+      description: Generate an invoice as PDF, based on Tarif 590 and QR-invoice Swiss
+        standards and send it to the author's and patient's mail addresses
       requestBody:
         content:
           application/json:
@@ -601,7 +601,8 @@ paths:
       summary: Send an invoice
   /pdf/{name}:
     post:
-      description: Generate an invoice as PDF, based on Tarif 590 and QR-invoice standards
+      description: Generate an invoice as PDF, based on Tarif 590 and QR-invoice Swiss
+        standards
       parameters:
       - description: The generated PDF invoice filename. It is needed when downloading
           the PDF from this endpoint or when opening the PDF in a browser directly

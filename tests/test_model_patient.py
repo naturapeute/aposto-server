@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from pydantic import ValidationError
 
-from models.patient import Patient
+from models import Patient
 
 
 class PatientTestCase(TestCase):

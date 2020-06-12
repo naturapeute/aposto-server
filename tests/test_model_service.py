@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from pydantic import ValidationError
 
-from models.service import Service
+from models import Service
 
 
 class ServiceTestCase(TestCase):

@@ -1,4 +1,4 @@
-from models.service import Service
+from models import Service
 from pdf_generation.service_codes import SERVICE_CODES
 
 

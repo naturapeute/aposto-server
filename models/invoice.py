@@ -4,10 +4,10 @@ from typing import List, Optional, Tuple
 from pydantic import BaseModel, Field, validator
 from pydantic.fields import ModelField
 
-from models.author import Author
-from models.patient import Patient
-from models.service import Service
-from models.therapist import Therapist
+from .author import Author
+from .patient import Patient
+from .service import Service
+from .therapist import Therapist
 
 
 class Invoice(BaseModel):

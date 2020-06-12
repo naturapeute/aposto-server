@@ -1,6 +1,6 @@
 from typing import Union
 
-from models.author import Author
+from models import Author
 from pdf_generation.contents.entity_content import EntityContent
 
 

@@ -19,7 +19,7 @@ from starlette.schemas import SchemaGenerator
 from starlette.status import HTTP_400_BAD_REQUEST
 from swagger_ui import api_doc
 
-from models.invoice import Invoice
+from models import Invoice
 from pdf_generation.aposto_pdf import ApostoCanvas
 from pdf_generation.contents.invoice_content import InvoiceContent
 
@@ -102,7 +102,7 @@ app: Starlette = Starlette(debug=True, middleware=middleware)
 async def download_invoice(request: Request):
     """
     summary: Generate an invoice as PDF
-    description: Generate an invoice as PDF, based on Tarif 590 and QR-invoice standards
+    description: Generate an invoice as PDF, based on Tarif 590 and QR-invoice Swiss standards
 
     parameters:
         -   in: path
@@ -163,7 +163,7 @@ async def download_invoice(request: Request):
 async def email_invoice(request: Request):
     """
     summary: Send an invoice
-    description: Generate an invoice as PDF, based on Tarif 590 and QR-invoice standards and send it to the author's and patient's mail addresses
+    description: Generate an invoice as PDF, based on Tarif 590 and QR-invoice Swiss standards and send it to the author's and patient's mail addresses
 
     requestBody:
         summary: The content used to generate the PDF invoice

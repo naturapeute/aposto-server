@@ -1,4 +1,4 @@
-from models.patient import Patient
+from models import Patient
 
 
 class PatientContent:
