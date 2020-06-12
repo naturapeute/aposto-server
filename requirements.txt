@@ -9,6 +9,7 @@ reportlab==3.5.42
 responses==0.10.14
 python-dateutil==2.8.1
 qrcode[pil]==6.1
-spectree==0.3.3
 email-validator==1.1.1
 typing-extensions==3.7.4.2
+pydantic==1.5.1
+swagger-ui-py==0.30

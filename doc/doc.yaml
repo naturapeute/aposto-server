@@ -1,0 +1,640 @@
+components:
+  schemas:
+    Invoice:
+      description: The `Invoice` model gathers all the information required for generating
+        an invoice with Aposto, based on Tarif 590 and QR-invoice Swiss standards
+      properties:
+        QRReference:
+          description: The invoice QR-reference
+          pattern: ^[0-9]{27}$
+          title: QR-reference
+          type: string
+        author:
+          allOf:
+          - $ref: '#/definitions/Author'
+          description: The invoice author. It can be the therapy society or the therapist
+            itself
+          title: Author
+        naturapeuteID:
+          description: The Naturapeute user ID
+          pattern: ^[a-fA-F0-9]{24}$
+          title: Naturapeute ID
+          type: string
+        patient:
+          allOf:
+          - $ref: '#/definitions/Patient'
+          description: The patient who received the treatment
+          title: Patient
+        servicePrice:
+          description: The hourly price the therapist charges
+          exclusiveMinimum: 0
+          title: Service price
+          type: integer
+        services:
+          description: The list of services performed as part of the treatment
+          items:
+            $ref: '#/definitions/Service'
+          minItems: 1
+          title: Services
+          type: array
+        therapist:
+          allOf:
+          - $ref: '#/definitions/Therapist'
+          description: The therapist who performed the treatment
+          title: Therapist
+        timestamp:
+          description: The timestamp of the date the treatment was performed. The
+            timestamp is expressed in milliseconds (JavaScript standard) except if
+            negative (before 01/01/1970). If so, it is expressed in seconds
+          format: date-time
+          title: Timestamp
+          type: string
+      required:
+      - author
+      - therapist
+      - patient
+      - servicePrice
+      - services
+      - timestamp
+      title: Invoice
+      type: object
+    JSON Error:
+      description: An error occurring when the request body contains wrongly formatted
+        JSON
+      properties:
+        json_error:
+          description: An error message describing the JSON error. The syntax error
+            position is provided
+          type: string
+    SendinBlue Error:
+      description: An error occurring when sending an email with SendinBlue service
+        has failed
+      properties:
+        code:
+          description: An error code
+          type: string
+        message:
+          description: A readable message associated with the failure
+          type: string
+    Validation Error:
+      description: An error occurring when the invoice content is incorrect
+      properties:
+        loc:
+          description: The field sequence raising an error. `['author','name']` corresponds
+            to `author.name`
+          items:
+            type: string
+          type: array
+        msg:
+          description: The validation error message
+          type: string
+        type:
+          description: The type of validation error
+          type: string
+definitions:
+  Author:
+    description: The author who edits the invoice. It can be the therapy society or
+      the therapist itself
+    properties:
+      ESRBankId:
+        description: 'The author ESR bank ID. It is provided by the bank institution
+          (German: ESR, French: BVR, English: ISR)'
+        pattern: ^01[0-9]{7}$
+        title: ESR bank ID
+        type: string
+      ESRId:
+        description: 'The author ESR customer ID. It is provided by the bank institution
+          (German: ESR, French: BVR, English: ISR)'
+        pattern: ^[0-9]{6}$
+        title: ESR ID
+        type: string
+      QRIBAN:
+        description: The author QR-IBAN. The QR-IBAN must correspond to the bank account
+          that cashes invoices
+        pattern: ^CH[0-9]{2}3[0-1][0-9]{15}$
+        title: QR-IBAN
+        type: string
+      RCC:
+        description: The author RCC number. It can be the therapy society RCC number
+          or the therapist RCC number
+        pattern: ^[A-Z][0-9]{6}$
+        title: RCC
+        type: string
+      ZIP:
+        description: The author ZIP code
+        maxLength: 9
+        minLength: 1
+        title: ZIP
+        type: string
+      city:
+        description: The author city name
+        maxLength: 35
+        minLength: 1
+        title: City
+        type: string
+      email:
+        description: The author email. Generated invoices can be sent to this email
+          address
+        format: email
+        title: Email
+        type: string
+      name:
+        description: The author name. It can be the therapy society name or the therapist's
+          first name and last name
+        maxLength: 70
+        minLength: 1
+        title: Name
+        type: string
+      phone:
+        description: The author phone number. It can be the therapy society phone
+          number or the therapist phone number
+        maxLength: 25
+        minLength: 1
+        title: Phone
+        type: string
+      street:
+        description: The author address street part. It contains the mailbox number
+          and the street name. Extra information is not allowed. All author address
+          information corresponds to the address where the therapist performs therapies
+        maxLength: 35
+        minLength: 1
+        title: Street
+        type: string
+    required:
+    - name
+    - street
+    - ZIP
+    - city
+    - phone
+    - email
+    title: Author
+    type: object
+  Patient:
+    description: The patient who received the therapies
+    properties:
+      ZIP:
+        description: The patient ZIP code
+        maxLength: 9
+        minLength: 1
+        title: ZIP
+        type: string
+      birthday:
+        description: The timestamp of the patient birthday. The timestamp is expressed
+          in milliseconds (JavaScript standard) except if negative (before 01/01/1970).
+          If so, it is expressed in seconds
+        format: date-time
+        title: Birthday
+        type: string
+      canton:
+        anyOf:
+        - const: AG
+          type: string
+        - const: AI
+          type: string
+        - const: AR
+          type: string
+        - const: BE
+          type: string
+        - const: BL
+          type: string
+        - const: BS
+          type: string
+        - const: FR
+          type: string
+        - const: GE
+          type: string
+        - const: GL
+          type: string
+        - const: GR
+          type: string
+        - const: JU
+          type: string
+        - const: LU
+          type: string
+        - const: NE
+          type: string
+        - const: NW
+          type: string
+        - const: OW
+          type: string
+        - const: SG
+          type: string
+        - const: SH
+          type: string
+        - const: SO
+          type: string
+        - const: SZ
+          type: string
+        - const: TI
+          type: string
+        - const: TG
+          type: string
+        - const: UR
+          type: string
+        - const: VD
+          type: string
+        - const: VS
+          type: string
+        - const: ZG
+          type: string
+        - const: ZH
+          type: string
+        - const: LI
+          type: string
+        - const: A
+          type: string
+        - const: D
+          type: string
+        - const: F
+          type: string
+        - const: I
+          type: string
+        description: The patient Swiss canton
+        title: Canton
+      city:
+        description: The patient city name
+        maxLength: 35
+        minLength: 1
+        title: City
+        type: string
+      email:
+        description: The patient email. Generated invoices can be sent to this email
+          address
+        format: email
+        title: Email
+        type: string
+      firstName:
+        description: The patient first name
+        maxLength: 35
+        minLength: 1
+        title: First name
+        type: string
+      gender:
+        anyOf:
+        - const: male
+          type: string
+        - const: female
+          type: string
+        description: The patient gender
+        title: Gender
+      lastName:
+        description: The patient last name
+        maxLength: 35
+        minLength: 1
+        title: Last name
+        type: string
+      street:
+        description: The patient address street part. It contains the mailbox number
+          and the street name. Extra information is not allowed
+        maxLength: 35
+        minLength: 1
+        title: Street
+        type: string
+    required:
+    - firstName
+    - lastName
+    - street
+    - ZIP
+    - city
+    - canton
+    - birthday
+    - gender
+    - email
+    title: Patient
+    type: object
+  Service:
+    description: A service performed. It corresponds to a therapy and its duration
+    properties:
+      code:
+        anyOf:
+        - const: 1003
+          type: integer
+        - const: 1004
+          type: integer
+        - const: 1005
+          type: integer
+        - const: 1006
+          type: integer
+        - const: 1008
+          type: integer
+        - const: 1010
+          type: integer
+        - const: 1012
+          type: integer
+        - const: 1013
+          type: integer
+        - const: 1014
+          type: integer
+        - const: 1017
+          type: integer
+        - const: 1021
+          type: integer
+        - const: 1022
+          type: integer
+        - const: 1024
+          type: integer
+        - const: 1025
+          type: integer
+        - const: 1026
+          type: integer
+        - const: 1027
+          type: integer
+        - const: 1028
+          type: integer
+        - const: 1029
+          type: integer
+        - const: 1030
+          type: integer
+        - const: 1032
+          type: integer
+        - const: 1033
+          type: integer
+        - const: 1034
+          type: integer
+        - const: 1039
+          type: integer
+        - const: 1045
+          type: integer
+        - const: 1047
+          type: integer
+        - const: 1048
+          type: integer
+        - const: 1049
+          type: integer
+        - const: 1050
+          type: integer
+        - const: 1051
+          type: integer
+        - const: 1052
+          type: integer
+        - const: 1054
+          type: integer
+        - const: 1055
+          type: integer
+        - const: 1056
+          type: integer
+        - const: 1057
+          type: integer
+        - const: 1058
+          type: integer
+        - const: 1060
+          type: integer
+        - const: 1061
+          type: integer
+        - const: 1062
+          type: integer
+        - const: 1063
+          type: integer
+        - const: 1064
+          type: integer
+        - const: 1065
+          type: integer
+        - const: 1066
+          type: integer
+        - const: 1067
+          type: integer
+        - const: 1068
+          type: integer
+        - const: 1069
+          type: integer
+        - const: 1070
+          type: integer
+        - const: 1071
+          type: integer
+        - const: 1072
+          type: integer
+        - const: 1076
+          type: integer
+        - const: 1077
+          type: integer
+        - const: 1079
+          type: integer
+        - const: 1080
+          type: integer
+        - const: 1081
+          type: integer
+        - const: 1082
+          type: integer
+        - const: 1084
+          type: integer
+        - const: 1085
+          type: integer
+        - const: 1087
+          type: integer
+        - const: 1088
+          type: integer
+        - const: 1089
+          type: integer
+        - const: 1091
+          type: integer
+        - const: 1092
+          type: integer
+        - const: 1093
+          type: integer
+        - const: 1094
+          type: integer
+        - const: 1096
+          type: integer
+        - const: 1097
+          type: integer
+        - const: 1098
+          type: integer
+        - const: 1100
+          type: integer
+        - const: 1102
+          type: integer
+        - const: 1104
+          type: integer
+        - const: 1105
+          type: integer
+        - const: 1106
+          type: integer
+        - const: 1111
+          type: integer
+        - const: 1114
+          type: integer
+        - const: 1115
+          type: integer
+        - const: 1117
+          type: integer
+        - const: 1120
+          type: integer
+        - const: 1121
+          type: integer
+        - const: 1122
+          type: integer
+        - const: 1123
+          type: integer
+        - const: 1131
+          type: integer
+        - const: 1132
+          type: integer
+        - const: 1134
+          type: integer
+        - const: 1140
+          type: integer
+        - const: 1141
+          type: integer
+        - const: 1142
+          type: integer
+        - const: 1200
+          type: integer
+        - const: 1202
+          type: integer
+        - const: 1203
+          type: integer
+        - const: 1204
+          type: integer
+        - const: 1205
+          type: integer
+        - const: 1206
+          type: integer
+        - const: 1207
+          type: integer
+        - const: 1210
+          type: integer
+        description: The therapy code as defined in the Tarif 590 standard
+        title: Code
+      date:
+        description: The timestamp of the date the therapy was performed. The timestamp
+          is expressed in milliseconds (JavaScript standard) except if negative (before
+          01/01/1970). If so, it is expressed in seconds
+        format: date-time
+        title: Date
+        type: string
+      duration:
+        description: The therapy duration
+        minimum: 5
+        multipleOf: 5
+        title: Duration
+        type: integer
+    required:
+    - date
+    - duration
+    - code
+    title: Service
+    type: object
+  Therapist:
+    description: The therapist who performed the billed therapies
+    properties:
+      RCC:
+        description: The therapist RCC number
+        pattern: ^[A-Z][0-9]{6}$
+        title: RCC
+        type: string
+      ZIP:
+        description: The therapist ZIP code
+        maxLength: 9
+        minLength: 1
+        title: ZIP
+        type: string
+      city:
+        description: The therapist city name
+        maxLength: 35
+        minLength: 1
+        title: City
+        type: string
+      firstName:
+        description: The therapist first name
+        maxLength: 35
+        minLength: 1
+        title: First name
+        type: string
+      lastName:
+        description: The therapist last name
+        maxLength: 35
+        minLength: 1
+        title: Last name
+        type: string
+      phone:
+        description: The therapist phone number
+        maxLength: 25
+        minLength: 1
+        title: Phone
+        type: string
+      street:
+        description: The therapist address street part. It contains the mailbox number
+          and the street name. Extra information is not allowed
+        maxLength: 35
+        minLength: 1
+        title: Street
+        type: string
+    required:
+    - firstName
+    - lastName
+    - street
+    - ZIP
+    - city
+    - phone
+    title: Therapist
+    type: object
+info:
+  title: Aposto API
+  version: '1.0'
+openapi: 3.0.0
+paths:
+  /email:
+    post:
+      description: Generate an invoice as PDF, based on Tarif 590 and QR-invoice standards
+        and send it to the author's and patient's mail addresses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invoice'
+        required: true
+        summary: The content used to generate the PDF invoice
+      responses:
+        201:
+          description: The invoice as been successfully sent
+        400:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/JSON Error'
+                - items:
+                    $ref: '#/components/schemas/Validation Error'
+                  type: array
+                - $ref: '#/components/schemas/SendinBlue Error'
+          description: Bad Request Error
+      summary: Send an invoice
+  /pdf/{name}:
+    post:
+      description: Generate an invoice as PDF, based on Tarif 590 and QR-invoice standards
+      parameters:
+      - description: The generated PDF invoice filename. It is needed when downloading
+          the PDF from this endpoint or when opening the PDF in a browser directly
+          from the endpoint URL. It should end with _.pdf_
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invoice'
+        required: true
+        summary: The content used to generate the PDF invoice
+      responses:
+        200:
+          content:
+            application/pdf:
+              schema:
+                format: binary
+                type: string
+          description: The generated PDF invoice
+        400:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/JSON Error'
+                - items:
+                    $ref: '#/components/schemas/Validation Error'
+                  type: array
+          description: Bad Request Error
+      summary: Generate an invoice as PDF
+servers: []
