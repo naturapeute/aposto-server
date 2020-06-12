@@ -20,8 +20,8 @@ from starlette.status import HTTP_400_BAD_REQUEST
 from swagger_ui import api_doc
 
 from models import Invoice
-from pdf_generation.aposto_pdf import ApostoCanvas
-from pdf_generation.contents.invoice_content import InvoiceContent
+from pdf_generation import ApostoCanvas
+from pdf_generation.contents import InvoiceContent
 
 load_dotenv()
 SEND_IN_BLUE_API_KEY = os.getenv("SEND_IN_BLUE_API_KEY")

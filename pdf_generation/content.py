@@ -3,10 +3,10 @@ from typing import Union
 
 from reportlab.lib.units import mm
 
-import pdf_generation
-from pdf_generation.contents.invoice_content import InvoiceContent
-from pdf_generation.contents.service_content import ServiceContent
-from pdf_generation.text_style import TextStyle
+import pdf_generation.text_style as text_style
+
+from .contents import InvoiceContent, ServiceContent
+from .text_style import TextStyle
 
 
 class Content:
@@ -35,7 +35,7 @@ class Text(Content):
     def __init__(self, dict_text: dict):
         super().__init__(dict_text)
         self.text: str = dict_text["text"]
-        self.style: TextStyle = getattr(pdf_generation.text_style, dict_text["style"])()
+        self.style: TextStyle = getattr(text_style, dict_text["style"])()
 
     def shift_top(self, shift: float):
         self._top += shift
@@ -65,7 +65,7 @@ class Value(Content):
     def __init__(self, dict_value: dict):
         super().__init__(dict_value)
         self.key: str = dict_value["key"]
-        self.style: TextStyle = getattr(pdf_generation.text_style, dict_value["style"])()
+        self.style: TextStyle = getattr(text_style, dict_value["style"])()
 
     def to_text(self, content: Union[InvoiceContent, ServiceContent]) -> Text:
         return Text(

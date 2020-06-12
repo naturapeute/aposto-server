@@ -5,16 +5,16 @@ from PIL import Image
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 
-from pdf_generation.content import Graphic, SwissQRCode, Text, Value
-from pdf_generation.contents.invoice_content import InvoiceContent
-from pdf_generation.qr_invoice import QRInvoice
-from pdf_generation.template import (
+from .content import Graphic, SwissQRCode, Text, Value
+from .contents import InvoiceContent
+from .qr_invoice import QRInvoice
+from .template import (
     DescriptorTemplate,
     GraphicTemplate,
     SwissQRCodeTemplate,
     ValueTemplate,
 )
-from pdf_generation.text_style import TextStyle, TTFontToRegister
+from .text_style import TextStyle, TTFontToRegister
 
 
 class ApostoCanvas(canvas.Canvas):

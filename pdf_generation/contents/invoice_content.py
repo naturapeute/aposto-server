@@ -5,10 +5,10 @@ from PIL import Image
 from pystrich.datamatrix import DataMatrixEncoder, DataMatrixRenderer
 
 from models import Invoice
-from pdf_generation.contents.author_content import AuthorContent
-from pdf_generation.contents.patient_content import PatientContent
-from pdf_generation.contents.service_content import ServiceContent
-from pdf_generation.contents.therapist_content import TherapistContent
+from .author_content import AuthorContent
+from .patient_content import PatientContent
+from .service_content import ServiceContent
+from .therapist_content import TherapistContent
 
 
 class InvoiceContent:

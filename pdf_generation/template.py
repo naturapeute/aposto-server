@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 from typing import List
 
-from pdf_generation.content import Content, Graphic, SwissQRCode, Text, Value
+from .content import Content, Graphic, SwissQRCode, Text, Value
 
 
 class Template:

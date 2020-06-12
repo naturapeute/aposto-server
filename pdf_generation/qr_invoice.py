@@ -2,7 +2,7 @@ import qrcode
 from PIL import Image
 from qrcode import QRCode
 
-from pdf_generation.contents.invoice_content import InvoiceContent
+from .contents import InvoiceContent
 
 
 class QRInvoice:
