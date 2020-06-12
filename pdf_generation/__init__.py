@@ -1,1 +1,1 @@
-from .aposto_pdf import ApostoCanvas
+from .pdf_generator import PDFGenerator

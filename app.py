@@ -20,7 +20,7 @@ from starlette.status import HTTP_400_BAD_REQUEST
 from swagger_ui import api_doc
 
 from models import Invoice
-from pdf_generation import ApostoCanvas
+from pdf_generation import PDFGenerator
 from pdf_generation.contents import InvoiceContent
 
 load_dotenv()
@@ -154,7 +154,7 @@ async def download_invoice(request: Request):
 
     invoice_content: InvoiceContent = InvoiceContent(invoice)
 
-    invoice_path: Path = generate_invoice(invoice_content)
+    invoice_path: Path = PDFGenerator(invoice_content).generate_invoice()
 
     return FileResponse(invoice_path.as_posix())
 
@@ -203,7 +203,7 @@ async def email_invoice(request: Request):
 
     invoice_content: InvoiceContent = InvoiceContent(invoice)
 
-    invoice_path: Path = generate_invoice(invoice_content)
+    invoice_path: Path = PDFGenerator(invoice_content).generate_invoice()
 
     with open(invoice_path.as_posix(), "rb") as invoice_file:
         invoice_file_base_64 = base64.b64encode(invoice_file.read())
@@ -251,155 +251,3 @@ with open("./doc/doc.yaml", "w") as doc_yaml:
     doc_yaml.write(yaml.dump(schemas.get_schema(app.routes)))
 
 api_doc(app, config_path=Path("./doc/doc.yaml").as_posix(), url_prefix="/doc")
-
-
-def generate_invoice(invoice_content: InvoiceContent) -> Path:
-    invoice_dir_str = (
-        f"./out/{invoice_content.naturapeute_id}"
-        if invoice_content.naturapeute_id
-        else "./out/demo"
-    )
-    invoice_dir: Path = Path(invoice_dir_str)
-    invoice_dir.mkdir(parents=True, exist_ok=True)
-    invoice_path: Path = invoice_dir.joinpath(f"invoice-{invoice_content.timestamp}.pdf")
-
-    if not invoice_path.exists():
-        cvs: ApostoCanvas = ApostoCanvas(invoice_path.as_posix())
-
-        cvs.draw_invoice(
-            [
-                Path(
-                    "pdf_generation/qr_invoice_templates/descriptor_templates/header_template.json"
-                ),
-                Path(
-                    "pdf_generation/qr_invoice_templates/descriptor_templates/author_template.json"
-                ),
-                Path(
-                    "pdf_generation/qr_invoice_templates/descriptor_templates/patient_template.json"
-                ),
-                Path(
-                    "pdf_generation/qr_invoice_templates/descriptor_templates/invoice_template.json"
-                ),
-            ],
-            [
-                Path(
-                    "pdf_generation/qr_invoice_templates/graphic_templates/invoice_frame_template.json"
-                )
-            ],
-            [
-                Path(
-                    "pdf_generation/qr_invoice_templates/value_templates/author_template.json"
-                ),
-                Path(
-                    "pdf_generation/qr_invoice_templates/value_templates/patient_template.json"
-                ),
-                Path(
-                    "pdf_generation/qr_invoice_templates/value_templates/invoice_template.json"
-                ),
-            ],
-            [],
-            invoice_content,
-        )
-
-        if invoice_content.qr_reference and invoice_content.author.qr_iban:
-            cvs.draw_descriptor_template(
-                Path(
-                    "pdf_generation/qr_invoice_templates/descriptor_templates/receipt_template.json"
-                )
-            )
-            cvs.draw_descriptor_template(
-                Path(
-                    "pdf_generation/qr_invoice_templates/descriptor_templates/payment_section_template.json"
-                )
-            )
-
-            cvs.draw_value_template(
-                Path(
-                    "pdf_generation/qr_invoice_templates/value_templates/receipt_template.json"
-                ),
-                invoice_content,
-            )
-            cvs.draw_value_template(
-                Path(
-                    "pdf_generation/qr_invoice_templates/value_templates/payment_section_template.json"
-                ),
-                invoice_content,
-            )
-
-            cvs.draw_frame_template(
-                Path(
-                    "pdf_generation/qr_invoice_templates/graphic_templates/qr_invoice_frame_template.json"
-                )
-            )
-
-            cvs.draw_scissors_template(
-                Path(
-                    "pdf_generation/qr_invoice_templates/graphic_templates/scissors_template.json"
-                )
-            )
-
-            cvs.draw_swiss_qr_code_template(
-                Path(
-                    "pdf_generation/qr_invoice_templates/graphic_templates/swiss_qr_code_template.json"
-                ),
-                invoice_content,
-            )
-
-        cvs.showPage()
-
-        cvs.draw_invoice(
-            [
-                Path(
-                    "pdf_generation/invoice_templates/descriptor_templates/header_template.json"
-                ),
-                Path(
-                    "pdf_generation/invoice_templates/descriptor_templates/author_template.json"
-                ),
-                Path(
-                    "pdf_generation/invoice_templates/descriptor_templates/patient_template.json"
-                ),
-                Path(
-                    "pdf_generation/invoice_templates/descriptor_templates/other_fields_template.json"
-                ),
-                Path(
-                    "pdf_generation/invoice_templates/descriptor_templates/services_template.json"
-                ),
-                Path(
-                    "pdf_generation/invoice_templates/descriptor_templates/footer_template.json"
-                ),
-            ],
-            [
-                Path(
-                    "pdf_generation/invoice_templates/graphic_templates/frame_template.json"
-                )
-            ],
-            [
-                Path(
-                    "pdf_generation/invoice_templates/value_templates/author_template.json"
-                ),
-                Path(
-                    "pdf_generation/invoice_templates/value_templates/patient_template.json"
-                ),
-                Path(
-                    "pdf_generation/invoice_templates/value_templates/other_fields_template.json"
-                ),
-                Path(
-                    "pdf_generation/invoice_templates/value_templates/services_template.json"
-                ),
-                Path(
-                    "pdf_generation/invoice_templates/value_templates/footer_template.json"
-                ),
-            ],
-            [
-                Path(
-                    "pdf_generation/invoice_templates/graphic_templates/datamatrix_template.json"
-                ),
-            ],
-            invoice_content,
-        )
-
-        cvs.showPage()
-
-        cvs.save()
-
-    return invoice_path
