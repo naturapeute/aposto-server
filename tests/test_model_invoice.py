@@ -181,6 +181,18 @@ class InvoiceTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Invoice(**self.invoice_dict)
 
+        self.invoice_dict["services"] = [
+            {"date": 1584921600000, "code": 1003, "duration": 60},
+            {"date": 1584921600000, "code": 1003, "duration": 60},
+            {"date": 1584921600000, "code": 1003, "duration": 60},
+            {"date": 1584921600000, "code": 1003, "duration": 60},
+            {"date": 1584921600000, "code": 1003, "duration": 60},
+            {"date": 1584921600000, "code": 1003, "duration": 60},
+        ]
+
+        with self.assertRaises(ValidationError):
+            Invoice(**self.invoice_dict)
+
     def test_wrong_qr_reference(self):
         self.invoice_dict["QRReference"] = "azertyuiopqsdfghjklmwxcvbna"
 

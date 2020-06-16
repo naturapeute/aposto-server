@@ -36,6 +36,7 @@ components:
           description: The list of services performed as part of the treatment
           items:
             $ref: '#/definitions/Service'
+          maxItems: 5
           minItems: 1
           title: Services
           type: array

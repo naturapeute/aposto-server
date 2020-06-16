@@ -44,6 +44,7 @@ class Invoice(BaseModel):
         title="Services",
         description="The list of services performed as part of the treatment",
         min_items=1,
+        max_items=5,
     )
 
     QRReference: Optional[str] = Field(
