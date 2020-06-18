@@ -168,6 +168,14 @@ class PatientTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
 
+        # FIXME : pydantic actually does not support JavaScript negative timestamp
+        #           Remove this code when it will be properly parsed.
+        #           See https://github.com/samuelcolvin/pydantic/issues/1600
+        self.patient_dict["birthday"] = -1585049118485
+
+        with self.assertRaises(ValidationError):
+            Patient(**self.patient_dict)
+
     def test_missing_gender(self):
         self.patient_dict.pop("gender")
 
