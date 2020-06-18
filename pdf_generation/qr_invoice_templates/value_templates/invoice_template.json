@@ -54,7 +54,7 @@
         "style": "BoldQRInvoiceInvoiceRightTextStyle"
     },
     {
-        "key": "total_amount",
+        "key": "paid_amount",
         "left": 126.026,
         "top": 180.496,
         "style": "BoldQRInvoiceInvoiceRightTextStyle"

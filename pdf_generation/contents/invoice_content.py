@@ -129,11 +129,11 @@ class InvoiceContent:
 
     @property
     def paid_amount(self) -> str:
-        return self.total_amount
+        return self.total_amount if self._invoice.paid else "0.00"
 
     @property
     def owed_amount(self) -> str:
-        return "0.00"
+        return "0.00" if self._invoice.paid else self.total_amount
 
     @property
     def reference_type(self) -> str:
