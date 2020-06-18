@@ -17,6 +17,7 @@ class InvoiceContentTestCase(TestCase):
                 "email": "LeroyFrechette@armyspy.com",
                 "phone": "081 660 68 36",
                 "RCC": "V123123",
+                "IBAN": "CH5131234567890123456",
             },
             "therapist": {
                 "firstName": "Leroy",
@@ -62,6 +63,7 @@ class InvoiceContentDemoModeTestCase(TestCase):
                 "email": "LeroyFrechette@armyspy.com",
                 "phone": "081 660 68 36",
                 "RCC": "V123123",
+                "IBAN": "CH5131234567890123456",
             },
             "therapist": {
                 "firstName": "Leroy",
@@ -132,6 +134,7 @@ class InvoiceContentInvalidTestCase(TestCase):
                 "email": "LeroyFrechette@armyspy.com",
                 "phone": "081 660 68 36",
                 "RCC": "V12312",
+                "IBAN": "CH5131234567890123456",
             },
             "therapist": {
                 "firstName": "Leroy",

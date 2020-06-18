@@ -57,7 +57,7 @@ class PDFEndpointTest(
         test_time: datetime = datetime.now()
         test_time_str: str = test_time.strftime("%Y%m%d%H%M%S")
 
-        response: Response = self.test_client.post(f"/pdf/invoice.pdf", json=self.invoice)
+        response: Response = self.test_client.post("/pdf/invoice.pdf", json=self.invoice)
 
         self.assertEqual(response.status_code, HTTP_200_OK)
         self.assertEqual(response.headers["Content-Type"], "application/pdf")
@@ -70,7 +70,7 @@ class PDFEndpointTest(
         test_time: datetime = datetime.now()
         test_time_str: str = test_time.strftime("%Y%m%d%H%M%S")
 
-        response: Response = self.test_client.post(f"/pdf/invoice.pdf", json=self.invoice)
+        response: Response = self.test_client.post("/pdf/invoice.pdf", json=self.invoice)
 
         self.assertEqual(response.status_code, HTTP_200_OK)
         self.assertEqual(response.headers["Content-Type"], "application/pdf")
@@ -83,7 +83,7 @@ class PDFEndpointTest(
         test_time: datetime = datetime.now()
         test_time_str: str = test_time.strftime("%Y%m%d%H%M%S")
 
-        response: Response = self.test_client.post(f"/pdf/invoice.pdf", json=self.invoice)
+        response: Response = self.test_client.post("/pdf/invoice.pdf", json=self.invoice)
 
         self.assertEqual(response.status_code, HTTP_200_OK)
         self.assertEqual(response.headers["Content-Type"], "application/pdf")
@@ -95,7 +95,7 @@ class PDFEndpointTest(
         test_time_str: str = test_time.strftime("%Y%m%d%H%M%S")
 
         response: Response = self.test_client.post(
-            f"/pdf/invoice.pdf", json=self.invoice_demo
+            "/pdf/invoice.pdf", json=self.invoice_demo
         )
 
         self.assertEqual(response.status_code, HTTP_200_OK)
@@ -105,7 +105,7 @@ class PDFEndpointTest(
 
     def test_pdf_endpoint_invalid_content(self):
         response: Response = self.test_client.post(
-            f"/pdf/invoice.pdf", json=self.invoice_invalid
+            "/pdf/invoice.pdf", json=self.invoice_invalid
         )
 
         self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST)
@@ -113,7 +113,7 @@ class PDFEndpointTest(
 
     def test_pdf_endpoint_improper_json(self):
         response: Response = self.test_client.post(
-            f"/pdf/invoice.pdf", data=self.invoice_improper_json
+            "/pdf/invoice.pdf", data=self.invoice_improper_json
         )
 
         self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST)
@@ -136,7 +136,7 @@ class EmailEndpointTest(
     def test_email_endpoint_success(self):
         responses.add(SendInBlueMock.smtp_email_success_request())
 
-        response: Response = self.test_client.post(f"/email", json=self.invoice)
+        response: Response = self.test_client.post("/email", json=self.invoice)
 
         self.assertEqual(response.status_code, HTTP_200_OK)
         self.assertEqual(response.headers["Content-Type"], "application/json")
@@ -145,21 +145,21 @@ class EmailEndpointTest(
     def test_email_endpoint_failure(self):
         responses.add(SendInBlueMock.smtp_email_failure_request())
 
-        response: Response = self.test_client.post(f"/email", json=self.invoice)
+        response: Response = self.test_client.post("/email", json=self.invoice)
 
         self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST)
         self.assertEqual(response.headers["Content-Type"], "application/json")
         self.assertDictEqual(response.json(), SendInBlueMock.FAILURE_JSON)
 
     def test_email_endpoint_invalid_content(self):
-        response: Response = self.test_client.post(f"/email", json=self.invoice_invalid)
+        response: Response = self.test_client.post("/email", json=self.invoice_invalid)
 
         self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST)
         self.assertEqual(response.json(), InvoiceContentInvalidTestCase.FAILURE_JSON)
 
     def test_email_endpoint_improper_json(self):
         response: Response = self.test_client.post(
-            f"/email", data=self.invoice_improper_json
+            "/email", data=self.invoice_improper_json
         )
 
         self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST)

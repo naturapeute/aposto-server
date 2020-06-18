@@ -52,28 +52,22 @@ class PDFGenerator:
             for qr_invoice_value_template in qr_invoice_value_templates:
                 cvs.draw_value_template(qr_invoice_value_template, self._invoice_content)
 
-            if (
-                self._invoice_content.reference
-                and self._invoice_content.author_content.iban
-            ):
-                # QR-invoice part in QR-invoice page
-                for (
-                    qr_invoice_qr_part_descriptor_template
-                ) in qr_invoice_qr_part_descriptor_templates:
-                    cvs.draw_descriptor_template(qr_invoice_qr_part_descriptor_template)
+            # QR-invoice part in QR-invoice page
+            for (
+                qr_invoice_qr_part_descriptor_template
+            ) in qr_invoice_qr_part_descriptor_templates:
+                cvs.draw_descriptor_template(qr_invoice_qr_part_descriptor_template)
 
-                for (
-                    qr_invoice_qr_part_value_template
-                ) in qr_invoice_qr_part_value_templates:
-                    cvs.draw_value_template(
-                        qr_invoice_qr_part_value_template, self._invoice_content
-                    )
-
-                cvs.draw_frame_template(qr_invoice_qr_part_frame_template)
-                cvs.draw_scissors_template(qr_invoice_scissors_template)
-                cvs.draw_swiss_qr_code_template(
-                    qr_invoice_swiss_qr_code_template, self._invoice_content
+            for qr_invoice_qr_part_value_template in qr_invoice_qr_part_value_templates:
+                cvs.draw_value_template(
+                    qr_invoice_qr_part_value_template, self._invoice_content
                 )
+
+            cvs.draw_frame_template(qr_invoice_qr_part_frame_template)
+            cvs.draw_scissors_template(qr_invoice_scissors_template)
+            cvs.draw_swiss_qr_code_template(
+                qr_invoice_swiss_qr_code_template, self._invoice_content
+            )
 
             cvs.showPage()
 

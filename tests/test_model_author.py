@@ -46,14 +46,6 @@ class AuthorTestCase(TestCase):
         except ValidationError:
             self.fail("Author is invalid while it should not.")
 
-    def test_valid_without_iban(self):
-        self.author_dict.pop("IBAN")
-
-        try:
-            Author(**self.author_dict)
-        except ValidationError:
-            self.fail("Author is invalid while it should not.")
-
     def test_empty(self):
         with self.assertRaises(ValidationError):
             Author(**{})
@@ -189,6 +181,12 @@ class AuthorTestCase(TestCase):
             Author(**self.author_dict)
 
         self.author_dict["RCC"] = "VVVVVVV"
+
+        with self.assertRaises(ValidationError):
+            Author(**self.author_dict)
+
+    def test_missing_iban(self):
+        self.author_dict.pop("IBAN")
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)

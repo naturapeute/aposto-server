@@ -1,5 +1,3 @@
-from typing import Union
-
 from models import Author
 from .entity_content import EntityContent
 
@@ -18,11 +16,8 @@ class AuthorContent(EntityContent):
         return self._author.email
 
     @property
-    def iban(self) -> Union[str, None]:
-        iban: Union[str, None] = self._author.IBAN
-
-        if iban:
-            iban: str = iban.replace(" ", "")
-            iban: str = " ".join([iban[i : i + 4] for i in range(0, len(iban), 4)])
+    def iban(self) -> str:
+        iban: str = self._author.IBAN
+        iban: str = " ".join([iban[i : i + 4] for i in range(0, len(iban), 4)])
 
         return iban

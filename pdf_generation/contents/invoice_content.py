@@ -140,8 +140,8 @@ class InvoiceContent:
         return self._invoice.reference_type
 
     @property
-    def reference(self) -> Union[str, None]:
-        reference: Union[str, None] = self._invoice.reference
+    def reference(self) -> str:
+        reference: str = self._invoice.reference
 
         if self._invoice.reference_type == "SCOR":
             reference: str = " ".join(

@@ -170,6 +170,7 @@ definitions:
     - city
     - phone
     - email
+    - IBAN
     title: Author
     type: object
   Patient:

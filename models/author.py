@@ -49,12 +49,11 @@ class Author(BaseModel):
         regex=r"^[A-Z][0-9]{6}$",
     )
 
-    IBAN: Optional[str] = Field(
-        None,
+    IBAN: str = Field(
         title="IBAN",
         description="The author IBAN. The IBAN must correspond to the bank account that cashes invoices. It can be an IBAN or a QR-IBAN",
         regex=r"^CH[0-9]{19}$",
-    )  # TODO : Turn into compulsory field when moving to QR-invoice
+    )
 
     ESRId: Optional[str] = Field(
         None,
@@ -81,4 +80,4 @@ class Author(BaseModel):
         if str(98 - (int(f"{value[4:]}121700") % 97)) == value[2:4]:
             return value
 
-        raise ValueError(f"IBAN checksum is invalid.")
+        raise ValueError("IBAN checksum is invalid.")

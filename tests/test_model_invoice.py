@@ -18,6 +18,7 @@ class InvoiceTestCase(TestCase):
                 "email": "LeroyFrechette@armyspy.com",
                 "phone": "081 660 68 36",
                 "RCC": "V123123",
+                "IBAN": "CH5131234567890123456",
             },
             "therapist": {
                 "firstName": "Leroy",
@@ -218,12 +219,6 @@ class InvoiceTestCase(TestCase):
 
         with self.assertRaises(ValidationError):
             Invoice(**self.invoice_dict)
-
-    def test_empty_reference(self):
-        invoice: Invoice = Invoice(**self.invoice_dict)
-
-        self.assertEqual(invoice.reference_type, "NON")
-        self.assertIsNone(invoice.reference)
 
     def test_creditor_reference(self):
         self.invoice_dict["author"]["IBAN"] = "CH2641234567890123456"
