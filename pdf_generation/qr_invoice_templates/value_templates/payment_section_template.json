@@ -12,7 +12,7 @@
         "style": "QRInvoicePaymentSectionTextStyle"
     },
     {
-        "key": "author_content.qr_iban",
+        "key": "author_content.iban",
         "left": 118,
         "top": 203.703,
         "style": "QRInvoicePaymentSectionTextStyle"
@@ -36,7 +36,7 @@
         "style": "QRInvoicePaymentSectionTextStyle"
     },
     {
-        "key": "qr_reference",
+        "key": "reference",
         "left": 118,
         "top": 226.989,
         "style": "QRInvoicePaymentSectionTextStyle"

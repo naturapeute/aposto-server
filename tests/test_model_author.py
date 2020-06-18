@@ -14,6 +14,7 @@ class AuthorTestCase(TestCase):
             "city": "Vrin",
             "email": "LeroyFrechette@armyspy.com",
             "phone": "081 660 68 36",
+            "IBAN": "CH5131234567890123456",
             "RCC": "V123123",
         }
 
@@ -23,7 +24,7 @@ class AuthorTestCase(TestCase):
         except ValidationError:
             self.fail("Author is invalid while it should not.")
 
-        self.author_dict["QRIBAN"] = "CH2631234567890123456"
+        self.author_dict["IBAN"] = "CH2641234567890123456"
 
         try:
             Author(**self.author_dict)
@@ -39,6 +40,14 @@ class AuthorTestCase(TestCase):
 
     def test_valid_without_rcc(self):
         self.author_dict.pop("RCC")
+
+        try:
+            Author(**self.author_dict)
+        except ValidationError:
+            self.fail("Author is invalid while it should not.")
+
+    def test_valid_without_iban(self):
+        self.author_dict.pop("IBAN")
 
         try:
             Author(**self.author_dict)
@@ -184,28 +193,28 @@ class AuthorTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
-    def test_wrong_qr_iban(self):
-        self.author_dict["QRIBAN"] = "114430999123000889012"
+    def test_wrong_iban(self):
+        self.author_dict["IBAN"] = "114430999123000889012"
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
-        self.author_dict["QRIBAN"] = "AA4430999123000889012"
+        self.author_dict["IBAN"] = "AA4440999123000889012"
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
-        self.author_dict["QRIBAN"] = "AAA430999123000889012"
+        self.author_dict["IBAN"] = "AAA430999123000889012"
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
-        self.author_dict["QRIBAN"] = "CH4450999123000889012"
+        self.author_dict["IBAN"] = "CH44359991230008890121"
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
-        self.author_dict["QRIBAN"] = "CH4435999123000889012"
+        self.author_dict["IBAN"] = "CH1231234567890123456"
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)

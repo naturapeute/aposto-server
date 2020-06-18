@@ -193,22 +193,6 @@ class InvoiceTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Invoice(**self.invoice_dict)
 
-    def test_wrong_qr_reference(self):
-        self.invoice_dict["QRReference"] = "azertyuiopqsdfghjklmwxcvbna"
-
-        with self.assertRaises(ValidationError):
-            Invoice(**self.invoice_dict)
-
-        self.invoice_dict["QRReference"] = "12345678901234567890123456"
-
-        with self.assertRaises(ValidationError):
-            Invoice(**self.invoice_dict)
-
-        self.invoice_dict["QRReference"] = "1234567890123456789012345678"
-
-        with self.assertRaises(ValidationError):
-            Invoice(**self.invoice_dict)
-
     def test_timestamp_is_utc(self):
         invoice: Invoice = Invoice(**self.invoice_dict)
 
@@ -225,6 +209,31 @@ class InvoiceTestCase(TestCase):
 
         with self.assertRaises(ValidationError):
             Invoice(**self.invoice_dict)
+
+    def test_empty_reference(self):
+        invoice: Invoice = Invoice(**self.invoice_dict)
+
+        self.assertEqual(invoice.reference_type, "NON")
+        self.assertIsNone(invoice.reference)
+
+    def test_creditor_reference(self):
+        self.invoice_dict["author"]["IBAN"] = "CH2641234567890123456"
+
+        invoice: Invoice = Invoice(**self.invoice_dict)
+
+        self.assertEqual(invoice.reference_type, "SCOR")
+        self.assertTrue(invoice.reference.startswith("RF"))
+        self.assertEqual(
+            int(f"{invoice.reference[4:]}2715{invoice.reference[2:4]}") % 97, 1
+        )
+
+    def test_qr_reference(self):
+        self.invoice_dict["author"]["IBAN"] = "CH5131234567890123456"
+
+        invoice: Invoice = Invoice(**self.invoice_dict)
+
+        self.assertEqual(invoice.reference_type, "QRR")
+        self.assertEqual(invoice.reference, "000000000000015850491184852")
 
     def tearDown(self):
         self.invoice_dict = None

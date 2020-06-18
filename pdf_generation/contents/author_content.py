@@ -18,14 +18,11 @@ class AuthorContent(EntityContent):
         return self._author.email
 
     @property
-    def qr_iban(self) -> Union[str, None]:
-        # TODO : Update when moving to QR-invoice
-        _qr_iban: Union[str, None] = self._author.QRIBAN
+    def iban(self) -> Union[str, None]:
+        iban: Union[str, None] = self._author.IBAN
 
-        if _qr_iban:
-            _qr_iban: str = _qr_iban.replace(" ", "")
-            _qr_iban: str = " ".join(
-                [_qr_iban[i : i + 4] for i in range(0, len(_qr_iban), 4)]
-            )
+        if iban:
+            iban: str = iban.replace(" ", "")
+            iban: str = " ".join([iban[i : i + 4] for i in range(0, len(iban), 4)])
 
-        return _qr_iban
+        return iban

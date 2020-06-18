@@ -31,7 +31,7 @@ class QRInvoice:
 
     @property
     def cdtr_inf_iban(self) -> str:
-        return self.invoice_content.author_content.qr_iban
+        return self.invoice_content.author_content.iban.replace(" ", "")
 
     @property
     def cdtr_inf(self) -> str:
@@ -76,6 +76,46 @@ class QRInvoice:
         _cdtr: str = f"{_cdtr}{self.separator}{self.cdtr_ctry}"
 
         return _cdtr
+
+    @property
+    def ultmt_cdtr_adr_tp(self) -> str:
+        return ""
+
+    @property
+    def ultmt_cdtr_name(self) -> str:
+        return ""
+
+    @property
+    def ultmt_cdtr_strt_nm_or_adr_line1(self) -> str:
+        return ""
+
+    @property
+    def ultmt_cdtr_bldg_nb_or_adr_line2(self) -> str:
+        return ""
+
+    @property
+    def ultmt_cdtr_pst_cd(self) -> str:
+        return ""
+
+    @property
+    def ultmt_cdtr_twn_nm(self) -> str:
+        return ""
+
+    @property
+    def ultmt_cdtr_ctry(self) -> str:
+        return ""
+
+    @property
+    def ultmt_cdtr(self) -> str:
+        _ultmt_cdtr: str = self.ultmt_cdtr_adr_tp
+        _ultmt_cdtr: str = f"{_ultmt_cdtr}{self.separator}{self.ultmt_cdtr_name}"
+        _ultmt_cdtr: str = f"{_ultmt_cdtr}{self.separator}{self.ultmt_cdtr_strt_nm_or_adr_line1}"
+        _ultmt_cdtr: str = f"{_ultmt_cdtr}{self.separator}{self.ultmt_cdtr_bldg_nb_or_adr_line2}"
+        _ultmt_cdtr: str = f"{_ultmt_cdtr}{self.separator}{self.ultmt_cdtr_pst_cd}"
+        _ultmt_cdtr: str = f"{_ultmt_cdtr}{self.separator}{self.ultmt_cdtr_twn_nm}"
+        _ultmt_cdtr: str = f"{_ultmt_cdtr}{self.separator}{self.ultmt_cdtr_ctry}"
+
+        return _ultmt_cdtr
 
     @property
     def ccy_amt_amt(self) -> str:
@@ -131,11 +171,11 @@ class QRInvoice:
 
     @property
     def rmt_inf_tp(self) -> str:
-        return "QRR"
+        return self.invoice_content.reference_type
 
     @property
     def rmt_inf_ref(self) -> str:
-        return self.invoice_content.qr_reference
+        return self.invoice_content.reference.replace(" ", "")
 
     @property
     def rmt_inf(self) -> str:
@@ -161,6 +201,7 @@ class QRInvoice:
         qr_code_string: str = f"{self.header}"
         qr_code_string: str = f"{qr_code_string}{self.separator}{self.cdtr_inf}"
         qr_code_string: str = f"{qr_code_string}{self.separator}{self.cdtr}"
+        qr_code_string: str = f"{qr_code_string}{self.separator}{self.ultmt_cdtr}"
         qr_code_string: str = f"{qr_code_string}{self.separator}{self.ccy_amt}"
         qr_code_string: str = f"{qr_code_string}{self.separator}{self.ultmt_dbtr}"
         qr_code_string: str = f"{qr_code_string}{self.separator}{self.rmt_inf}"

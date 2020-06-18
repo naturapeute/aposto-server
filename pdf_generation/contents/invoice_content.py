@@ -136,22 +136,27 @@ class InvoiceContent:
         return "0.00"
 
     @property
-    def qr_reference(self) -> Union[str, None]:
-        # TODO : Update when moving to QR-invoice
-        _qr_reference: Union[str, None] = self._invoice.QRReference
+    def reference_type(self) -> str:
+        return self._invoice.reference_type
 
-        if _qr_reference:
-            _qr_reference: str = _qr_reference.replace(" ", "")
-            _qr_reference: str = " ".join(
-                [_qr_reference[0:2]]
-                + [_qr_reference[i : i + 5] for i in range(2, len(_qr_reference), 5)]
+    @property
+    def reference(self) -> Union[str, None]:
+        reference: Union[str, None] = self._invoice.reference
+
+        if self._invoice.reference_type == "SCOR":
+            reference: str = " ".join(
+                [reference[i : i + 4] for i in range(0, len(reference), 4)]
+            )
+        elif self._invoice.reference_type == "QRR":
+            reference: str = " ".join(
+                [reference[0:2]]
+                + [reference[i : i + 5] for i in range(2, len(reference), 5)]
             )
 
-        return _qr_reference
+        return reference
 
     @property
     def esr_coding_line(self) -> Union[str, None]:
-        # TODO : Update when moving to QR-invoice
         if not self._invoice.author.ESRId or not self._invoice.author.ESRBankId:
             return None
 
@@ -160,7 +165,6 @@ class InvoiceContent:
         return f"01{total_amount}>{self._invoice.author.ESRId}{self._invoice.QRReference}+ {self._invoice.author.ESRBankId}"
 
     def _generate_datamatrix_string(self) -> Union[str, None]:
-        # TODO : Update when moving to QR-invoice
         if not self.esr_coding_line:
             return None
 
@@ -189,9 +193,13 @@ class InvoiceContent:
         return datamatrix_string
 
     def generate_datamatrix(self) -> Union[Image.Image, None]:
+        # NOTE : For now, the ESR identification and ESR bank identification is never provided. So
+        #           the datamatrix_string is always None and never generated.
+        #
+        #           It seems that it is not needed for QR-invoice as it replaces ESR invoice (in
+        #           french BVR).
         datamatrix_string: str = self._generate_datamatrix_string()
 
-        # TODO : Update when moving to QR-invoice
         if not datamatrix_string:
             return None
 
