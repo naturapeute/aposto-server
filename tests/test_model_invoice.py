@@ -46,6 +46,7 @@ class InvoiceTestCase(TestCase):
                 {"date": 1585008000000, "code": 1004, "duration": 30},
             ],
             "timestamp": 1585049118.485,
+            "paid": True,
         }
 
     def test_valid(self):

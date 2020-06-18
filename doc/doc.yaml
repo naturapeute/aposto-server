@@ -17,6 +17,10 @@ components:
           pattern: ^[a-fA-F0-9]{24}$
           title: Naturapeute ID
           type: string
+        paid:
+          description: Indicates if the invoice has been paid or not
+          title: Paid
+          type: boolean
         patient:
           allOf:
           - $ref: '#/definitions/Patient'
@@ -54,6 +58,7 @@ components:
       - servicePrice
       - services
       - timestamp
+      - paid
       title: Invoice
       type: object
     JSONError:

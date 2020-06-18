@@ -53,6 +53,10 @@ class Invoice(BaseModel):
         description="The timestamp of the date the treatment was performed. The timestamp is expressed in milliseconds (JavaScript standard) except if negative (before 01/01/1970). If so, it is expressed in seconds",
     )
 
+    paid: bool = Field(
+        title="Paid", description="Indicates if the invoice has been paid or not"
+    )
+
     # FIXME : pydantic actually does not support JavaScript negative timestamp
     #           Remove this code when it will be properly parsed.
     #           See https://github.com/samuelcolvin/pydantic/issues/1600
