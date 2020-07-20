@@ -23,15 +23,12 @@ class ServiceTestCase(TestCase):
         except ValidationError:
             self.fail("Service is invalid while it should not.")
 
-        # FIXME : pydantic actually does not support JavaScript negative timestamp
-        #           Enable this code when it will be properly parsed.
-        #           See https://github.com/samuelcolvin/pydantic/issues/1600
-        # self.service_dict["date"] = -1585008000000
+        self.service_dict["date"] = -1585008000000
 
-        # try:
-        #     Service(**self.service_dict)
-        # except ValidationError:
-        #     self.fail("Service is invalid while it should not.")
+        try:
+            Service(**self.service_dict)
+        except ValidationError:
+            self.fail("Service is invalid while it should not.")
 
     def test_date_is_utc(self):
         service: Service = Service(**self.service_dict)

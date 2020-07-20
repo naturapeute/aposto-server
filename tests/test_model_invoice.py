@@ -63,15 +63,12 @@ class InvoiceTestCase(TestCase):
         except ValidationError:
             self.fail("Invoice is invalid while it should not.")
 
-        # FIXME : pydantic actually does not support JavaScript negative timestamp
-        #           Enable this code when it will be properly parsed.
-        #           See https://github.com/samuelcolvin/pydantic/issues/1600
-        # self.invoice_dict["timestamp"] = -1585049118485
+        self.invoice_dict["timestamp"] = -1585049118485
 
-        # try:
-        #     Invoice(**self.invoice_dict)
-        # except ValidationError:
-        #     self.fail("Invoice is invalid while it should not.")
+        try:
+            Invoice(**self.invoice_dict)
+        except ValidationError:
+            self.fail("Invoice is invalid while it should not.")
 
     def test_valid_without_naturapeute_id(self):
         self.invoice_dict.pop("naturapeuteID")
@@ -202,14 +199,6 @@ class InvoiceTestCase(TestCase):
 
     def test_missing_timestamp(self):
         self.invoice_dict.pop("timestamp")
-
-        with self.assertRaises(ValidationError):
-            Invoice(**self.invoice_dict)
-
-        # FIXME : pydantic actually does not support JavaScript negative timestamp
-        #           Remove this code when it will be properly parsed.
-        #           See https://github.com/samuelcolvin/pydantic/issues/1600
-        self.invoice_dict["timestamp"] = -1585049118485
 
         with self.assertRaises(ValidationError):
             Invoice(**self.invoice_dict)

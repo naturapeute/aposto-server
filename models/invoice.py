@@ -57,17 +57,6 @@ class Invoice(BaseModel):
         title="Paid", description="Indicates if the invoice has been paid or not"
     )
 
-    # FIXME : pydantic actually does not support JavaScript negative timestamp
-    #           Remove this code when it will be properly parsed.
-    #           See https://github.com/samuelcolvin/pydantic/issues/1600
-    @validator("timestamp", pre=True)
-    @classmethod
-    def check_valid_pydantic_date(cls, value: ModelField):
-        if value < -int(2e10):
-            raise ValueError(f"Negative timestamps bigger than {2e10} are not allowed.")
-
-        return value
-
     @property
     def total_amount(self) -> float:
         _total_amount: float = 0.0
