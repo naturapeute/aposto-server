@@ -9,4 +9,4 @@ class TherapistContent(EntityContent):
 
     @property
     def name(self) -> str:
-        return f"{self._therapist.firstName} {self._therapist.lastName}"
+        return f"{self._therapist.firstname} {self._therapist.lastname}"

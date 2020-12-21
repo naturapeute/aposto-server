@@ -12,10 +12,10 @@ components:
           description: The invoice author. It can be the therapy society or the therapist
             itself
           title: Author
-        naturapeuteID:
+        id:
           description: The Naturapeute user ID
           pattern: ^[a-fA-F0-9]{24}$
-          title: Naturapeute ID
+          title: id
           type: string
         paid:
           description: Indicates if the invoice has been paid or not
@@ -111,24 +111,6 @@ definitions:
         pattern: ^[0-9]{6}$
         title: ESR ID
         type: string
-      IBAN:
-        description: The author IBAN. The IBAN must correspond to the bank account
-          that cashes invoices. It can be an IBAN or a QR-IBAN
-        pattern: ^CH[0-9]{19}$
-        title: IBAN
-        type: string
-      RCC:
-        description: The author RCC number. It can be the therapy society RCC number
-          or the therapist RCC number
-        pattern: ^[A-Z][0-9]{6}$
-        title: RCC
-        type: string
-      ZIP:
-        description: The author ZIP code
-        maxLength: 9
-        minLength: 1
-        title: ZIP
-        type: string
       city:
         description: The author city name
         maxLength: 35
@@ -140,6 +122,12 @@ definitions:
           address
         format: email
         title: Email
+        type: string
+      iban:
+        description: The author IBAN. The IBAN must correspond to the bank account
+          that cashes invoices. It can be an IBAN or a QR-IBAN
+        pattern: ^CH[0-9]{19}$
+        title: IBAN
         type: string
       name:
         description: The author name. It can be the therapy society name or the therapist's
@@ -155,6 +143,12 @@ definitions:
         minLength: 1
         title: Phone
         type: string
+      rcc:
+        description: The author RCC number. It can be the therapy society RCC number
+          or the therapist RCC number
+        pattern: ^[A-Z][0-9]{6}$
+        title: RCC
+        type: string
       street:
         description: The author address street part. It contains the mailbox number
           and the street name. Extra information is not allowed. All author address
@@ -163,27 +157,27 @@ definitions:
         minLength: 1
         title: Street
         type: string
+      zipcode:
+        description: The author zipcode code
+        maxLength: 9
+        minLength: 1
+        title: zipcode
+        type: string
     required:
     - name
     - street
-    - ZIP
+    - zipcode
     - city
     - phone
     - email
-    - IBAN
+    - iban
     title: Author
     type: object
   Patient:
     description: The patient who received the therapies
     properties:
-      ZIP:
-        description: The patient ZIP code
-        maxLength: 9
-        minLength: 1
-        title: ZIP
-        type: string
-      birthday:
-        description: The timestamp of the patient birthday. The timestamp is expressed
+      birthdate:
+        description: The timestamp of the patient birthdate. The timestamp is expressed
           in milliseconds (JavaScript standard) except if negative (before 01/01/1970).
           If so, it is expressed in seconds
         format: date-time
@@ -267,7 +261,7 @@ definitions:
         format: email
         title: Email
         type: string
-      firstName:
+      firstname:
         description: The patient first name
         maxLength: 35
         minLength: 1
@@ -275,13 +269,13 @@ definitions:
         type: string
       gender:
         anyOf:
-        - const: male
+        - const: man
           type: string
-        - const: female
+        - const: woman
           type: string
         description: The patient gender
         title: Gender
-      lastName:
+      lastname:
         description: The patient last name
         maxLength: 35
         minLength: 1
@@ -294,14 +288,20 @@ definitions:
         minLength: 1
         title: Street
         type: string
+      zipcode:
+        description: The patient zipcode code
+        maxLength: 9
+        minLength: 1
+        title: zipcode
+        type: string
     required:
-    - firstName
-    - lastName
+    - firstname
+    - lastname
     - street
-    - ZIP
+    - zipcode
     - city
     - canton
-    - birthday
+    - birthdate
     - gender
     - email
     title: Patient
@@ -521,30 +521,19 @@ definitions:
   Therapist:
     description: The therapist who performed the billed therapies
     properties:
-      RCC:
-        description: The therapist RCC number
-        pattern: ^[A-Z][0-9]{6}$
-        title: RCC
-        type: string
-      ZIP:
-        description: The therapist ZIP code
-        maxLength: 9
-        minLength: 1
-        title: ZIP
-        type: string
       city:
         description: The therapist city name
         maxLength: 35
         minLength: 1
         title: City
         type: string
-      firstName:
+      firstname:
         description: The therapist first name
         maxLength: 35
         minLength: 1
         title: First name
         type: string
-      lastName:
+      lastname:
         description: The therapist last name
         maxLength: 35
         minLength: 1
@@ -556,6 +545,11 @@ definitions:
         minLength: 1
         title: Phone
         type: string
+      rcc:
+        description: The therapist RCC number
+        pattern: ^[A-Z][0-9]{6}$
+        title: RCC
+        type: string
       street:
         description: The therapist address street part. It contains the mailbox number
           and the street name. Extra information is not allowed
@@ -563,11 +557,17 @@ definitions:
         minLength: 1
         title: Street
         type: string
+      zipcode:
+        description: The therapist zipcode code
+        maxLength: 9
+        minLength: 1
+        title: zipcode
+        type: string
     required:
-    - firstName
-    - lastName
+    - firstname
+    - lastname
     - street
-    - ZIP
+    - zipcode
     - city
     - phone
     title: Therapist

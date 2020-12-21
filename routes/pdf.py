@@ -54,7 +54,6 @@ async def pdf_endpoint(request: Request):
                                 items:
                                     $ref: '#/components/schemas/ValidationError'
     """
-
     try:
         invoice_dict: dict = await request.json()
     except JSONDecodeError as json_error:
@@ -65,6 +64,7 @@ async def pdf_endpoint(request: Request):
     try:
         invoice: Invoice = Invoice(**invoice_dict)
     except ValidationError as validation_error:
+        print(validation_error)
         return UJSONResponse(validation_error.errors(), status_code=HTTP_400_BAD_REQUEST)
 
     invoice_content: InvoiceContent = InvoiceContent(invoice)

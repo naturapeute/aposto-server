@@ -30,7 +30,7 @@
         "style": "ValueTextStyle"
     },
     {
-        "key": "patient_content.birthday",
+        "key": "patient_content.birthdate",
         "left": 59.105,
         "top": 59.883,
         "style": "ValueTextStyle"

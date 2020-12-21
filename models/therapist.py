@@ -9,14 +9,14 @@ class Therapist(BaseModel):
     The therapist who performed the billed therapies
     """
 
-    firstName: str = Field(
+    firstname: str = Field(
         title="First name",
         description="The therapist first name",
         min_length=1,
         max_length=35,
     )
 
-    lastName: str = Field(
+    lastname: str = Field(
         title="Last name",
         description="The therapist last name",
         min_length=1,
@@ -30,8 +30,8 @@ class Therapist(BaseModel):
         max_length=35,
     )
 
-    ZIP: str = Field(
-        title="ZIP", description="The therapist ZIP code", min_length=1, max_length=9,
+    zipcode: str = Field(
+        title="zipcode", description="The therapist zipcode code", min_length=1, max_length=9,
     )
 
     city: str = Field(
@@ -45,11 +45,11 @@ class Therapist(BaseModel):
         max_length=25,
     )
 
-    RCC: Optional[str] = Field(
+    rcc: Optional[str] = Field(
         title="RCC", description="The therapist RCC number", regex=r"^[A-Z][0-9]{6}$",
     )
 
-    @validator("phone", pre=True)
+    @validator("phone", pre=True, allow_reuse=True)
     @classmethod
     def remove_phone_whitespace(cls, value: ModelField):
         return value.replace(" ", "")

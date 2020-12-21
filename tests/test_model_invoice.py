@@ -9,36 +9,36 @@ from models import Invoice
 class InvoiceTestCase(TestCase):
     def setUp(self):
         self.invoice_dict: dict = {
-            "naturapeuteID": "abcdef1234567890abcdef12",
+            "id": "abcdef1234567890abcdef12",
             "author": {
                 "name": "Cabinet de Leroy",
                 "street": "Via delle Vigne 1",
-                "ZIP": "7149",
+                "zipcode": "7149",
                 "city": "Vrin",
                 "email": "LeroyFrechette@armyspy.com",
                 "phone": "081 660 68 36",
-                "RCC": "V123123",
-                "IBAN": "CH5131234567890123456",
+                "rcc": "V123123",
+                "iban": "CH5131234567890123456",
             },
             "therapist": {
-                "firstName": "Leroy",
-                "lastName": "Fréchette",
+                "firstname": "Leroy",
+                "lastname": "Fréchette",
                 "street": "Via delle Vigne 1",
-                "ZIP": "7149",
+                "zipcode": "7149",
                 "city": "Vrin",
                 "email": "LeroyFrechette@armyspy.com",
                 "phone": "081 660 68 36",
-                "RCC": "V123123",
+                "rcc": "V123123",
             },
             "patient": {
-                "firstName": "Nicholas",
-                "lastName": "Ailleboust",
+                "firstname": "Nicholas",
+                "lastname": "Ailleboust",
                 "street": "Tösstalstrasse 97",
-                "ZIP": "8872",
+                "zipcode": "8872",
                 "city": "Weesen",
                 "canton": "SG",
-                "birthday": -1118102400.000,
-                "gender": "female",
+                "birthdate": -1118102400.000,
+                "gender": "woman",
                 "email": "NicholasAilleboust@teleworm.us",
             },
             "servicePrice": 100,
@@ -71,7 +71,7 @@ class InvoiceTestCase(TestCase):
             self.fail("Invoice is invalid while it should not.")
 
     def test_valid_without_naturapeute_id(self):
-        self.invoice_dict.pop("naturapeuteID")
+        self.invoice_dict.pop("id")
 
         try:
             Invoice(**self.invoice_dict)
@@ -95,17 +95,17 @@ class InvoiceTestCase(TestCase):
             Invoice(**{})
 
     def test_wrong_naturapeute_id(self):
-        self.invoice_dict["naturapeuteID"] = "abcdef1234567890abcdef1"
+        self.invoice_dict["id"] = "abcdef1234567890abcdef1"
 
         with self.assertRaises(ValidationError):
             Invoice(**self.invoice_dict)
 
-        self.invoice_dict["naturapeuteID"] = "abcdef1234567890abcdef123"
+        self.invoice_dict["id"] = "abcdef1234567890abcdef123"
 
         with self.assertRaises(ValidationError):
             Invoice(**self.invoice_dict)
 
-        self.invoice_dict["naturapeuteID"] = "abcdef1234567890abcdef1_"
+        self.invoice_dict["id"] = "abcdef1234567890abcdef1_"
 
         with self.assertRaises(ValidationError):
             Invoice(**self.invoice_dict)
@@ -129,7 +129,7 @@ class InvoiceTestCase(TestCase):
             Invoice(**self.invoice_dict)
 
     def test_wrong_therapist(self):
-        self.invoice_dict["therapist"].pop("firstName")
+        self.invoice_dict["therapist"].pop("firstname")
 
         with self.assertRaises(ValidationError):
             Invoice(**self.invoice_dict)
@@ -141,7 +141,7 @@ class InvoiceTestCase(TestCase):
             Invoice(**self.invoice_dict)
 
     def test_wrong_patient(self):
-        self.invoice_dict["patient"].pop("firstName")
+        self.invoice_dict["patient"].pop("firstname")
 
         with self.assertRaises(ValidationError):
             Invoice(**self.invoice_dict)
@@ -210,7 +210,7 @@ class InvoiceTestCase(TestCase):
             Invoice(**self.invoice_dict)
 
     def test_creditor_reference(self):
-        self.invoice_dict["author"]["IBAN"] = "CH2641234567890123456"
+        self.invoice_dict["author"]["iban"] = "CH2641234567890123456"
 
         invoice: Invoice = Invoice(**self.invoice_dict)
 
@@ -221,7 +221,7 @@ class InvoiceTestCase(TestCase):
         )
 
     def test_qr_reference(self):
-        self.invoice_dict["author"]["IBAN"] = "CH5131234567890123456"
+        self.invoice_dict["author"]["iban"] = "CH5131234567890123456"
 
         invoice: Invoice = Invoice(**self.invoice_dict)
 

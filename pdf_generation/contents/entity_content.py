@@ -13,7 +13,7 @@ class EntityContent:
 
     @property
     def rcc(self) -> str:
-        return self._entity.RCC if self._entity.RCC else ""
+        return self._entity.rcc if self._entity.rcc else ""
 
     @property
     def street(self) -> str:
@@ -21,7 +21,7 @@ class EntityContent:
 
     @property
     def zip_city(self) -> str:
-        return f"{self._entity.ZIP} {self._entity.city}"
+        return f"{self._entity.zipcode} {self._entity.city}"
 
     @property
     def address(self) -> str:

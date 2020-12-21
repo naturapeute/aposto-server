@@ -8,14 +8,14 @@ from models import Therapist
 class TherapistTestCase(TestCase):
     def setUp(self):
         self.therapist_dict: dict = {
-            "firstName": "Leroy",
-            "lastName": "Fréchette",
+            "firstname": "Leroy",
+            "lastname": "Fréchette",
             "street": "Via delle Vigne 1",
-            "ZIP": "7149",
+            "zipcode": "7149",
             "city": "Vrin",
             "email": "LeroyFrechette@armyspy.com",
             "phone": "081 660 68 36",
-            "RCC": "V123123",
+            "rcc": "V123123",
         }
 
     def test_valid(self):
@@ -32,7 +32,7 @@ class TherapistTestCase(TestCase):
             self.fail("Therapist is invalid while it should not.")
 
     def test_valid_without_rcc(self):
-        self.therapist_dict.pop("RCC")
+        self.therapist_dict.pop("rcc")
 
         try:
             Therapist(**self.therapist_dict)
@@ -44,35 +44,35 @@ class TherapistTestCase(TestCase):
             Therapist(**{})
 
     def test_missing_first_name(self):
-        self.therapist_dict.pop("firstName")
+        self.therapist_dict.pop("firstname")
 
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
 
     def test_wrong_first_name(self):
-        self.therapist_dict["firstName"] = "Leroy Leroy Leroy Leroy Leroy Leroy Leroy"
+        self.therapist_dict["firstname"] = "Leroy Leroy Leroy Leroy Leroy Leroy Leroy"
 
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
 
-        self.therapist_dict["firstName"] = ""
+        self.therapist_dict["firstname"] = ""
 
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
 
     def test_missing_last_name(self):
-        self.therapist_dict.pop("lastName")
+        self.therapist_dict.pop("lastname")
 
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
 
     def test_wrong_last_name(self):
-        self.therapist_dict["lastName"] = "Fréchette Fréchette Fréchette Fréchette"
+        self.therapist_dict["lastname"] = "Fréchette Fréchette Fréchette Fréchette"
 
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
 
-        self.therapist_dict["lastName"] = ""
+        self.therapist_dict["lastname"] = ""
 
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
@@ -95,18 +95,18 @@ class TherapistTestCase(TestCase):
             Therapist(**self.therapist_dict)
 
     def test_missing_zip(self):
-        self.therapist_dict.pop("ZIP")
+        self.therapist_dict.pop("zipcode")
 
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
 
     def test_wrong_zip(self):
-        self.therapist_dict["ZIP"] = "7149714971"
+        self.therapist_dict["zipcode"] = "7149714971"
 
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
 
-        self.therapist_dict["ZIP"] = ""
+        self.therapist_dict["zipcode"] = ""
 
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
@@ -146,22 +146,22 @@ class TherapistTestCase(TestCase):
             Therapist(**self.therapist_dict)
 
     def test_wrong_rcc(self):
-        self.therapist_dict["RCC"] = "1123123"
+        self.therapist_dict["rcc"] = "1123123"
 
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
 
-        self.therapist_dict["RCC"] = "123123"
+        self.therapist_dict["rcc"] = "123123"
 
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
 
-        self.therapist_dict["RCC"] = "VV23123"
+        self.therapist_dict["rcc"] = "VV23123"
 
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)
 
-        self.therapist_dict["RCC"] = "VVVVVVV"
+        self.therapist_dict["rcc"] = "VVVVVVV"
 
         with self.assertRaises(ValidationError):
             Therapist(**self.therapist_dict)

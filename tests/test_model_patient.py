@@ -9,14 +9,14 @@ from models import Patient
 class PatientTestCase(TestCase):
     def setUp(self):
         self.patient_dict: dict = {
-            "firstName": "Nicholas",
-            "lastName": "Ailleboust",
+            "firstname": "Nicholas",
+            "lastname": "Ailleboust",
             "street": "Tösstalstrasse 97",
-            "ZIP": "8872",
+            "zipcode": "8872",
             "city": "Weesen",
             "canton": "SG",
-            "birthday": -1118102400.000,
-            "gender": "female",
+            "birthdate": -1118102400.000,
+            "gender": "woman",
             "email": "NicholasAilleboust@teleworm.us",
         }
 
@@ -26,14 +26,14 @@ class PatientTestCase(TestCase):
         except ValidationError:
             self.fail("Patient is invalid while it should not.")
 
-        self.patient_dict["birthday"] = 1118102400000
+        self.patient_dict["birthdate"] = 1118102400000
 
         try:
             Patient(**self.patient_dict)
         except ValidationError:
             self.fail("Patient is invalid while it should not.")
 
-        self.patient_dict["birthday"] = -1118102400000
+        self.patient_dict["birthdate"] = -1118102400000
 
         try:
             Patient(**self.patient_dict)
@@ -45,42 +45,42 @@ class PatientTestCase(TestCase):
             Patient(**{})
 
     def test_missing_first_name(self):
-        self.patient_dict.pop("firstName")
+        self.patient_dict.pop("firstname")
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
 
     def test_wrong_first_name(self):
-        self.patient_dict["firstName"] = "Nicholas Nicholas Nicholas Nicholas Nicholas"
+        self.patient_dict["firstname"] = "Nicholas Nicholas Nicholas Nicholas Nicholas"
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
 
-        self.patient_dict["firstName"] = ""
+        self.patient_dict["firstname"] = ""
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
 
     def test_missing_last_name(self):
-        self.patient_dict.pop("lastName")
+        self.patient_dict.pop("lastname")
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
 
     def test_wrong_last_name(self):
-        self.patient_dict["lastName"] = "Ailleboust Ailleboust Ailleboust Ailleboust"
+        self.patient_dict["lastname"] = "Ailleboust Ailleboust Ailleboust Ailleboust"
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
 
-        self.patient_dict["lastName"] = ""
+        self.patient_dict["lastname"] = ""
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
 
     def test_too_long_name(self):
-        self.patient_dict["firstName"] = "Nicholas Nicholas Nicholas Nicholas"
-        self.patient_dict["lastName"] = "Ailleboust Ailleboust Ailleboust Ai"
+        self.patient_dict["firstname"] = "Nicholas Nicholas Nicholas Nicholas"
+        self.patient_dict["lastname"] = "Ailleboust Ailleboust Ailleboust Ai"
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
@@ -103,18 +103,18 @@ class PatientTestCase(TestCase):
             Patient(**self.patient_dict)
 
     def test_missing_zip(self):
-        self.patient_dict.pop("ZIP")
+        self.patient_dict.pop("zipcode")
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
 
     def test_wrong_zip(self):
-        self.patient_dict["ZIP"] = "8872887288"
+        self.patient_dict["zipcode"] = "8872887288"
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
 
-        self.patient_dict["ZIP"] = ""
+        self.patient_dict["zipcode"] = ""
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
@@ -148,19 +148,19 @@ class PatientTestCase(TestCase):
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
 
-    def test_birthday_is_utc(self):
+    def test_birthdate_is_utc(self):
         invoice: Patient = Patient(**self.patient_dict)
 
-        self.assertEqual(invoice.birthday.tzinfo, timezone.utc)
+        self.assertEqual(invoice.birthdate.tzinfo, timezone.utc)
 
-    def test_missing_birthday(self):
-        self.patient_dict.pop("birthday")
+    def test_missing_birthdate(self):
+        self.patient_dict.pop("birthdate")
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)
 
-    def test_wrong_birthday(self):
-        self.patient_dict["birthday"] = "test"
+    def test_wrong_birthdate(self):
+        self.patient_dict["birthdate"] = "test"
 
         with self.assertRaises(ValidationError):
             Patient(**self.patient_dict)

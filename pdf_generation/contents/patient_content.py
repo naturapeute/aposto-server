@@ -7,11 +7,11 @@ class PatientContent:
 
     @property
     def first_name(self) -> str:
-        return self._patient.firstName
+        return self._patient.firstname
 
     @property
     def last_name(self) -> str:
-        return self._patient.lastName
+        return self._patient.lastname
 
     @property
     def street(self) -> str:
@@ -19,19 +19,19 @@ class PatientContent:
 
     @property
     def zip(self) -> str:
-        return self._patient.ZIP
+        return self._patient.zipcode
 
     @property
     def city(self) -> str:
         return self._patient.city
 
     @property
-    def birthday(self) -> str:
-        return self._patient.birthday.strftime("%d.%m.%Y")
+    def birthdate(self) -> str:
+        return self._patient.birthdate.strftime("%d.%m.%Y")
 
     @property
     def gender(self) -> str:
-        if self._patient.gender == "male":
+        if self._patient.gender == "man":
             return "H"
         else:
             return "F"
@@ -53,8 +53,8 @@ class PatientContent:
         return self._patient.email
 
     @property
-    def birthday_with_header_and_gender(self) -> str:
-        return f"Date de naissance {self.birthday}/{self.gender}"
+    def birthdate_with_header_and_gender(self) -> str:
+        return f"Date de naissance {self.birthdate}/{self.gender}"
 
     @property
     def ssn(self) -> str:

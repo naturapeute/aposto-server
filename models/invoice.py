@@ -17,9 +17,9 @@ class Invoice(BaseModel):
     based on Tarif 590 and QR-invoice Swiss standards
     """
 
-    naturapeuteID: Optional[str] = Field(
+    id: Optional[str] = Field(
         None,
-        title="Naturapeute ID",
+        title="id",
         description="The Naturapeute user ID",
         regex=r"^[a-fA-F0-9]{24}$",
     )
@@ -74,7 +74,7 @@ class Invoice(BaseModel):
 
     @property
     def reference_type(self) -> str:
-        if re.match(r"^CH[0-9]{2}3[0-1][0-9]{15}$", self.author.IBAN):
+        if re.match(r"^CH[0-9]{2}3[0-1][0-9]{15}$", self.author.iban):
             return "QRR"
 
         return "SCOR"

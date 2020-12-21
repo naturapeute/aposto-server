@@ -17,7 +17,7 @@ class AuthorContent(EntityContent):
 
     @property
     def iban(self) -> str:
-        iban: str = self._author.IBAN
+        iban: str = self._author.iban
         iban: str = " ".join([iban[i : i + 4] for i in range(0, len(iban), 4)])
 
         return iban

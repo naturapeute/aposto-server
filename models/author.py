@@ -23,8 +23,8 @@ class Author(BaseModel):
         max_length=35,
     )
 
-    ZIP: str = Field(
-        title="ZIP", description="The author ZIP code", min_length=1, max_length=9
+    zipcode: str = Field(
+        title="zipcode", description="The author zipcode code", min_length=1, max_length=9
     )
 
     city: str = Field(
@@ -43,13 +43,13 @@ class Author(BaseModel):
         description="The author email. Generated invoices can be sent to this email address",
     )
 
-    RCC: Optional[str] = Field(
+    rcc: Optional[str] = Field(
         title="RCC",
         description="The author RCC number. It can be the therapy society RCC number or the therapist RCC number",
         regex=r"^[A-Z][0-9]{6}$",
     )
 
-    IBAN: str = Field(
+    iban: str = Field(
         title="IBAN",
         description="The author IBAN. The IBAN must correspond to the bank account that cashes invoices. It can be an IBAN or a QR-IBAN",
         regex=r"^CH[0-9]{19}$",
@@ -69,12 +69,12 @@ class Author(BaseModel):
         regex=r"^01[0-9]{7}$",
     )
 
-    @validator("phone", pre=True)
+    @validator("phone", pre=True, allow_reuse=True)
     @classmethod
     def remove_phone_whitespace(cls, value: ModelField):
         return value.replace(" ", "")
 
-    @validator("IBAN")
+    @validator("iban")
     @classmethod
     def check_iban_checksum(cls, value: ModelField):
         if str(98 - (int(f"{value[4:]}121700") % 97)) == value[2:4]:

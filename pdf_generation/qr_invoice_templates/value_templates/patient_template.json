@@ -36,7 +36,7 @@
         "style": "QRInvoiceInvoiceTextStyle"
     },
     {
-        "key": "patient_content.birthday_with_header_and_gender",
+        "key": "patient_content.birthdate_with_header_and_gender",
         "left": 117.747,
         "top": 112.2,
         "style": "QRInvoiceInvoiceTextStyle"

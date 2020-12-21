@@ -27,7 +27,7 @@ class InvoiceContent:
 
     @property
     def naturapeute_id(self) -> Union[str, None]:
-        return self._invoice.naturapeuteID
+        return self._invoice.id
 
     @property
     def timestamp(self) -> str:
@@ -177,7 +177,7 @@ class InvoiceContent:
         due_amount: str = "0"
 
         datamatrix_string = f"{self.esr_coding_line}{separator}{self.author_content.gln}{separator}{self.therapist_content.gln}{separator}"
-        datamatrix_string = f"{datamatrix_string}{therapy_start_date}{separator}{self.patient_content.ssn}{separator}{self.patient_content.birthday}{separator}"
+        datamatrix_string = f"{datamatrix_string}{therapy_start_date}{separator}{self.patient_content.ssn}{separator}{self.patient_content.birthdate}{separator}"
         datamatrix_string = f"{datamatrix_string}{due_amount}{separator}"
 
         for service in self.services_content:

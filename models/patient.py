@@ -9,14 +9,14 @@ class Patient(BaseModel):
     The patient who received the therapies
     """
 
-    firstName: str = Field(
+    firstname: str = Field(
         title="First name",
         description="The patient first name",
         min_length=1,
         max_length=35,
     )
 
-    lastName: str = Field(
+    lastname: str = Field(
         title="Last name",
         description="The patient last name",
         min_length=1,
@@ -30,8 +30,8 @@ class Patient(BaseModel):
         max_length=35,
     )
 
-    ZIP: str = Field(
-        title="ZIP", description="The patient ZIP code", min_length=1, max_length=9
+    zipcode: str = Field(
+        title="zipcode", description="The patient zipcode code", min_length=1, max_length=9
     )
 
     city: str = Field(
@@ -72,12 +72,12 @@ class Patient(BaseModel):
         "I",
     ] = Field(title="Canton", description="The patient Swiss canton")
 
-    birthday: datetime = Field(
+    birthdate: datetime = Field(
         title="Birthday",
-        description="The timestamp of the patient birthday. The timestamp is expressed in milliseconds (JavaScript standard) except if negative (before 01/01/1970). If so, it is expressed in seconds",
+        description="The timestamp of the patient birthdate. The timestamp is expressed in milliseconds (JavaScript standard) except if negative (before 01/01/1970). If so, it is expressed in seconds",
     )
 
-    gender: Literal["male", "female"] = Field(
+    gender: Literal["man", "woman"] = Field(
         title="Gender", description="The patient gender"
     )
 
@@ -89,8 +89,8 @@ class Patient(BaseModel):
     @root_validator
     @classmethod
     def check_name(cls, values):
-        first_name: str = values.get("firstName")
-        last_name: str = values.get("lastName")
+        first_name: str = values.get("firstname")
+        last_name: str = values.get("lastname")
 
         if (
             first_name is not None

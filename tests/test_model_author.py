@@ -10,12 +10,12 @@ class AuthorTestCase(TestCase):
         self.author_dict: dict = {
             "name": "Cabinet de Leroy",
             "street": "Via delle Vigne 1",
-            "ZIP": "7149",
+            "zipcode": "7149",
             "city": "Vrin",
             "email": "LeroyFrechette@armyspy.com",
             "phone": "081 660 68 36",
-            "IBAN": "CH5131234567890123456",
-            "RCC": "V123123",
+            "iban": "CH5131234567890123456",
+            "rcc": "V123123",
         }
 
     def test_valid(self):
@@ -24,7 +24,7 @@ class AuthorTestCase(TestCase):
         except ValidationError:
             self.fail("Author is invalid while it should not.")
 
-        self.author_dict["IBAN"] = "CH2641234567890123456"
+        self.author_dict["iban"] = "CH2641234567890123456"
 
         try:
             Author(**self.author_dict)
@@ -39,7 +39,7 @@ class AuthorTestCase(TestCase):
             self.fail("Author is invalid while it should not.")
 
     def test_valid_without_rcc(self):
-        self.author_dict.pop("RCC")
+        self.author_dict.pop("rcc")
 
         try:
             Author(**self.author_dict)
@@ -87,18 +87,18 @@ class AuthorTestCase(TestCase):
             Author(**self.author_dict)
 
     def test_missing_zip(self):
-        self.author_dict.pop("ZIP")
+        self.author_dict.pop("zipcode")
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
     def test_wrong_zip(self):
-        self.author_dict["ZIP"] = "7149714971"
+        self.author_dict["zipcode"] = "7149714971"
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
-        self.author_dict["ZIP"] = ""
+        self.author_dict["zipcode"] = ""
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
@@ -165,54 +165,54 @@ class AuthorTestCase(TestCase):
             Author(**self.author_dict)
 
     def test_wrong_rcc(self):
-        self.author_dict["RCC"] = "1123123"
+        self.author_dict["rcc"] = "1123123"
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
-        self.author_dict["RCC"] = "123123"
+        self.author_dict["rcc"] = "123123"
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
-        self.author_dict["RCC"] = "VV23123"
+        self.author_dict["rcc"] = "VV23123"
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
-        self.author_dict["RCC"] = "VVVVVVV"
+        self.author_dict["rcc"] = "VVVVVVV"
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
     def test_missing_iban(self):
-        self.author_dict.pop("IBAN")
+        self.author_dict.pop("iban")
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
     def test_wrong_iban(self):
-        self.author_dict["IBAN"] = "114430999123000889012"
+        self.author_dict["iban"] = "114430999123000889012"
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
-        self.author_dict["IBAN"] = "AA4440999123000889012"
+        self.author_dict["iban"] = "AA4440999123000889012"
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
-        self.author_dict["IBAN"] = "AAA430999123000889012"
+        self.author_dict["iban"] = "AAA430999123000889012"
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
-        self.author_dict["IBAN"] = "CH44359991230008890121"
+        self.author_dict["iban"] = "CH44359991230008890121"
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)
 
-        self.author_dict["IBAN"] = "CH1231234567890123456"
+        self.author_dict["iban"] = "CH1231234567890123456"
 
         with self.assertRaises(ValidationError):
             Author(**self.author_dict)

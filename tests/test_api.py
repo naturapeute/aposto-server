@@ -40,7 +40,7 @@ class PDFEndpointTest(
         invoice: Invoice = Invoice(**self.invoice)
 
         self.invoice_path: Path = Path(
-            f"./out/{invoice.naturapeuteID}/invoice-{int(datetime.timestamp(invoice.timestamp))}.pdf"
+            f"./out/{invoice.id}/invoice-{int(datetime.timestamp(invoice.timestamp))}.pdf"
         )
 
         if self.invoice_path.is_file():
