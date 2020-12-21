@@ -65,7 +65,7 @@ class PDFEndpointTest(
         self.assertTrue(self.invoice_path.is_file())
 
     def test_pdf_endpoint_iban(self):
-        self.invoice["author"]["IBAN"] = "CH2641234567890123456"
+        self.invoice["author"]["iban"] = "CH2641234567890123456"
 
         test_time: datetime = datetime.now()
         test_time_str: str = test_time.strftime("%Y%m%d%H%M%S")
@@ -78,7 +78,7 @@ class PDFEndpointTest(
         self.assertTrue(self.invoice_path.is_file())
 
     def test_pdf_endpoint_qr_iban(self):
-        self.invoice["author"]["IBAN"] = "CH5131234567890123456"
+        self.invoice["author"]["iban"] = "CH5131234567890123456"
 
         test_time: datetime = datetime.now()
         test_time_str: str = test_time.strftime("%Y%m%d%H%M%S")
