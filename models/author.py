@@ -74,7 +74,10 @@ class Author(BaseModel):
     def remove_phone_whitespace(cls, value: ModelField):
         return value.replace(" ", "")
 
-    @validator("iban")
+    #@validator("iban")
+    # IBAN validator is deactivated as the checkum is more complex:
+    # an IBAN can end with a letter that must be replaced by a
+    # corresponding value from a table.
     @classmethod
     def check_iban_checksum(cls, value: ModelField):
         if str(98 - (int(f"{value[4:]}121700") % 97)) == value[2:4]:
