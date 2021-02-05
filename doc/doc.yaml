@@ -126,7 +126,7 @@ definitions:
       iban:
         description: The author IBAN. The IBAN must correspond to the bank account
           that cashes invoices. It can be an IBAN or a QR-IBAN
-        pattern: ^CH[0-9]{19}$
+        pattern: ^CH(\d{2})(\d{5})([A-Z0-9]{12})$
         title: IBAN
         type: string
       name:

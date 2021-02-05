@@ -52,7 +52,7 @@ class Author(BaseModel):
     iban: str = Field(
         title="IBAN",
         description="The author IBAN. The IBAN must correspond to the bank account that cashes invoices. It can be an IBAN or a QR-IBAN",
-        regex=r"^CH[0-9]{19}$",
+        regex=r"^CH(\d{2})(\d{5})([A-Z0-9]{12})$",
     )
 
     ESRId: Optional[str] = Field(
