@@ -11,5 +11,5 @@ python-dateutil==2.8.1
 qrcode[pil]==6.1
 email-validator==1.1.1
 typing-extensions==3.7.4.2
-pydantic==1.6.1
+pydantic==1.6.2
 swagger-ui-py==0.3.0
